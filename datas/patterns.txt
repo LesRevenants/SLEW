@@ -1,0 +1,3 @@
+r_isa:est un:est une:designe
+r_holo:de la famille:est une espèce:de la sous-famille
+r_has_part:possède:possede
