@@ -8,14 +8,14 @@ import java.util.LinkedHashSet;
 public class ExtractionPattern {
 	
 	/** the name of the relation (ex : r_isa || r_holo ) */
-	private String relation_name;
+	private String relationType;
 	
 	/** The list of pattern which identifiate a relation (ex : r_isa : {est un , est une} */
 	private LinkedHashSet<String> patterns;
 	
 	
 	public String getRelation() {
-		return relation_name;
+		return relationType;
 	}
 	
 	public LinkedHashSet<String> getPatterns() {
@@ -30,15 +30,15 @@ public class ExtractionPattern {
 		patterns.remove(pattern);
 	}
 	
-	public ExtractionPattern(String relation) {
+	public ExtractionPattern(String relationType) {
 		super();
-		this.relation_name = relation;
+		this.relationType = relationType;
 		this.patterns = new LinkedHashSet<>();
 	}
 	
 	
 	public String toString() {
-		StringBuilder sb = new StringBuilder(relation_name + "  ");
+		StringBuilder sb = new StringBuilder(relationType + "  ");
 		for(String pattern : patterns) {
 			sb.append(": "+ pattern );
 		}

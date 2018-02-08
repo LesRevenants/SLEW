@@ -8,6 +8,9 @@ import util.JDM_Util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Example {
 	
@@ -16,19 +19,18 @@ public class Example {
        
     	
 
- 
-    	String sequence = "Le requin-tigre (Galeocerdo cuvier) est un requin et un poisson"
-    			+ " de la famille des Carcharhinidés "
-    			+ "et l'unique représentant du genre Galeocerdo.";
     	
-    	String sequence2 = "Le chamois (Rupicapra rupicapra) est une espèce de "
-    			+ "mammifères de la famille des Bovidés et de la sous-famille des Caprinés. ";
+    	String sequence = "Le requin-baleine (Rhincodon typus) est un poisson cartilagineux, "
+    			+ "seul membre du genre Rhincodon et seule espèce actuelle de la famille des Rhincodontidae."
+    			+ "Le chamois (Rupicapra rupicapra) est une espèce de "
+    			+ "la sous-famille des Caprinés.";
     	
+    	TextReader textReader = new TextReader(sequence);
     	RequeterRezo system_query = new RequeterRezo("36h",10000);
     	system_query.sauvegarder();
-    			
+    	
     	System.out.println("###########  Text ########### ");
-    	System.out.println(sequence2 +"\n");
+    	System.out.println(sequence+"\n");
     	
     	ExtractionPatternFactory patternFactory = new ExtractionPatternFactory("datas/patterns.txt"); 
     	System.out.println("########### Pattern list ########### ");
@@ -36,21 +38,19 @@ public class Example {
     		System.out.println("\t"+pattern.toString());
     	}
     	
-    	WordSequence wordSequence = new WordSequence(sequence2,3);
-    	System.out.println("\n########### Word list ###########");
-    	System.out.println(wordSequence.getWords_set() +"\n");
-    	
-    	System.out.println("########### Relations extracted ###########");
-
-    	PatternExtractor patternExtractor = new PatternExtractor(wordSequence,system_query,6);
-    	patternExtractor.extract(patternFactory.getPattern_datas());
-    	
-    	/*Mot jdm_word = system_query.requete("requin-tigre");
-    	for(Annotation annotation : jdm_word.getAnnotations()){
-        	if(annotation.getType_relation().equals("r_isa")){
-        		System.out.println(annotation.toString());
+    	List<WordSequence> wordSequences = new ArrayList(textReader.getAllWordSequence()) ;
+    	for(WordSequence wordSequence : wordSequences) {
+    		System.out.println("\n\n\n########### Word list ###########");
+        	for(int i=0;i<wordSequence.getWords_set().size();i++) {
+        		System.out.println("\t"+i+":"+wordSequence.getWords_set().get(i) );
         	}
-        }*/
-    	JDM_Util.similarity(system_query, "chamois");
+        	System.out.println("\n########### Relations extracted ###########");
+
+        	PatternExtractor patternExtractor = new PatternExtractor(wordSequence,system_query,10);
+        	patternExtractor.extract(patternFactory.getPattern_datas());
+    	}
+    	
+    	//JDM_Util.similarity(system_query, "requin-baleine","Rhincodon");
+    
     }
 }

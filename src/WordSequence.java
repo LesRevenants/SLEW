@@ -39,6 +39,14 @@ public class WordSequence {
 		build_combs();
 	}
 	
+	
+	
+	public WordSequence(String data) {
+		this(data,3);
+	}
+
+
+
 	/**
 	 * Build the list of combinaisons
 	 * @return

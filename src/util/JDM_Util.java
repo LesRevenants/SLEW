@@ -7,6 +7,7 @@ import RequeterRezo.Annotation;
 import RequeterRezo.Mot;
 import RequeterRezo.RequeterRezo;
 
+
 public class JDM_Util {
 	
 	public static int similarity(RequeterRezo system_query, String word1,String word2,String relation_type){
