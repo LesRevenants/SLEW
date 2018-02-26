@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/mediawiki/mediawiki-japi-0.0.22.jar" sourcepath="lib/mediawiki/mediawiki-japi-0.0.22-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SLEW/lib/mediawiki/mediawiki-japi-0.0.22-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/Trie/Trie.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/user/eclipse-workspace/SLEW/lib/Trie/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/json/json-20180130.jar" sourcepath="lib/json/json-20180130-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SLEW/lib/json/json-20180130-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/apache-commons/IO/commons-io-2.6-bin/commons-io-2.6/commons-io-2.6.jar" sourcepath="lib/apache-commons/IO/commons-io-2.6-bin/commons-io-2.6/commons-io-2.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SLEW/lib/apache-commons/IO/commons-io-2.6-bin/commons-io-2.6/commons-io-2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/RequeterRezo.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
