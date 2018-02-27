@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
@@ -67,14 +68,15 @@ public class RelationPatternFactory {
      * @return the list of relationPattern from the file and extract each pattern_str 
      * ex : { est_un, possède_un , }
      */
-	public LinkedList<String> readPatternAsString(){
-		 LinkedList<String> relationPatternsStr = new LinkedList<String>();
+	public LinkedHashSet<String> readPatternAsString(){
+		LinkedHashSet<String> relationPatternsStr = new LinkedHashSet<String>();
 		 readPattern()
-		 	.stream()
 		 	.forEach(relationPattern -> {
 				 relationPattern.getLinguisticPatterns().forEach(
-						 linguisticPattern -> { relationPatternsStr.add(linguisticPattern.getPattern()); 
-				 });
+						 linguisticPattern -> { 
+							 relationPatternsStr.add(linguisticPattern.getPattern()); 
+						 }
+				);
 		 	});
 		 return relationPatternsStr;
 	}
@@ -87,7 +89,7 @@ public class RelationPatternFactory {
 	public LinkedList<String> getCompoundWords(){
 		return readPatternAsString()
 				.stream()
-				.filter(Objects::nonNull)
+				//.filter(Objects::nonNull)
 				.filter(word -> word.contains("_"))
 				.collect(Collectors.toCollection(LinkedList::new));
 	}

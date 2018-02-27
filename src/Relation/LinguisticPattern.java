@@ -54,7 +54,7 @@ public class LinguisticPattern {
                     vars.add(exp);
                 }
                 else {
-                	pattern = exp;
+                	this.pattern_str = exp;
                 }
             }
     	}

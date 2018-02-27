@@ -91,18 +91,24 @@ public class Main {
 		RelationPatternFactory relationPatternFactory = new RelationPatternFactory("datas/patterns/patterns.json");
 		
 		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder("datas/jdm-mc.ser"); 
-		compoundWordBuilder.addToTrie(relationPatternFactory.getCompoundWords()); // add compound word from patterns into compound word dictionnary
+		compoundWordBuilder.addToTrie(relationPatternFactory.getCompoundWords()); // add compound word from patterns into compound word dictionary
 		
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<1000;i++) {
+			sb.append(text);
+		}
+		System.out.println(text.length());
 		
 		DataExtractor dataExtractor = new RawTextExtractor(text);
 		StructuredText structuredText = new StructuredText(dataExtractor, compoundWordBuilder);
 		
 		RequeterRezo system_query = new RequeterRezo("36h",10000);
 		
-		long tStart = System.currentTimeMillis();
-		RelationExtractor relationExtractor = new RelationExtractor(structuredText, system_query);
-		relationExtractor.extract(relationPatternFactory);
 		
+		RelationExtractor relationExtractor = new RelationExtractor(structuredText, system_query,relationPatternFactory);
+		
+		long tStart = System.currentTimeMillis();
+		relationExtractor.extract();	
 		long tEnd = System.currentTimeMillis();
 		long   tDelta = tEnd - tStart;
 	    System.out.println("test() : "+tDelta + "  ms");

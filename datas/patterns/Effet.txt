@@ -118,7 +118,7 @@ est_provoquée_par_des;
 est_provoquée_par_la;
 est_provoquée_par_le;
 est_provoquée_par_les;
-est_provoquée par un;
+est_provoquée_par_un;
 est_provoquée_par_une;
 sont_provoqués_par;
 sont_provoqués_par_l';

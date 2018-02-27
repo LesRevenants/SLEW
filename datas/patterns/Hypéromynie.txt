@@ -1,6 +1,6 @@
 qui_est_un;
 qui_est_un_des; 
-qui_est_l'un des;
+qui_est_l'un_des;
 qui_est_une; 
 qui_est_une_des; 
 qui_est_l';
@@ -50,7 +50,7 @@ sont_des_forme_de;
 sont_des_forme_des;
 est_une_forme_des;
 est_une_forme_d'un;
-est une_forme_d'une;
+est_une_forme_d'une;
 est_une_forme_rare_et_grave_de;
 sont_des_formes_rares_et_graves_de;
 sont_des_formes_rares_et_graves_des;
