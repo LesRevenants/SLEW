@@ -27,11 +27,6 @@ public class LinguisticPattern {
      * The list of vars from the pattern
      */
     LinkedList<String> vars;
-
-    /**
-     * List of syntaxic constaint which apply on the pattern
-     */
-    LinkedList<SyntaxicContraint> syntaxicContraints;
     
 
     /**
@@ -76,11 +71,6 @@ public class LinguisticPattern {
 		return vars;
 	}
 
-
-	public LinkedList<SyntaxicContraint> getSyntaxicContraints() {
-		return syntaxicContraints;
-	}
-    
     
     
 }

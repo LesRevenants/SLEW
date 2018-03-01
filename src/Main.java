@@ -17,7 +17,7 @@ import DataExtraction.RawTextExtractor;
 import DataExtraction.wikipedia.WikipediaDataExtractor;
 import DataExtraction.wikipedia.WikipediaToText;
 import Relation.RelationExtractor;
-import Relation.RelationPatternFactory;
+import Relation.RelationPatternReader;
 import RequeterRezo.RequeterRezo;
 
 public class Main {
@@ -34,13 +34,15 @@ public class Main {
         System.out.println("Time1 : "+tDelta + "  ms");
 
         //String[] sentence = {"il","existe","une","balancoire","ainsi","qu'une","radiographie","du","thorax","verte","grâce","à","une","technique","d'imagerie","médicale"};
-        String[] sentence = {"radiographie","du","thorax","grâce","à","une","technique","d'imagerie","médicale"};
+        String[] sentence = {"radiographie","du","thorax","grâce","à","une","technique","d'imagerie","médicale","radiographie","du","thorax"};
         ArrayList<String> sentenceAsList = new ArrayList<>(Arrays.asList(sentence));
-
+        
         tStart = System.currentTimeMillis();
         for(int j=0 ;j<1; j++){
             for(int i=sentence.length ;i<=sentence.length;i++){
-                compoundWordBuilder.getCompoundWordFrom( new TextSequence(sentenceAsList.subList(0,i)),5);
+                System.out.println(
+                		compoundWordBuilder.getCompoundWordFrom( new TextSequence(sentenceAsList.subList(0,i)),3)
+                );
             }
         }
         tEnd = System.currentTimeMillis();
@@ -64,14 +66,14 @@ public class Main {
 		relations.put("r_effect","datas/patterns/Effet.txt");
 		relations.put("r_isa","datas/patterns/Hypéromynie.txt");
 		relations.put("r_mero","datas/patterns/Méronymie.txt");
-		relations.put("r_poss","datas/patterns/Possession.txt");
-		RelationPatternFactory factory = new RelationPatternFactory("datas/patterns/patterns.json");
+		relations.put("r_has_part","datas/patterns/Possession.txt");
+		RelationPatternReader factory = new RelationPatternReader("datas/patterns/patterns.json");
 		factory.merge(relations);
 	}
 	
 	private static void testPatternRead() {
 		long tStart = System.currentTimeMillis();
-		RelationPatternFactory factory = new RelationPatternFactory("datas/patterns/patterns.json");
+		RelationPatternReader factory = new RelationPatternReader("datas/patterns/patterns.json");
 		factory.readPattern();
 		long tEnd = System.currentTimeMillis();
 		long   tDelta = tEnd - tStart;
@@ -82,32 +84,33 @@ public class Main {
 		
 		
 		
-		String text = "Le requin-baleine (Rhincodon typus) est un poisson cartilagineux, "
+		String text = "Le requin-baleine est un poisson cartilagineux, "
     			+ "seul membre du genre Rhincodon et seule espèce actuelle de la famille des Rhincodontidae."
-    			+ "Le chamois (Rupicapra rupicapra) est une espèce de "
+    			+ "Le chamois est une espèce de "
     			+ "la sous-famille des Caprinés.";
 		
 		
-		RelationPatternFactory relationPatternFactory = new RelationPatternFactory("datas/patterns/patterns.json");
+		RelationPatternReader relationPatternFactory = new RelationPatternReader("datas/patterns/patterns.json");
 		
 		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder("datas/jdm-mc.ser"); 
 		compoundWordBuilder.addToTrie(relationPatternFactory.getCompoundWords()); // add compound word from patterns into compound word dictionary
 		
 		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<1000;i++) {
+		for(int i=0;i<1;i++) {
 			sb.append(text);
 		}
-		System.out.println(text.length());
+		System.out.println(sb.length());
 		
-		DataExtractor dataExtractor = new RawTextExtractor(text);
+		long tStart = System.currentTimeMillis();
+		DataExtractor dataExtractor = new RawTextExtractor(sb.toString());
 		StructuredText structuredText = new StructuredText(dataExtractor, compoundWordBuilder);
 		
-		RequeterRezo system_query = new RequeterRezo("36h",10000);
+		RequeterRezo system_query = new RequeterRezo("72h",100000);
 		
 		
 		RelationExtractor relationExtractor = new RelationExtractor(structuredText, system_query,relationPatternFactory);
 		
-		long tStart = System.currentTimeMillis();
+		System.out.println(structuredText.toString());
 		relationExtractor.extract();	
 		long tEnd = System.currentTimeMillis();
 		long   tDelta = tEnd - tStart;

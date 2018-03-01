@@ -8,7 +8,9 @@ import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -51,31 +53,55 @@ public class CompoundWordBuilder {
     	return getCompoundWordFrom(new TextSequence(textSequence), limitSize);
     }
 
-	/**
-     *
-     * @param textSequence : A collection of word
+	
+    
+    /**
+     * 
+     * @param condition : the condition to check in order to add prefixWord as unique word 
+     * @param newWords : the list of words which represent the new text sequence
+     * @param prefixWord : the current prefixWord 
+     * @param newTextSequenceReplacements : the current map< multipleWord, List<each word into multipleWord>>
+     */
+    private boolean addWordToTextSequence(boolean condition,LinkedList<String> newWords,String prefixWord,HashMap<String,LinkedList<String>> newTextSequenceReplacements) {
+    	if(condition && trie.containsKey(prefixWord)){ 
+            newWords.add(prefixWord);
+            newTextSequenceReplacements.put(prefixWord,new LinkedList<String>( Arrays.asList(prefixWord.split("_"))));
+            return true;
+         }
+    	else { //
+            for(String subword : prefixWord.split("_")){ // the multiple word does not exist so add each part of multiple word
+                newWords.add(subword);
+            }
+            return false;
+        }
+    }
+    
+    /**
+     * @param oldTextSequence : A collection of word
      * @param limitSize : The maximum size of a compound word which can be finded
      * @return The list of compound word from the sentence
      * Complexity :
      */
-    public TextSequence getCompoundWordFrom(TextSequence textSequence, int limitSize){
+    public TextSequence getCompoundWordFrom(TextSequence oldTextSequence, int limitSize){
         if(limitSize < 2){
             throw new IllegalArgumentException("Limit size of a compoundWord must be >= 2 : "+limitSize);
         }
 
-        //TextSequence newTextSequence = new TextSequence();
-        LinkedList<String> newTextSequence = new LinkedList<String>();
+        LinkedList<String> newWords = new LinkedList<String>();
+        HashMap<String,LinkedList<String>> newTextSequenceReplacements = new HashMap<>();
         int compoundWordSize = 0;
         String prefixWord = "";
         boolean new_prefix_check = false;
        
-        for(String word : textSequence.getWords()){
-            if(compoundWordSize > 0){
-                if(compoundWordSize == limitSize){ // maximum size of compound word -> add it if exist into trie
-                    if(trie.containsKey(prefixWord)){
-                       newTextSequence.add(prefixWord);
-                    }
-                    new_prefix_check = true;
+        for(String word : oldTextSequence.getWords()){
+        	new_prefix_check = false;
+            if(compoundWordSize > 0){ // if the begin of a multiple word was found
+            	
+                if(compoundWordSize == limitSize){ // maximum size of compound word -> add it 
+                	if(! addWordToTextSequence(true,newWords, prefixWord, newTextSequenceReplacements)) {
+                		// if the limit size of a multiple word is reached and if does not exist then 
+                		new_prefix_check = true;
+                	}
                     compoundWordSize = 0;
                 }
                 else{
@@ -84,109 +110,30 @@ public class CompoundWordBuilder {
                         prefixWord = newPrefix;
                         compoundWordSize++;
                     }
-                    else{
-                        if(compoundWordSize > 1 && trie.containsKey(prefixWord)){ // add prefixWord if it exist into trie
-                            newTextSequence.add(prefixWord);
-                        }
-                        else { //
-                            for(String subword : prefixWord.split("_")){
-                                newTextSequence.add(subword);
-                            }
-                        }
-                        new_prefix_check = true;
+                    else{ // no longer multiple-word found                   
+                        addWordToTextSequence( (compoundWordSize > 1) ,newWords, prefixWord, newTextSequenceReplacements);
                         compoundWordSize = 0;
                     }
                 }
             }
-            if(compoundWordSize == 0 || new_prefix_check){ // no compound word begin finded or
+            if(compoundWordSize == 0 || new_prefix_check){    
                 if(trie.hasPrefix(word)){
                     compoundWordSize++;
                     prefixWord = word;
                 }
                 else{
-                    newTextSequence.add(word);
+                    newWords.add(word);
                 }
-                new_prefix_check = false;
             }
         }
-
+        // add last words to newTextSequence
+        addWordToTextSequence( (compoundWordSize > 1  && compoundWordSize <= limitSize) ,newWords, prefixWord, newTextSequenceReplacements);
+        TextSequence textSequence = new TextSequence(newWords);
+        textSequence.setWords_replacements(newTextSequenceReplacements);
+        return textSequence;
         
-        if(compoundWordSize > 1  && compoundWordSize <= limitSize && trie.containsKey(prefixWord) ){
-            newTextSequence.add(prefixWord);
-        }
-       /* textSequence.getWords().forEach(word -> System.out.print(word + ","));
-        System.out.println("  :  ");*/
-        /*sentenceCompoundWords.forEach(word -> System.out.println("\t"+word));
-        System.out.println("New sequnce");*/
-        //newTextSequence.forEach(word -> System.out.println("\t"+word));
-        
-        return new TextSequence(newTextSequence);
     }
 
-    public LinkedList<String> getCompoundWordFrom2(TextSequence textSequence, int limitSize){
-        if(limitSize < 2){
-            throw new IllegalArgumentException("Limit size of a compoundWord must be >= 2 : "+limitSize);
-        }
-
-        LinkedList<String> newTextSequence = new LinkedList<>();
-        int compoundWordSize = 0;
-        String prefixWord = "";
-        boolean new_prefix_check = false;
-        LinkedList<LinkedList<Integer>> indexes = new LinkedList<>();
-
-        for(String word : textSequence.getWords()){
-            if(compoundWordSize > 0){
-                if(compoundWordSize == limitSize){ // maximum size of compound word -> add it if exist into trie
-                    if(trie.containsKey(prefixWord)){
-                        newTextSequence.add(prefixWord);
-                    }
-                    new_prefix_check = true;
-                    compoundWordSize = 0;
-                }
-                else{
-                    String newPrefix = prefixWord.concat("_").concat(word);
-                    if( trie.hasPrefix(newPrefix)){ // check if word with newPrefix as prefix exists
-                        prefixWord = newPrefix;
-                        compoundWordSize++;
-                    }
-                    else{
-                        if(compoundWordSize > 1 && trie.containsKey(prefixWord)){ // add prefixWord if it exist into trie
-                            newTextSequence.add(prefixWord);
-                        }
-                        else { //
-                            for(String subword : prefixWord.split("_")){
-                                newTextSequence.add(subword);
-                            }
-                        }
-                        new_prefix_check = true;
-                        compoundWordSize = 0;
-                    }
-                }
-            }
-            if(compoundWordSize == 0 || new_prefix_check){ // no compound word begin finded or
-                if(trie.hasPrefix(word)){
-                    compoundWordSize++;
-                    prefixWord = word;
-                }
-                else{
-                    newTextSequence.add(word);
-                }
-                new_prefix_check = false;
-            }
-        }
-        //for(String word : textSequence.getWords()){
-
-        //}
-        if(compoundWordSize > 1 && trie.containsKey(prefixWord)){
-            newTextSequence.add(prefixWord);
-        }
-        textSequence.getWords().forEach(word -> System.out.print(word + ","));
-        System.out.println("  :  ");
-        /*sentenceCompoundWords.forEach(word -> System.out.println("\t"+word));
-        System.out.println("New sequnce");*/
-        newTextSequence.forEach(word -> System.out.println("\t"+word));
-        return newTextSequence;
-    }
 
     /**
      * Build the compound word list from a file

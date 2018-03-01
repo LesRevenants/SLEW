@@ -9,27 +9,42 @@ public class RelationPattern {
 
     /** The list of pattern which identifiate a relation*/
     LinkedList<LinguisticPattern> linguisticPatterns;
+    
+    SyntaxicContraint syntaxicContraint;
 
+   
+    
+    
     /**
-     *
+     * 
      * @param relationType
      * @param linguisticPatterns
+     * @param syntaxicContraint
      */
-    public RelationPattern(String relationType, LinkedList<LinguisticPattern> linguisticPatterns) {
-        this.relationType = relationType;
-        this.linguisticPatterns = linguisticPatterns;
-    }
-    
-    
+	public RelationPattern(String relationType, LinkedList<LinguisticPattern> linguisticPatterns,
+			SyntaxicContraint syntaxicContraint) {
+		super();
+		this.relationType = relationType;
+		this.linguisticPatterns = linguisticPatterns;
+		this.syntaxicContraint = syntaxicContraint;
+	}
+
+
 
 	public String getRelationType() {
 		return relationType;
 	}
 
 
-
 	public LinkedList<LinguisticPattern> getLinguisticPatterns() {
 		return linguisticPatterns;
+	}
+
+	
+
+
+	public SyntaxicContraint getSyntaxicContraint() {
+		return syntaxicContraint;
 	}
 
 

@@ -1,34 +1,32 @@
 package Relation;
 
+import java.util.LinkedList;
+
 /**
  *
  */
 public class SyntaxicContraint {
 
-    /** */
-    String var;
+   private LinkedList<String> xConstraints;
+   private LinkedList<String> yConstraints;
+   
+	public SyntaxicContraint(LinkedList<String> xConstraints, LinkedList<String> yConstraints) {
+		super();
+		this.xConstraints = xConstraints;
+		this.yConstraints = yConstraints;
+	}
 
-    /** */
-    String type;
+	public LinkedList<String> getxConstraints() {
+		return xConstraints;
+	}
 
-    public SyntaxicContraint(String var, String type) {
-        this.var = var;
-        this.type = type;
-    }
-
-    public String getVar() {
-        return var;
-    }
-
-    public void setVar(String var) {
-        this.var = var;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+	public LinkedList<String> getyConstraints() {
+		return yConstraints;
+	}
+	
+	
+   
+   
+   
+   
 }

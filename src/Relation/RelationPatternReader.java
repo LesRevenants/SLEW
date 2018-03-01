@@ -22,14 +22,14 @@ import org.json.JSONObject;
  * @author user
  *
  */
-public class RelationPatternFactory {
+public class RelationPatternReader {
 
 	/**
 	 * Path of the file which store relationPatterns
 	 */
 	private String filePath;
 
-    public RelationPatternFactory(String filePath) {
+    public RelationPatternReader(String filePath) {
 		super();
 		this.filePath = filePath;
 	}
@@ -44,14 +44,32 @@ public class RelationPatternFactory {
     	try {
 			JSONObject jsonObject = new JSONObject(FileUtils.readFileToString(new File(filePath),Charset.defaultCharset()));
 		    for(String relationType :  jsonObject.keySet()) {
-		    	JSONArray pattern_list = jsonObject.getJSONArray(relationType);
-		    	//System.out.println(relationType);
+		    	
+		    	JSONArray relationDatas = jsonObject.getJSONArray(relationType);
+		    	
+		    	JSONObject constraintObject = (JSONObject) relationDatas.get(0);
+		    	JSONArray constraintList = constraintObject.getJSONArray("constraints");
+		    	JSONArray xConstraintArray = (JSONArray) ((JSONObject) constraintList.get(0)).get("$x");
+		    	JSONArray yConstraintArray =  (JSONArray) ((JSONObject) constraintList.get(1)).get("$y");
+		    	LinkedList<String> xConstraintList = new LinkedList<>();
+		    	LinkedList<String> yConstraintList = new LinkedList<>();
+		    	xConstraintArray.forEach(cons -> xConstraintList.add((String) cons));
+		    	yConstraintArray.forEach(cons -> yConstraintList.add((String) cons));
+		    	SyntaxicContraint syntaxicContraint = new SyntaxicContraint(xConstraintList, yConstraintList);
+		    	
+		    	
+		    	JSONObject patternObject  = (JSONObject) relationDatas.get(1);
+		    	JSONArray pattern_list = patternObject.getJSONArray("patterns");
 		    	LinkedList<LinguisticPattern> linguisticPatterns = new LinkedList<>();
 		    	for(Object pattern : pattern_list) {
 		    		LinguisticPattern linguisticPattern = new LinguisticPattern( (String) pattern);
 		    		linguisticPatterns.add(linguisticPattern);
 		    	}
-		    	relationPatterns.add(new RelationPattern(relationType, linguisticPatterns));
+		    	relationPatterns.add(new RelationPattern(relationType, linguisticPatterns,syntaxicContraint));
+		    	
+		    	/*JSONArray pattern_list = jsonObject.getJSONArray(relationType);
+		    	//System.out.println(relationType);*/
+		    	
 		    }
 		    //relationPatterns.forEach(relationPattern -> System.out.println(relationPattern.toString()));
 			return relationPatterns;
