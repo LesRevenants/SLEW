@@ -24,12 +24,12 @@ public class StructuredText {
 		
 		dataExtractor.getTextSequences().forEach( 
 			textSequence -> {
-				textSequences.add(compoundWordBuilder.getCompoundWordFrom(textSequence, 5));
+				textSequences.add(compoundWordBuilder.replaceSequence(textSequence, 5));
 			}
 		);
 		
 		textSequences.forEach(textSequence -> {
-			textSequence.setWordsPositions(textSequenceAnalyser.getPositionsOf(textSequence));
+			textSequence.setWordsGramPositions(textSequenceAnalyser.getPositionsOf(textSequence));
 		});
 	}
 
@@ -41,7 +41,7 @@ public class StructuredText {
 
     public String toString() {
     	StringBuilder sb = new StringBuilder();
-    	textSequences.forEach(textSequence -> sb.append(textSequence.toString() + "\n\n"));
+    	textSequences.forEach(textSequence -> sb.append(textSequence.toString() + "\n"));
     	return sb.toString();
     }
  

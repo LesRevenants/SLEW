@@ -8,6 +8,7 @@ import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,14 +44,15 @@ public class CompoundWordBuilder {
     
     
 
-    public CompoundWordBuilder(String filePath) {
+    public CompoundWordBuilder(String filePath,boolean serialized) {
 		this();
 		this.filePath = filePath;
+		read(filePath, serialized);
 	}
 
 
     public TextSequence getCompoundWordFrom(LinkedList<String> textSequence, int limitSize){
-    	return getCompoundWordFrom(new TextSequence(textSequence), limitSize);
+    	return replaceSequence(new TextSequence(textSequence), limitSize);
     }
 
 	
@@ -82,12 +84,17 @@ public class CompoundWordBuilder {
      * @return The list of compound word from the sentence
      * Complexity :
      */
-    public TextSequence getCompoundWordFrom(TextSequence oldTextSequence, int limitSize){
+      
+     public TextSequence replaceSequence(TextSequence oldTextSequence, int limitSize){
         if(limitSize < 2){
             throw new IllegalArgumentException("Limit size of a compoundWord must be >= 2 : "+limitSize);
         }
 
         LinkedList<String> newWords = new LinkedList<String>();
+        
+        /**
+         * The list of replacement of each multiple_word. Ex replace(est_un) -> {est,un}
+         */
         HashMap<String,LinkedList<String>> newTextSequenceReplacements = new HashMap<>();
         int compoundWordSize = 0;
         String prefixWord = "";
@@ -102,7 +109,7 @@ public class CompoundWordBuilder {
                 		// if the limit size of a multiple word is reached and if does not exist then 
                 		new_prefix_check = true;
                 	}
-                    compoundWordSize = 0;
+                    compoundWordSize = 0; // reset current compound word size
                 }
                 else{
                     String newPrefix = prefixWord.concat("_").concat(word);
@@ -110,14 +117,17 @@ public class CompoundWordBuilder {
                         prefixWord = newPrefix;
                         compoundWordSize++;
                     }
-                    else{ // no longer multiple-word found                   
+                    else{ // no longer multiple-word found     
+                    	// add the multiple_word if it size > 1
                         addWordToTextSequence( (compoundWordSize > 1) ,newWords, prefixWord, newTextSequenceReplacements);
-                        compoundWordSize = 0;
+                        compoundWordSize = 0; // reset current compound word size
                     }
                 }
             }
+            // if there's no multiple_word 
+            // || if a word which has not been added, exist. Ex:  a_multiple_word,limitSize=2 -> a_multiple added if exist, and the word 'word' must be processed.
             if(compoundWordSize == 0 || new_prefix_check){    
-                if(trie.hasPrefix(word)){
+                if(trie.hasPrefix(word)){ // begin of a multiple word find
                     compoundWordSize++;
                     prefixWord = word;
                 }
@@ -127,14 +137,13 @@ public class CompoundWordBuilder {
             }
         }
         // add last words to newTextSequence
-        addWordToTextSequence( (compoundWordSize > 1  && compoundWordSize <= limitSize) ,newWords, prefixWord, newTextSequenceReplacements);
+        //addWordToTextSequence( (compoundWordSize > 1  && compoundWordSize <= limitSize) ,newWords, prefixWord, newTextSequenceReplacements);
         TextSequence textSequence = new TextSequence(newWords);
         textSequence.setWords_replacements(newTextSequenceReplacements);
         return textSequence;
         
     }
-
-
+    
     /**
      * Build the compound word list from a file
      * @param filePath : path of the file with store all compound words
@@ -193,4 +202,12 @@ public class CompoundWordBuilder {
     public void addToTrie(Collection<String> compoundWords) {
     	compoundWords.forEach(word -> trie.put(word, true));
     }
+
+
+
+	public WordPatriciaTrie getTrie() {
+		return trie;
+	}
+    
+    
 }

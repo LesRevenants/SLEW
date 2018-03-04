@@ -23,6 +23,16 @@ public class SyntaxicContraint {
 	public LinkedList<String> getyConstraints() {
 		return yConstraints;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + xConstraints + " , " + yConstraints + "]";
+	}
+	
+	
+	public boolean isEmpty() {
+		return xConstraints.isEmpty() && yConstraints.isEmpty();
+	}
 	
 	
    

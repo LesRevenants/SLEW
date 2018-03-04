@@ -48,7 +48,7 @@ public class RelationPatternReader {
 		    	JSONArray relationDatas = jsonObject.getJSONArray(relationType);
 		    	
 		    	JSONObject constraintObject = (JSONObject) relationDatas.get(0);
-		    	JSONArray constraintList = constraintObject.getJSONArray("constraints");
+		    	JSONArray constraintList = constraintObject.getJSONArray("syntaxic_constraints");
 		    	JSONArray xConstraintArray = (JSONArray) ((JSONObject) constraintList.get(0)).get("$x");
 		    	JSONArray yConstraintArray =  (JSONArray) ((JSONObject) constraintList.get(1)).get("$y");
 		    	LinkedList<String> xConstraintList = new LinkedList<>();
@@ -86,7 +86,7 @@ public class RelationPatternReader {
      * @return the list of relationPattern from the file and extract each pattern_str 
      * ex : { est_un, possède_un , }
      */
-	public LinkedHashSet<String> readPatternAsString(){
+	public LinkedHashSet<String> readPatternStrList(){
 		LinkedHashSet<String> relationPatternsStr = new LinkedHashSet<String>();
 		 readPattern()
 		 	.forEach(relationPattern -> {
@@ -105,7 +105,7 @@ public class RelationPatternReader {
 	 * @return
 	 */
 	public LinkedList<String> getCompoundWords(){
-		return readPatternAsString()
+		return readPatternStrList()
 				.stream()
 				//.filter(Objects::nonNull)
 				.filter(word -> word.contains("_"))
