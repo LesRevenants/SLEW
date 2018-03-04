@@ -1,9 +1,9 @@
 {
 		"r_effect": [
 
-			{"constraints" : [
-				{"$x" : [ "nom", "name"]},
-				{"$y" : [ "nom", "name"]}
+			{"syntaxic_constraints" : [
+				{"$x" : [ ]},
+				{"$y" : [ ]}
 			]},
 
 			{"patterns":[
@@ -151,10 +151,11 @@
 		],
 		"r_holo": [
 
-			{"constraints" : [
-				{"$x" : [] },
-				{"$y" : [] }
+			{"syntaxic_constraints" : [
+				{"$x" : [ "NOM", "NAM"]},
+				{"$y" : [ "NOM", "NAM"]}
 			]},
+
 
 			{"patterns":[
 				"a_comme_partie_la",
@@ -221,7 +222,7 @@
 		],
 		"r_mero": [
 
-			{"constraints" : [
+			{"syntaxic_constraints" : [
 				{"$x" : [] },
 				{"$y" : [] }
 			]},
@@ -274,9 +275,9 @@
 		],
 		"r_isa": [
 
-			{"constraints" : [
-				{"$x" : [] },
-				{"$y" : [] }
+			{"syntaxic_constraints" : [
+				{"$x" : [ "NOM", "NAM"]},
+				{"$y" : [ "NOM", "NAM"]}
 			]},
 
 			{ "patterns" : [
@@ -388,7 +389,7 @@
 		],
 		"r_has_part": [
 			
-			{"constraints" : [
+			{"syntaxic_constraints" : [
 				{"$x" : [] },
 				{"$y" : [] }
 			]},
@@ -416,7 +417,7 @@
 		],
 		"r_cause": [
 
-			{"constraints" : [
+			{"syntaxic_constraints" : [
 				{"$x" : [] },
 				{"$y" : [] }
 			]},
