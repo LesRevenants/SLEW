@@ -60,7 +60,7 @@ public class RelationExtractor {
 			);
 	 	});
 		 
-		 int windows_size=5;
+		 int windows_size=3;
 			 
 		 structuredText.getTextSequences().forEach(textSequence -> {
 			//LinkedHashSet<String> wordSet = textSequence.getWordsSet();
@@ -70,20 +70,7 @@ public class RelationExtractor {
 				 String word = words.get(i);
 				 if(relationPatternsStr.contains(word)) {
 					 //System.out.println(pattern_map.get(word).shortToString());
-					 int start_idx=(i-windows_size) > 0 ? (i-windows_size) : 0; 
-					 int end_idx=(i+1+windows_size) <words.size() ? (i+1+windows_size) : words.size()-1; 
-					 
-					 for(int j=start_idx;j<i;j++) {
-						 for(int k=i+1;k<end_idx;k++) {
-							 String object  = words.get(j);
-							 String subject = words.get(k);
-							 checkPattern(textSequence, object, j, pattern_map.get(word), subject, k);
-							 //System.out.println("\t"+word + "("+object + "," +subject+")");
-						 }
-						
-					 }
-					 
-					
+					 extractFrom(textSequence, pattern_map.get(word), i);	
 				 }
 			 }
 		
@@ -91,26 +78,27 @@ public class RelationExtractor {
 		 
 	}
 	
-	public boolean checkPattern(TextSequence textSequence,String object, int object_idx, RelationPattern pattern,String subject,int subject_idx) {
-		// if jdm exist
-		
+	public ExtractedRelation extractFrom(TextSequence textSequence, RelationPattern pattern, int pattern_word_idx) {
+		int subject_idx=pattern_word_idx-1;
+		int object_idx=pattern_word_idx+1;
+		if(subject_idx <0 || object_idx >= textSequence.getWords().size()) {
+			return null;
+		}
 		String objectGramPosition = textSequence.getWordsPositions().get(object_idx);
 		String subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
-		//System.out.println("\t"+pattern.relationType + "("+object + "," +subject+")("+objectGramPosition+","+subjectGramPosition+")");
 		
-		//if(pattern.)
 		if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) {
 			if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) {
-				System.out.println("\t"+pattern.getRelationType() + "("+object + "," +subject+")");
+				System.out.println("\t"+pattern.getRelationType() + "("
+							+textSequence.getWords().get(subject_idx) + "," 
+							+textSequence.getWords().get(object_idx)+")");
+				return null;
 			}
 		}
-		
-		/*SyntaxicContraint syntaxicContraint = pattern.getSyntaxicContraint();
-		syntaxicContraint.getxConstraints().forEach(action);*/
-		return true;
-		
+		return null;
 	}
 	
+
 	
 	
 	

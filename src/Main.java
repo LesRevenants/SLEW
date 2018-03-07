@@ -214,10 +214,10 @@ public class Main {
 		
 		
 		long tStart = System.currentTimeMillis();
-		String text = "Le requin-baleine est un poisson cartilagineux, "
+		String text = "Le requin baleine est un poisson cartilagineux, "
     			+ "seul membre du genre Rhincodon et seule espèce actuelle de la famille des Rhincodontidae."
-    			/*+ "Le chamois est une espèce de "
-    			+ "la sous-famille des Caprinés."*/
+    			+ "Le chamois est une espèce de "
+    			+ "la sous-famille des Caprinés."
     			;
 		
 		
@@ -225,7 +225,7 @@ public class Main {
 		
 		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder("datas/jdm-mc.ser",true); 
 		compoundWordBuilder.addToTrie(relationPatternFactory.getCompoundWords()); // add compound word from patterns into compound word dictionary
-		
+		System.out.println(compoundWordBuilder.getTrie().hasPrefix("du_genre"));
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<1;i++) {
 			sb.append(text);

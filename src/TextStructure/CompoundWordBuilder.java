@@ -64,10 +64,10 @@ public class CompoundWordBuilder {
      * @param prefixWord : the current prefixWord 
      * @param newTextSequenceReplacements : the current map< multipleWord, List<each word into multipleWord>>
      */
-    private boolean addWordToTextSequence(boolean condition,LinkedList<String> newWords,String prefixWord,HashMap<String,LinkedList<String>> newTextSequenceReplacements) {
+    private boolean addWordToTextSequence(boolean condition,LinkedList<String> newWords,String prefixWord,HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
     	if(condition && trie.containsKey(prefixWord)){ 
             newWords.add(prefixWord);
-            newTextSequenceReplacements.put(prefixWord,new LinkedList<String>( Arrays.asList(prefixWord.split("_"))));
+            newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
             return true;
          }
     	else { //
@@ -95,55 +95,72 @@ public class CompoundWordBuilder {
         /**
          * The list of replacement of each multiple_word. Ex replace(est_un) -> {est,un}
          */
-        HashMap<String,LinkedList<String>> newTextSequenceReplacements = new HashMap<>();
-        int compoundWordSize = 0;
-        String prefixWord = "";
-        boolean new_prefix_check = false;
-       
-        for(String word : oldTextSequence.getWords()){
-        	new_prefix_check = false;
-            if(compoundWordSize > 0){ // if the begin of a multiple word was found
-            	
-                if(compoundWordSize == limitSize){ // maximum size of compound word -> add it 
-                	if(! addWordToTextSequence(true,newWords, prefixWord, newTextSequenceReplacements)) {
-                		// if the limit size of a multiple word is reached and if does not exist then 
-                		new_prefix_check = true;
-                	}
-                    compoundWordSize = 0; // reset current compound word size
-                }
-                else{
-                    String newPrefix = prefixWord.concat("_").concat(word);
-                    if( trie.hasPrefix(newPrefix)){ // check if word with newPrefix as prefix exists
-                        prefixWord = newPrefix;
-                        compoundWordSize++;
-                    }
-                    else{ // no longer multiple-word found     
-                    	// add the multiple_word if it size > 1
-                        addWordToTextSequence( (compoundWordSize > 1) ,newWords, prefixWord, newTextSequenceReplacements);
-                        compoundWordSize = 0; // reset current compound word size
-                    }
-                }
-            }
-            // if there's no multiple_word 
-            // || if a word which has not been added, exist. Ex:  a_multiple_word,limitSize=2 -> a_multiple added if exist, and the word 'word' must be processed.
-            if(compoundWordSize == 0 || new_prefix_check){    
-                if(trie.hasPrefix(word)){ // begin of a multiple word find
-                    compoundWordSize++;
-                    prefixWord = word;
-                }
-                else{
-                    newWords.add(word);
-                }
-            }
-        }
-        // add last words to newTextSequence
-        //addWordToTextSequence( (compoundWordSize > 1  && compoundWordSize <= limitSize) ,newWords, prefixWord, newTextSequenceReplacements);
+        HashMap<String,ArrayList<String>> newTextSequenceReplacements = new HashMap<>();
+        build(oldTextSequence,"",0,0,limitSize,newWords,newTextSequenceReplacements);
         TextSequence textSequence = new TextSequence(newWords);
         textSequence.setWords_replacements(newTextSequenceReplacements);
         return textSequence;
         
     }
     
+     public void build(TextSequence oldTextSequence,String prefixWord, int i, int compoundWordSize, int limitSize,
+    		 LinkedList<String> newWords,
+    		 HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
+    	 
+    	 if(i==oldTextSequence.getWords().size()) {
+    		 return;
+    	 }
+    	 String word=oldTextSequence.getWords().get(i);
+    	 if(compoundWordSize == 0) {
+    		 if(trie.hasPrefix(word)) {
+    			 build(oldTextSequence,word,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
+    		 }
+    		 else {
+    			 newWords.add(word);
+    			 build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    		 }
+    	 }
+    	 else {
+    		 if(compoundWordSize==limitSize) {
+    			 if(trie.containsKey(prefixWord)) {
+    				 newWords.add(prefixWord);
+    		         newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
+    		         build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    			 }
+    			 else {
+    				 for(String subword : prefixWord.split("_")){ // the multiple word does not exist so add each part of multiple word
+                         newWords.add(subword);
+                     }
+    				 build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    			 }
+    		 }
+    		 else {
+    			 String newPrefix = prefixWord.concat("_").concat(word);
+                 if( trie.hasPrefix(newPrefix)){ // check if word with newPrefix as prefix exists     
+                     build(oldTextSequence,newPrefix,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
+                 }
+                 else{ // no longer multiple-word found     
+                	 if( (compoundWordSize > 1) ) {
+                		 if(trie.containsKey(prefixWord)){  	// add the multiple_word if it exist
+                			  newWords.add(prefixWord);
+                              newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
+                              build(oldTextSequence,"",i,0,limitSize,newWords,newTextSequenceReplacements);
+                		 }
+                		 else {
+                			 newWords.add(oldTextSequence.getWords().get(i-compoundWordSize));
+                			 build(oldTextSequence,"",i-compoundWordSize+1,0,limitSize,newWords,newTextSequenceReplacements);
+                		 }
+                			                  
+                    }
+                 	else { //
+                         newWords.add(prefixWord);
+                         build(oldTextSequence,"",i,0,limitSize,newWords,newTextSequenceReplacements);
+                     }
+                 }
+    		 }
+    		
+    	 }
+     }
     /**
      * Build the compound word list from a file
      * @param filePath : path of the file with store all compound words

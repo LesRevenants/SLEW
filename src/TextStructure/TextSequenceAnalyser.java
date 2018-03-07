@@ -38,14 +38,14 @@ public class TextSequenceAnalyser {
 		      tt.setModel("lib/TreeTagger/lib/french-utf8.par");
 		      tt.setHandler((token, pos, lemma) -> {
 		    	  textSequencePositions.add(pos);
-		    	  System.out.println(token + "\t\t" + pos );
+		    	  //System.out.println(token + "\t\t" + pos );
 		      });
 		        
 		      LinkedList<String> allWords = new LinkedList<>();
-		      HashMap<String, LinkedList<String>> words_replacements =  textSequence.getWords_replacements();
+		      HashMap<String, ArrayList<String>> words_replacements =  textSequence.getWords_replacements();
 		      ArrayList<String> words = textSequence.getWords();
 		      words.forEach(word -> {
-		    	  LinkedList<String> replacements =  words_replacements.get(word);
+		    	  ArrayList<String> replacements =  words_replacements.get(word);
 		    	  if(replacements != null) { // if the word is a compound_word
 		    		  allWords.addAll(replacements);
 		    	  }
