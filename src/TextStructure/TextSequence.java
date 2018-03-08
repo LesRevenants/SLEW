@@ -101,7 +101,7 @@ public class TextSequence {
 		return wordsGramPositions;
 	}
 
-	public boolean setWordsGramPositions(ArrayList<String> wordsGramPositions) {
+	public boolean setWordsGramPositions(ArrayList<String> wordsGramPositions, HashSet<String> patterns) {
 		/*if(words.size() != wordsGramPositions.size()) {
     		return false;
     	}*/
@@ -112,7 +112,8 @@ public class TextSequence {
 			String word = words.get(i-offset);
 			if(isCompoundWord(word)) {
 				int compoundWordSize = words_replacements.get(word).size();
-				this.wordsGramPositions.add("NOM");
+				if(patterns.contains(word)) this.wordsGramPositions.add("PAT");
+				else this.wordsGramPositions.add("NOM");
 				compoundWordPositions.put(word, new ArrayList<>(wordsGramPositions.subList(i, i+compoundWordSize)));
 				i += compoundWordSize;
 				offset += compoundWordSize-1;

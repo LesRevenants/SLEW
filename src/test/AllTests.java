@@ -55,7 +55,7 @@ public class AllTests {
     	//TestTrieOrHashSet(readFile("datas/jdm-mc.ser"));
     }
 }*/
-
+/*
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 public class AllTests {
@@ -65,3 +65,4 @@ public class AllTests {
       assertEquals("I am done with Junit setup",str);
    }
 }
+*/

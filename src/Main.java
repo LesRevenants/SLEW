@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 
 import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
@@ -86,7 +86,7 @@ public class Main {
 	}
 	
 	
-	private static void TestTrieOrHashSet() throws Exception{
+	/*private static void TestTrieOrHashSet() throws Exception{
 		
 		
 		HashSet<String> hashSet = new HashSet<>();
@@ -208,7 +208,7 @@ public class Main {
 		
 		
 		//fail();
-	}
+	}*/
 	
 	private static void test() {
 		
@@ -234,7 +234,8 @@ public class Main {
 		
 		
 		DataExtractor dataExtractor = new RawTextExtractor(sb.toString());
-		StructuredText structuredText = new StructuredText(dataExtractor, compoundWordBuilder);
+		StructuredText structuredText = new StructuredText(dataExtractor, compoundWordBuilder, relationPatternFactory.getCompoundWords());
+		//actually is only patterns
 		RequeterRezo system_query = new RequeterRezo("72h",100000);
 		
 		RelationExtractor relationExtractor = new RelationExtractor(structuredText, system_query,relationPatternFactory);
