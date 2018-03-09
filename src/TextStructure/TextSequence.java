@@ -188,6 +188,7 @@ public class TextSequence {
 	}
 
 	public String toString(){
+		int indent = 80;
         StringBuilder sb = new StringBuilder();
         for(int i=0 ;i<words.size(); i++) {
         	String word = words.get(i);
@@ -203,7 +204,17 @@ public class TextSequence {
         	
         		sb.append("]");
         	}
-        	sb.append("		["+wordsGramPositions.get(i)+"]");
+        	int temp = indent - word.length();
+        	if(i<10){
+        		for(int j = 0; j<temp; j++){
+        			sb.append(" ");
+        		}
+        	} else {
+        		for(int j = 0; j<temp-1; j++){
+        			sb.append(" ");
+        		}
+        	}
+        	sb.append("["+wordsGramPositions.get(i)+"]");
         	sb.append("[ss_idx="+wordsSubSequenceIdx.get(i)+"]");
         	sb.append("\n");
         }

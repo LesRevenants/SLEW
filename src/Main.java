@@ -220,17 +220,18 @@ public class Main {
     			+ "la sous-famille des Caprinés."
     			;
 		
+		System.out.println("Lecture du texte... ");
 		
 		RelationPatternReader relationPatternFactory = new RelationPatternReader("datas/patterns/patterns.json");
 		
 		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder("datas/jdm-mc.ser",true); 
 		compoundWordBuilder.addToTrie(relationPatternFactory.getCompoundWords()); // add compound word from patterns into compound word dictionary
-		System.out.println(compoundWordBuilder.getTrie().hasPrefix("du_genre"));
+		//System.out.println(compoundWordBuilder.getTrie().hasPrefix("du_genre"));
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<1;i++) {
 			sb.append(text);
 		}
-		System.out.println(sb.length());
+		System.out.println("Taille du texte : "+sb.length()+"\n");
 		
 		
 		DataExtractor dataExtractor = new RawTextExtractor(sb.toString());
@@ -240,7 +241,10 @@ public class Main {
 		
 		RelationExtractor relationExtractor = new RelationExtractor(structuredText, system_query,relationPatternFactory);
 		
+		
 		System.out.println(structuredText.toString());
+		
+		System.out.println("Relations extraites : \n");
 		relationExtractor.extract();	
 		long tEnd = System.currentTimeMillis();
 		long   tDelta = tEnd - tStart;
