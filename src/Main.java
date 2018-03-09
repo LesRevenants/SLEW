@@ -218,7 +218,9 @@ public class Main {
     			+ "seul membre du genre Rhincodon et seule espèce actuelle de la famille des Rhincodontidae."
     			+ "Le chamois est une espèce de "
     			+ "la sous-famille des Caprinés."
-    			;
+    			+ "Les marmottes (Marmota) forment un genre de mammifère fouisseur de l'ordre des rongeurs."
+				+ "L'espèce la plus connue en Europe est la marmotte vivant dans les montagnes (Marmota marmota)."
+				+ "En Amérique du Nord, la Marmota monax, appelée familièrement « siffleux » au Québec, constitue l'espèce la plus courante.";
 		
 		System.out.println("Lecture du texte... ");
 		
@@ -248,7 +250,7 @@ public class Main {
 		relationExtractor.extract();	
 		long tEnd = System.currentTimeMillis();
 		long   tDelta = tEnd - tStart;
-	    System.out.println("test() : "+tDelta + "  ms");
+	    System.out.println("\nTemps d'éxécution : "+tDelta + "  ms");
        
 	}
 
