@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
 import DataExtraction.wikipedia.WikipediaDataExtractor;
-import DataExtraction.wikipedia.WikipediaToText;
 import Relation.RelationExtractor;
 import Relation.RelationPatternReader;
 import RequeterRezo.RequeterRezo;
@@ -256,10 +255,10 @@ public class Main {
 
     public static void main(String[] args){
     	//testMC();
-    	//testWiki();
+    	testWiki();
     	//testPatternWrite();
     	//testPatternRead();
-    	test();
+    	//test();
     	/*try {
 			TestTrieOrHashSet();
 		} catch (Exception e) {

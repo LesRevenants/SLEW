@@ -1,4 +1,4 @@
-//package org.wikipedia;
+package DataExtraction.wikipedia;
 
 import java.io.*;
 import java.net.*;
