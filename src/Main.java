@@ -55,7 +55,7 @@ public class Main {
 	}
 	
 	private static void testWiki() {
-		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor("Colibri");
+		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor("Marmotte");
 		wikipediaDataExtractor.getTextSequences();
 		/*for(TextSequence seq : wikipediaDataExtractor.getTextSequences()) {
 			System.out.println(se);
