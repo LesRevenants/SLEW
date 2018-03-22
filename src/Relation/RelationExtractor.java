@@ -90,13 +90,15 @@ public class RelationExtractor {
 		boolean found = false;
 		//sujet
 		while(cpt < window && !found){
-			if(subject_idx <0 || object_idx >= textSequence.getWords().size()) {
+			if(subject_idx <0 || object_idx == textSequence.getWords().size()) {
 				return null;
 			}
 			if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) found = true;
 			else {
 				subject_idx--;
-				subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
+				if(subject_idx >=0) {
+					subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
+				}
 			}
 			cpt++;
 		}
@@ -117,8 +119,8 @@ public class RelationExtractor {
 		}
 		if(!found) return null;
 		System.out.println("\t"+pattern.getRelationType() + "("
-				+textSequence.getWords().get(subject_idx) + " , "
-				+textSequence.getWords().get(pattern_word_idx) + " , "
+				+textSequence.getWords().get(subject_idx) + ","
+				+textSequence.getWords().get(pattern_word_idx) + ","
 				+textSequence.getWords().get(object_idx)+")");
 			/*if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) {
 				if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) {

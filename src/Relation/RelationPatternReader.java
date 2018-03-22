@@ -28,10 +28,12 @@ public class RelationPatternReader {
 	 * Path of the file which store relationPatterns
 	 */
 	private String filePath;
+	private LinkedList<RelationPattern> patterns;
 
     public RelationPatternReader(String filePath) {
 		super();
 		this.filePath = filePath;
+		patterns = readPattern();
 	}
 
 
@@ -88,7 +90,7 @@ public class RelationPatternReader {
      */
 	public LinkedHashSet<String> readPatternStrList(){
 		LinkedHashSet<String> relationPatternsStr = new LinkedHashSet<String>();
-		 readPattern()
+		 patterns
 		 	.forEach(relationPattern -> {
 				 relationPattern.getLinguisticPatterns().forEach(
 						 linguisticPattern -> { 
