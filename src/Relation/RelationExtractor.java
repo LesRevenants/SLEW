@@ -15,6 +15,8 @@ import org.annolab.tt4j.TokenHandler;
 import org.annolab.tt4j.TreeTaggerException;
 import org.annolab.tt4j.TreeTaggerWrapper;
 
+import ExtractionMethod.ExtractionMethod;
+import ExtractionMethod.NaiveExtractionMethod;
 import RequeterRezo.RequeterRezo;
 import TextStructure.CompoundWordBuilder;
 import TextStructure.StructuredText;
@@ -45,7 +47,7 @@ public class RelationExtractor {
 		}
 	}
 	
-	public void extract() {
+	public Collection<ExtractedRelation>extract() {
 		
 		 HashMap<String,RelationPattern> pattern_map = new HashMap<>();
 		 LinkedList<RelationPattern> patterns = relationPatternFactory.readPattern();
@@ -61,74 +63,28 @@ public class RelationExtractor {
 	 	});
 		 
 		 int windows_size=3;
-			 
+		 LinkedList<ExtractedRelation> extractedRelations=new LinkedList<>();
 		 structuredText.getTextSequences().forEach(textSequence -> {
 			//LinkedHashSet<String> wordSet = textSequence.getWordsSet();
 			 ArrayList<String> words = textSequence.getWords();
 			 
-			 for(int i=0 ;i<words.size();i++) {
-				 String word = words.get(i);
-				 if(relationPatternsStr.contains(word)) {
-					 //System.out.println(pattern_map.get(word).shortToString());
-					 extractFrom(textSequence, pattern_map.get(word), i);	
+			 for(Integer patternIdx : textSequence.getPatternsIdx()) {
+				 String word = words.get(patternIdx);
+				 ExtractedRelation extractedRelation=extractFrom(textSequence, pattern_map.get(word), patternIdx);
+				 if(extractedRelation != null) {
+					 extractedRelations.add(extractedRelation);
 				 }
 			 }
 		
 		 });
 		 
+		 return extractedRelations;
+		 
 	}
 	
 	public ExtractedRelation extractFrom(TextSequence textSequence, RelationPattern pattern, int pattern_word_idx) {
-		int subject_idx=pattern_word_idx-1;
-		int object_idx=pattern_word_idx+1;
-		int window = 10;
-		
-		String objectGramPosition = textSequence.getWordsPositions().get(object_idx);
-		String subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
-		
-		int cpt = 0; 
-		boolean found = false;
-		//sujet
-		while(cpt < window && !found){
-			if(subject_idx <0 || object_idx == textSequence.getWords().size()) {
-				return null;
-			}
-			if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) found = true;
-			else {
-				subject_idx--;
-				if(subject_idx >=0) {
-					subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
-				}
-			}
-			cpt++;
-		}
-		if(!found) return null;
-		else {
-			found = false; cpt = 0;
-			while(cpt < window && !found){
-				if(subject_idx <0 || object_idx >= textSequence.getWords().size()) {
-					return null;
-				}
-				if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) found = true;
-				else {
-					object_idx++;
-					objectGramPosition = textSequence.getWordsPositions().get(object_idx);
-				}
-				cpt++;
-			}
-		}
-		if(!found) return null;
-		System.out.println("\t"+pattern.getRelationType() + "("
-				+textSequence.getWords().get(subject_idx) + ","
-				+textSequence.getWords().get(pattern_word_idx) + ","
-				+textSequence.getWords().get(object_idx)+")");
-			/*if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) {
-				if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) {
-					
-				}
-			}*/
-
-		return null;
+		ExtractionMethod extractionMethod=new NaiveExtractionMethod();
+		return extractionMethod.extract(textSequence, pattern, pattern_word_idx);
 	}
 	
 

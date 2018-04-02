@@ -1,6 +1,7 @@
 package DataExtraction.wikipedia;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import DataExtraction.DataExtractor;
@@ -9,18 +10,16 @@ import TextStructure.TextSequence;
 
 public class WikipediaDataExtractor implements DataExtractor {
 	
-	
-	private String articleUrl;
+
 	private Wiki wiki;
 	
-	public WikipediaDataExtractor(String articleName) {
-		this.articleUrl = articleName;
+	public WikipediaDataExtractor() {
 		wiki=Wiki.createInstance("fr.wikipedia.org");
 	}
 
 	@Override
-	public LinkedList<TextSequence> getTextSequences() {
-		try {			
+	public LinkedList<TextSequence> getTextSequences(String articleUrl) {
+		try {
 			String yolo2 = wiki.getRenderedText(articleUrl);
 			yolo2 = yolo2.replace("{", ""); yolo2 = yolo2.replace("}", "");
 			yolo2 = yolo2.replace("[", ""); yolo2 = yolo2.replace("]", "");
@@ -43,11 +42,20 @@ public class WikipediaDataExtractor implements DataExtractor {
 			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
-			RawTextExtractor rawTextExtractor = new RawTextExtractor(content);
-			return rawTextExtractor.getTextSequences();
+			RawTextExtractor rawTextExtractor = new RawTextExtractor();
+			return rawTextExtractor.getTextSequences(content);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Collection<LinkedList<TextSequence>> extractAll(Collection<String> data_sources, int limit) {
+		Collection<LinkedList<TextSequence>> allSequences=new LinkedList<>();
+		data_sources.forEach(src -> {
+			allSequences.add(getTextSequences(src));
+		});
+		return allSequences;
 	}
 }
