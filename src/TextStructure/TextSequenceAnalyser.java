@@ -45,9 +45,8 @@ public class TextSequenceAnalyser {
 		      HashMap<String, ArrayList<String>> words_replacements =  textSequence.getWords_replacements();
 		      ArrayList<String> words = textSequence.getWords();
 		      words.forEach(word -> {
-		    	  ArrayList<String> replacements =  words_replacements.get(word);
-		    	  if(replacements != null) { // if the word is a compound_word
-		    		  allWords.addAll(replacements);
+		      	  if(textSequence.isCompoundWord(word)){
+		    		  allWords.addAll(words_replacements.get(word));
 		    	  }
 		    	  else {
 		    		  allWords.add(word);
