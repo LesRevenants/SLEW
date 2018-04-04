@@ -26,7 +26,7 @@ public class TextSequenceAnalyser {
 	
 	public static TextSequenceAnalyser getInstance() {
 		if(instance != null) {
-			return null;
+			return instance;
 		}
 		instance = new TextSequenceAnalyser();
 		return instance;
