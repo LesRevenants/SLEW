@@ -1,8 +1,4 @@
-<?php
-
-session_start();
-
-echo '<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <!--
 	Overflow by HTML5 UP
 	html5up.net | @ajlkn
@@ -22,18 +18,23 @@ echo '<!DOCTYPE HTML>
 <article class="container box style3">
 				<section>
 					<header>
-						<h3>Is it what you were looking for ?</h3>
+						<h3>Welcome to this hidden section</h3>
+						<span style="font-size:80%;"><p>You might have been chosen by your pairs.
+						This section is used to insert confident relations from specific articles in order to be up to compare with our automatic tool.
+						<b>Please, be honest and don't cheat.</b></p></span>
+						<BR>
+						<p>Choose the article you want to work through.</p>
 					</header>
-					<form method="post" action="load.php">
+					<form method="post" action="manual_load.php">
 						<div class="middler">
 							<div class="middler">
-								<center>'. $_SESSION['mar'] .'</center>
+								<center><input class="text" type="text" name="name" id="name" value="" placeholder="Marmotte" /></center>
 							</div>
 						</div>
 						<div class="row">
 							<div class="12u">
 								<ul class="actions">
-									<li><input type="submit" value="Confirm" /></li>
+									<li><input type="submit" value="Submit" /></li>
 								</ul>
 							</div>
 						</div>
@@ -41,6 +42,4 @@ echo '<!DOCTYPE HTML>
 				</section>
 			</article>
 		</body>
-	</html>;';
-
-?>
+	</html>

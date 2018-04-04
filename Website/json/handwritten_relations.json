@@ -1,0 +1,22 @@
+
+	[
+		{
+			"article_name":"Marmotte",
+			"x":"a",
+			"y":"a",
+			"type":"a",
+			"predicate":"a"
+		},{
+			"article_name":"Marmotte",
+			"x":"b",
+			"y":"b",
+			"type":"b",
+			"predicate":"b"
+		},{
+			"article_name":"Marmotte",
+			"x":"c",
+			"y":"c",
+			"type":"c",
+			"predicate":"c"
+		}
+	]
