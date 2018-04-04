@@ -51,7 +51,7 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 		String object=textSequence.getWords().get(object_idx);
 		String subject=textSequence.getWords().get(subject_idx);
 				
-		return new ExtractedRelation(patternStr, object, object_idx, subject, subject_idx);
+		return new ExtractedRelation(pattern.getRelationType(),patternStr, object, subject);
 	}
 
 }

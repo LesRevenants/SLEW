@@ -24,102 +24,15 @@ import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
 import DataExtraction.wikipedia.WikipediaDataExtractor;
 import Relation.ExtractedRelation;
+import Relation.RelationDB;
 import Relation.RelationExtractor;
 import Relation.RelationPatternReader;
+import Relation.WikiArticleDB;
 import RequeterRezo.RequeterRezo;
 
 public class Main {
 
-	
-	/**
-	 * 
-	 * @param patternPath
-	 * @param jdmMcPath
-	 * @param verbose
-	 * @param relationPatternFactory
-	 * @param compoundWordBuilder
-	 */
-	
-	public RelationPatternReader buildPatterns(String patternPath) {
-		long tStart = System.currentTimeMillis();
-		System.out.println("Lecture des pattrons : ");
-		RelationPatternReader relationPatternFactory = new RelationPatternReader(patternPath);
-		Utils.display_ellapsed_time(tStart,"");
-		return relationPatternFactory;
-	}
-	
-	public CompoundWordBuilder buildCWB(String jdmMcPath,RelationPatternReader relationPatternReader) {
-		long tStart = System.currentTimeMillis();
-		System.out.println("Lecture des mots composés de JDM : ");
-		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder(jdmMcPath,true); 
-		compoundWordBuilder.addToTrie(relationPatternReader.getCompoundWords()); // add compound word from patterns into compound word dictionary
-		Utils.display_ellapsed_time(tStart,"");	
-		return compoundWordBuilder;
-	}
-	
-	public RequeterRezo buildRequeterRezo() {
-		long tStart = System.currentTimeMillis();
-		System.out.println("Initialisation du moteur requeterRezo : ");
-		RequeterRezo system_query = new RequeterRezo("72h",100000);
-		Utils.display_ellapsed_time(tStart,"");
-		return system_query;
-	}
-	
-	
-	/**
-	 * 
-	 * @param dataExtractor
-	 * @param patternPath
-	 * @param jdmMcPath
-	 * @param sources_file_path
-	 * @param verbose
-	 */
-	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path,boolean verbose) {
-		
-		
-		
-		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
-		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
-		RequeterRezo system_query=buildRequeterRezo();
-		
-		
-		System.out.println("Lectures sources : \n");
-		long tStart = System.currentTimeMillis();
-		 try {
-			 for(LinkedList<TextSequence> sequences : dataExtractor.extractAll(Files.readAllLines(Paths.get(sources_file_path)),3)) {
-				
-				System.out.println("Structuration du texte : ");
-				StructuredText structuredText=new StructuredText(
-						sequences, 
-						compoundWordBuilder, 
-						relationPatternReader.getCompoundWords());
-				
-				tStart=Utils.display_ellapsed_time(tStart,"\t");;
 
-				System.out.println("Extraction des relations : \n");
-				RelationExtractor relationExtractor = new RelationExtractor(
-						    structuredText,
-							system_query,
-							relationPatternReader
-							);
-			 	if(verbose) {
-					System.out.println(structuredText.toString());
-				}
-				System.out.println("Relations extraites : \n");
-				for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-					System.out.println("\t"+extractedRelation.toString());
-				}
-			 	tStart=Utils.display_ellapsed_time(tStart,"");
-			
-				
-
-				
-			 }	
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-		
-	}
 	
 	private static void test() {
 		
@@ -133,11 +46,28 @@ public class Main {
 				      
 	}
 
+	public static void extract(){
+		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
+    	SLEW slew=new SLEW();
+    	slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id",true);
+	}
+	
+	
     public static void main(String[] args){
-    	WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
-    	Main main=new Main();
-    	main.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id",true);
-
-
+    	extract();
+    	/*if(args.length < 1){
+    		System.err.println("Error bad argument number, use help" );
+    		return;
+    	}
+    	switch(args[0]){
+    		case "i":
+    		case "re":extract();
+    		case "help": {
+    			//System.out.println("i : ");
+    		}
+    	}*/
+      		
+    		
     }
+    
 }

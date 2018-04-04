@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
 import TextStructure.TextSequence;
+import Util.Pair;
 
 public class WikipediaDataExtractor implements DataExtractor {
 	
@@ -18,9 +19,10 @@ public class WikipediaDataExtractor implements DataExtractor {
 	}
 
 	@Override
-	public LinkedList<TextSequence> getTextSequences(String articleUrl) {
+	public Pair<String, LinkedList<TextSequence>> getTextSequences(String articleUrl) {
 		try {
 			String yolo2 = wiki.getRenderedText(articleUrl);
+			
 			yolo2 = yolo2.replace("{", ""); yolo2 = yolo2.replace("}", "");
 			yolo2 = yolo2.replace("[", ""); yolo2 = yolo2.replace("]", "");
 			yolo2 = yolo2.replace("*", ""); //yolo2 = yolo2.replace("'", "");
@@ -31,7 +33,8 @@ public class WikipediaDataExtractor implements DataExtractor {
 				//System.out.println(l);
 				CharSequence k = "<p>";
 				CharSequence m = "</p>";
-				if(l.contains(k)  && !l.matches("<!--[a-zA-Z]*-->")) {
+				CharSequence li =" <li";
+				if(( l.contains(k) || l.contains(li))  && !l.matches("<!--[a-zA-Z]*-->")) {
 					if(!l.equals("\n")){
 					content = content + l + "\n";
 					//System.out.println(l);
@@ -43,7 +46,9 @@ public class WikipediaDataExtractor implements DataExtractor {
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
 			RawTextExtractor rawTextExtractor = new RawTextExtractor();
-			return rawTextExtractor.getTextSequences(content);
+			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.getTextSequences(content);
+			data_src.setLeft(articleUrl);
+			return data_src;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,8 +56,8 @@ public class WikipediaDataExtractor implements DataExtractor {
 	}
 
 	@Override
-	public Collection<LinkedList<TextSequence>> extractAll(Collection<String> data_sources, int limit) {
-		Collection<LinkedList<TextSequence>> allSequences=new LinkedList<>();
+	public Collection<Pair<String,LinkedList<TextSequence>>> extractAll(Collection<String> data_sources, int limit) {
+		Collection<Pair<String,LinkedList<TextSequence>>> allSequences=new LinkedList<>();
 		data_sources.forEach(src -> {
 			allSequences.add(getTextSequences(src));
 		});
