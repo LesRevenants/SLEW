@@ -1,27 +1,28 @@
 package DataExtraction.wikipedia;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
 import TextStructure.TextSequence;
+import Util.Pair;
 
 public class WikipediaDataExtractor implements DataExtractor {
 	
-	
-	private String articleUrl;
+
 	private Wiki wiki;
 	
-	public WikipediaDataExtractor(String articleName) {
-		this.articleUrl = articleName;
+	public WikipediaDataExtractor() {
 		wiki=Wiki.createInstance("fr.wikipedia.org");
 	}
 
 	@Override
-	public LinkedList<TextSequence> getTextSequences() {
-		try {			
+	public Pair<String, LinkedList<TextSequence>> getTextSequences(String articleUrl) {
+		try {
 			String yolo2 = wiki.getRenderedText(articleUrl);
+			
 			yolo2 = yolo2.replace("{", ""); yolo2 = yolo2.replace("}", "");
 			yolo2 = yolo2.replace("[", ""); yolo2 = yolo2.replace("]", "");
 			yolo2 = yolo2.replace("*", ""); //yolo2 = yolo2.replace("'", "");
@@ -32,7 +33,8 @@ public class WikipediaDataExtractor implements DataExtractor {
 				//System.out.println(l);
 				CharSequence k = "<p>";
 				CharSequence m = "</p>";
-				if(l.contains(k)  && !l.matches("<!--[a-zA-Z]*-->")) {
+				CharSequence li =" <li";
+				if(( l.contains(k) || l.contains(li))  && !l.matches("<!--[a-zA-Z]*-->")) {
 					if(!l.equals("\n")){
 					content = content + l + "\n";
 					//System.out.println(l);
@@ -43,11 +45,22 @@ public class WikipediaDataExtractor implements DataExtractor {
 			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
-			RawTextExtractor rawTextExtractor = new RawTextExtractor(content);
-			return rawTextExtractor.getTextSequences();
+			RawTextExtractor rawTextExtractor = new RawTextExtractor();
+			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.getTextSequences(content);
+			data_src.setLeft(articleUrl);
+			return data_src;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Collection<Pair<String,LinkedList<TextSequence>>> extractAll(Collection<String> data_sources, int limit) {
+		Collection<Pair<String,LinkedList<TextSequence>>> allSequences=new LinkedList<>();
+		data_sources.forEach(src -> {
+			allSequences.add(getTextSequences(src));
+		});
+		return allSequences;
 	}
 }

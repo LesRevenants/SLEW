@@ -3,12 +3,9 @@ package DataExtraction;
 
 import DataExtraction.DataExtractor;
 import TextStructure.TextSequence;
+import Util.Pair;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -18,23 +15,12 @@ import java.util.regex.Pattern;
  */
 public class RawTextExtractor implements DataExtractor {
 
-	/**
-	 *
-	 */
-	private String text;
-
-	/**
-	 *
-	 * @param text
-	 */
-	public RawTextExtractor(String text) {
+	public RawTextExtractor() {
 		super();
-		this.text = text;
 	}
 
-
 	@Override
-	public LinkedList<TextSequence> getTextSequences() {
+	public Pair<String,LinkedList<TextSequence>> getTextSequences(String text) {
 		LinkedList<TextSequence> wordSequences = new LinkedList<>();
 		List<Character> punctuations = new ArrayList<>(Arrays.asList(';',':',','));
 		String[] sequences = text.split("[\\.\n]"); // split text into sentences 
@@ -71,6 +57,11 @@ public class RawTextExtractor implements DataExtractor {
 			}
 				
 		}
-		return wordSequences;
+		return new Pair<String, LinkedList<TextSequence>>("text",wordSequences);
+	}
+
+	@Override
+	public Collection<Pair<String, LinkedList<TextSequence>>> extractAll(Collection<String> data_sources, int limit) {
+		return null;
 	}
 }

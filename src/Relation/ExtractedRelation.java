@@ -2,26 +2,43 @@ package Relation;
 
 public class ExtractedRelation{
 	
-	private LinguisticPattern linguisticPattern;
+	private String relation_type;
+	private String linguisticPattern;
 	private String object;
-	private int object_idx;
 	private String subject;
-	private int subject_idx;
+
 	
-	public ExtractedRelation(LinguisticPattern linguisticPattern, String object, int object_idx, String subject,
-			int subject_idx) {
+	
+
+	public ExtractedRelation(String relation_type, String linguisticPattern, String object, String subject) {
 		super();
+		this.relation_type = relation_type;
 		this.linguisticPattern = linguisticPattern;
 		this.object = object;
-		this.object_idx = object_idx;
 		this.subject = subject;
-		this.subject_idx = subject_idx;
 	}
 
 	@Override
 	public String toString() {
-		return "\t"+linguisticPattern.getPattern() + "("+subject + "," +object+")";
+		return linguisticPattern + "("+subject + "," +object+")";
 	}
+
+	public String getRelation_type() {
+		return relation_type;
+	}
+
+	public String getLinguisticPattern() {
+		return linguisticPattern;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+	
 	
 	
 

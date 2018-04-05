@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 
 /**
@@ -50,34 +49,6 @@ public class CompoundWordBuilder {
 		read(filePath, serialized);
 	}
 
-
-    public TextSequence getCompoundWordFrom(LinkedList<String> textSequence, int limitSize){
-    	return replaceSequence(new TextSequence(textSequence), limitSize);
-    }
-
-	
-    
-    /**
-     * 
-     * @param condition : the condition to check in order to add prefixWord as unique word 
-     * @param newWords : the list of words which represent the new text sequence
-     * @param prefixWord : the current prefixWord 
-     * @param newTextSequenceReplacements : the current map< multipleWord, List<each word into multipleWord>>
-     */
-    private boolean addWordToTextSequence(boolean condition,LinkedList<String> newWords,String prefixWord,HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
-    	if(condition && trie.containsKey(prefixWord)){ 
-            newWords.add(prefixWord);
-            newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
-            return true;
-         }
-    	else { //
-            for(String subword : prefixWord.split("_")){ // the multiple word does not exist so add each part of multiple word
-                newWords.add(subword);
-            }
-            return false;
-        }
-    }
-    
     /**
      * @param oldTextSequence : A collection of word
      * @param limitSize : The maximum size of a compound word which can be finded
@@ -96,6 +67,7 @@ public class CompoundWordBuilder {
          * The list of replacement of each multiple_word. Ex replace(est_un) -> {est,un}
          */
         HashMap<String,ArrayList<String>> newTextSequenceReplacements = new HashMap<>();
+
         build(oldTextSequence,"",0,0,limitSize,newWords,newTextSequenceReplacements);
         TextSequence textSequence = new TextSequence(newWords);
         textSequence.setWords_replacements(newTextSequenceReplacements);
@@ -108,6 +80,15 @@ public class CompoundWordBuilder {
     		 HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
     	 
     	 if(i==oldTextSequence.getWords().size()) {
+    	     if(compoundWordSize>0){
+    	         if( trie.containsKey(prefixWord)) {
+                     newWords.add(prefixWord);
+                     newTextSequenceReplacements.put(prefixWord, new ArrayList<String>(Arrays.asList(prefixWord.split("_"))));
+                 }
+                 else{
+                     newWords.addAll(Arrays.asList(prefixWord.split("_")));  // the multiple word does not exist so add each part of multiple word
+                 }
+             }
     		 return;
     	 }
     	 String word=oldTextSequence.getWords().get(i);
@@ -128,9 +109,7 @@ public class CompoundWordBuilder {
     		         build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
     			 }
     			 else {
-    				 for(String subword : prefixWord.split("_")){ // the multiple word does not exist so add each part of multiple word
-                         newWords.add(subword);
-                     }
+                     newWords.addAll(Arrays.asList(prefixWord.split("_")));  // the multiple word does not exist so add each part of multiple word
     				 build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
     			 }
     		 }
@@ -173,7 +152,6 @@ public class CompoundWordBuilder {
                       Files.readAllLines(Paths.get(filePath))
                         .stream()
                         .map(word -> word.split(";")[1])
-                        //.map(word -> word.replace(";",""))
                         .map(word -> word.replace(" ","_"))
                         .forEach(word -> trie.put(word,true));
             }
