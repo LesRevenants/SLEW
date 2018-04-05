@@ -17,6 +17,40 @@ public class WikipediaDataExtractor implements DataExtractor {
 	public WikipediaDataExtractor() {
 		wiki=Wiki.createInstance("fr.wikipedia.org");
 	}
+	
+	public String getText(String articleUrl) {
+		String content = "";
+		try {
+			String yolo2 = wiki.getRenderedText(articleUrl);
+			
+			yolo2 = yolo2.replace("{", ""); yolo2 = yolo2.replace("}", "");
+			yolo2 = yolo2.replace("[", ""); yolo2 = yolo2.replace("]", "");
+			yolo2 = yolo2.replace("*", ""); //yolo2 = yolo2.replace("'", "");
+			String[] lines = yolo2.split(System.getProperty("line.separator"));
+			yolo2 = yolo2.replace("'''", ""); yolo2 = yolo2.replace("]", "");
+			for(String l : lines) {
+				//System.out.println(l);
+				CharSequence k = "<p>";
+				CharSequence m = "</p>";
+				CharSequence li =" <li";
+				if(( l.contains(k) || l.contains(li))  && !l.matches("<!--[a-zA-Z]*-->")) {
+					if(!l.equals("\n")){
+					content = content + l + "\n";
+					//System.out.println(l);
+					}
+				}
+			}
+			content = content.replaceAll("\n\n", "\n");
+			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
+			content = content.replaceAll("&#160;", "");
+			content = content.replaceAll("(<[^>]*>)", "");	
+			System.out.println(content);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return content;
+	}
 
 	@Override
 	public Pair<String, LinkedList<TextSequence>> getTextSequences(String articleUrl) {
@@ -45,6 +79,7 @@ public class WikipediaDataExtractor implements DataExtractor {
 			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
+			System.out.println(content);
 			RawTextExtractor rawTextExtractor = new RawTextExtractor();
 			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.getTextSequences(content);
 			data_src.setLeft(articleUrl);

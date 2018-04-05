@@ -92,6 +92,7 @@ public class SLEW {
 					System.out.println(structuredText.toString());
 				}
 				ExistingRelations existingRelations=new ExistingRelations();
+				ArrayList<ExtractedRelation> rex=new ArrayList<>();
 				System.out.println("Relations extraites : \n");
 				for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
 					if(! existingRelations.Requesting(extractedRelation)){
@@ -100,7 +101,9 @@ public class SLEW {
 					else{
 						System.out.println("Existing relation : "+existingRelations);
 					}
+					rex.add(extractedRelation);
 				}
+				exportInJSONFile(rex);
 				tStart=Utils.display_ellapsed_time(tStart,"");
 			
 			 }
