@@ -18,6 +18,41 @@
 		vertical-align: baseline;
 	}
 
+	.centerise {
+
+ 	 margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  	transform: translateY(-25%); /* tiré de la moitié de sa propre hauteur */
+}
+
+	}
+
+	.buttonsoft {
+		-moz-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-webkit-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-ms-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-webkit-appearance: none;
+		position: relative;
+		display: inline-block;
+		border: 0;
+		background: #35b88f;
+		color: #fff;
+		text-shadow: 0 0 0.5px rgba(255, 255, 255, 0.25);
+		cursor: pointer;
+		text-decoration: none;
+		outline: 0;
+		padding: 0.5em 1.5em 0.5em 1.5em;
+		text-align: center;
+		border-radius: 3em;
+		font-weight: 200;
+	}
+
+		input[type="buttonsoft"]:hover,
+		.buttonsoft:hover {
+			background: #45c89f;
+		}
+
+
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
@@ -47,6 +82,7 @@
 	body {
 		-webkit-text-size-adjust: none;
 	}
+
 
 /* Box Model */
 
@@ -1679,8 +1715,9 @@
 					border-top: 0;
 				}
 
-			table.default td {
-				padding: 0.75em 1.25em 0.75em 1.25em;
+			 td {
+				padding: 0em 1.25em 0em 1.25em;
+border-right: 1px;
 			}
 
 			table.default th {
@@ -1694,6 +1731,30 @@
 			}
 
 /* Button */
+
+	input[type="add"] {
+	
+-moz-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-webkit-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-ms-transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		-webkit-appearance: none;
+		position: relative;
+		display: inline-block;
+		border: 0;
+		font-size: 80%;
+		color: rgba(0, 0, 0, 0.5) !important;
+		background: rgba(90, 255, 90, 0.25);
+		color: #fff;
+		text-shadow: 0 0 0.5px rgba(255, 255, 255, 0.25);
+		cursor: pointer;
+		text-decoration: none;
+		outline: 0;
+		text-align: center;
+		border-radius: 3em;
+		font-weight: 400;
+
+	}
 
 	input[type="button"],
 	input[type="submit"],
