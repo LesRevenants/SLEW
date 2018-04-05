@@ -42,7 +42,10 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 				if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) found = true;
 				else {
 					object_idx++;
-					objectGramPosition = textSequence.getWordsPositions().get(object_idx);
+					if(object_idx != textSequence.getWordsPositions().size()){
+						objectGramPosition = textSequence.getWordsPositions().get(object_idx);
+					}
+
 				}
 				cpt++;
 			}

@@ -5,11 +5,7 @@ package TextStructure;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.List;
 
 /**
  *
@@ -44,15 +40,20 @@ public class TextSequence {
     
     private ArrayList<Integer> patternsIdx;
 
+    private long size;
 
 
+	public long getSize() {
+		return size;
+	}
 
-    public TextSequence() {
+	public TextSequence() {
     	 words = new ArrayList<>();
     	 words_replacements = new HashMap<>();
     	 wordsGramPositions=new ArrayList<>();
     	 compoundWordPositions=new HashMap<>();
     	 patternsIdx=new ArrayList<>();
+    	 size =0;
     }
     
     /*public TextSequence(ArrayList<String> words) {
@@ -60,6 +61,9 @@ public class TextSequence {
         this.words = words;
     }*/
 
+    private void set_size(){
+    	words.forEach(word -> size += word.length());
+	}
 
 	public ArrayList<String> getWordsGramPositions() {
 		return wordsGramPositions;
@@ -109,6 +113,7 @@ public class TextSequence {
 	public TextSequence(Collection<String> words) {
         this();
         this.words.addAll(words);
+        set_size();
     }
 
 	/**
@@ -121,6 +126,7 @@ public class TextSequence {
         for(String word : words){
             this.words.add(word);
         }
+        set_size();
     }
     
     
@@ -148,7 +154,7 @@ public class TextSequence {
 	}
 
 	public String toString(){
-		/*int indent = 90; int compound = 0;
+		int indent = 90; int compound = 0;
         StringBuilder sb = new StringBuilder();
         for(int i=0 ;i<words.size(); i++) {
         	String word = words.get(i);
@@ -182,8 +188,7 @@ public class TextSequence {
         	sb.append("\n");
         	compound =0;
         }
-        return sb.toString();*/
-		return "";
+        return sb.toString();
     }
     
     public String shortToString() {

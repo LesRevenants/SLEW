@@ -32,6 +32,8 @@ import Relation.RelationPatternReader;
 import Relation.WikiArticleDB;
 import RequeterRezo.RequeterRezo;
 
+import Util.UtilColor;
+
 public class SLEW {
 
 	public SLEW(){
@@ -45,24 +47,21 @@ public class SLEW {
 	 * @param jdmMcPath
 	 * @param sources_file_path
 	 * @param verbose
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 * @throws UnsupportedEncodingException
 	 */
 	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path,boolean verbose, boolean isFile, boolean use_db) {
 
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
 		RequeterRezo system_query=buildRequeterRezo();
-		RelationDB relationDB;
-		WikiArticleDB wikiArticleDB;
+		RelationDB relationDB=null;
+		WikiArticleDB wikiArticleDB=null;
 		if(use_db){
 			relationDB=new RelationDB("jdbc:mysql://venus/rcolin", "rcolin", "mysqlpwd");
 			wikiArticleDB=new WikiArticleDB("jdbc:mysql://venus/rcolin", "rcolin", "mysqlpwd");
 		}
 
 
-		System.out.println("Lectures sources : ");
+		System.out.println("Read data sources : ");
 		long tStart = System.currentTimeMillis();
 
 		try {
@@ -74,11 +73,14 @@ public class SLEW {
 				articlesName=new LinkedList<>();
 				articlesName.add(sources_file_path);
 			}
+
+			Collection<Pair<String,LinkedList<TextSequence>>> data_sources = dataExtractor.extractAll(articlesName,3);
 			tStart=Utils.display_ellapsed_time(tStart,"\t");
 
-			for(Pair<String,LinkedList<TextSequence>> data_src : dataExtractor.extractAll(articlesName,3)) {
-
+			for(Pair<String,LinkedList<TextSequence>> data_src : data_sources) {
 				String data_key=data_src.getLeft();
+				System.out.println("Get Wikipedia page ["+ UtilColor.ANSI_GREEN+data_key+"]"+UtilColor.ANSI_RESET);
+
 				LinkedList<TextSequence> sequences=data_src.getRight();
 				System.out.println("Structuration du texte : ");
 				StructuredText structuredText=new StructuredText(
@@ -86,37 +88,65 @@ public class SLEW {
 						compoundWordBuilder,
 						relationPatternReader.getCompoundWords());
 
+				System.out.println("\tTextSize : "+structuredText.getTotal_size());
 				tStart=Utils.display_ellapsed_time(tStart,"\t");
 
+				if(verbose) {
+					System.out.println(structuredText.toString());
+				}
 				System.out.println("Extraction des relations : \n");
 				RelationExtractor relationExtractor = new RelationExtractor(
 						structuredText,
 						system_query,
 						relationPatternReader
 				);
-				if(verbose) {
-					System.out.println(structuredText.toString());
-				}
-				ExistingRelations existingRelations=new ExistingRelations();
-				ArrayList<ExtractedRelation> rex=new ArrayList<>();
-				System.out.println("Relations extraites : \n");
-				for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-					if(! existingRelations.Requesting(extractedRelation)){
-						System.out.println("\t"+extractedRelation.toString());
-					}
-					else{
-						System.out.println("Existing relation : "+existingRelations);
-					}
-					rex.add(extractedRelation);
-				}
-				exportInJSONFile(rex);
+
+				extract(relationExtractor,relationDB,use_db,data_key);
 				tStart=Utils.display_ellapsed_time(tStart,"");
+				System.out.println();
 			}
 
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public void extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name){
+		try {
+			ExistingRelations existingRelations=new ExistingRelations();
+			ArrayList<ExtractedRelation> rex=new ArrayList<>();
+
+			System.out.println("Relations extraites : \n");
+
+			Collection<ExtractedRelation> expected_relations=null;
+			if(use_db){
+				expected_relations= relationDB.getRelationsFromArticle(article_name,true);
+
+			}
+
+			for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
+				String flags="";
+
+				if(use_db){
+					flags += expected_relations.contains(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
+				}
+				else{
+					flags += UtilColor.ANSI_PURPLE;
+				}
+				flags += "[ANNOT]";
+
+				flags += existingRelations.Requesting(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
+				flags += "[JDM] "+UtilColor.ANSI_RESET;
+				System.out.println(flags+UtilColor.ANSI_YELLOW +extractedRelation.toString() +UtilColor.ANSI_RESET + extractedRelation.getContextAsStr());
+				rex.add(extractedRelation);
+			}
+			exportInJSONFile(rex);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 

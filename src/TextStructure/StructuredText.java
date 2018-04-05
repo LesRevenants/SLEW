@@ -19,9 +19,13 @@ public class StructuredText {
 	private HashSet<String> patterns;
     private LinkedList<TextSequence> textSequences;
     private TextSequenceAnalyser textSequenceAnalyser;
-    
-  
-	public StructuredText(Collection<TextSequence>  inTextSequences, CompoundWordBuilder compoundWordBuilder, LinkedList<String> knownPatterns) {
+    private long total_size;
+
+    public long getTotal_size() {
+        return total_size;
+    }
+
+    public StructuredText(Collection<TextSequence>  inTextSequences, CompoundWordBuilder compoundWordBuilder, LinkedList<String> knownPatterns) {
 		super();
 		this.textSequences = new LinkedList<>();
 		textSequenceAnalyser = TextSequenceAnalyser.getInstance();
@@ -66,6 +70,7 @@ public class StructuredText {
 			TextSequence newTextSequence=compoundWordBuilder.replaceSequence(textSequence, 5);
 			newTextSequence.setWordsGramPositions(positions, patterns);
 			this.textSequences.add(newTextSequence);
+			total_size +=newTextSequence.getSize();
 		});
 
 	}

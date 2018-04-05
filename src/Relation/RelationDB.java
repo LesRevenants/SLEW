@@ -1,6 +1,8 @@
 package Relation;
 
 import java.sql.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Properties;
 
 
@@ -25,6 +27,34 @@ public class RelationDB {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 		}		
+	}
+
+	public Collection<ExtractedRelation> getRelationsFromArticle(String article_name, boolean is_human_found){
+		HashSet<ExtractedRelation> relations = new HashSet<>();
+		if(! wikiDB.exist(article_name)){
+			System.err.println("[ERROR] no article : "+article_name);
+			return relations;
+		}
+		try {
+			int article_id = wikiDB.article_id_for(article_name);
+			StringBuilder query = new StringBuilder("SELECT relation_type, predicate,x,y FROM Extracted_Relation" +
+					"WHERE article_id=? AND is_human_found=");
+			PreparedStatement pstmt= connection.prepareStatement(query.toString());
+			pstmt.setInt(1,article_id);
+			pstmt.setBoolean(2,is_human_found);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				relations.add(new ExtractedRelation(
+						rs.getString("relation_type"),
+						rs.getString("predicate"),
+						rs.getString("x"),
+						rs.getString("y")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return relations;
 	}
 
 	public void add(ExtractedRelation relation, String article_name, boolean is_human_found){
