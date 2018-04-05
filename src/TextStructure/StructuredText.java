@@ -1,6 +1,10 @@
 package TextStructure;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 import DataExtraction.DataExtractor;
@@ -22,12 +26,14 @@ public class StructuredText {
 		this.textSequences = new LinkedList<>();
 		textSequenceAnalyser = TextSequenceAnalyser.getInstance();
 
+
 		ArrayList<ArrayList<String>> compoundWordRules=new ArrayList<>();
-		compoundWordRules.add(new ArrayList<>(Arrays.asList("NOM","ADJ")));
-        compoundWordRules.add(new ArrayList<>(Arrays.asList("NOM","NOM")));
-        compoundWordRules.add(new ArrayList<>(Arrays.asList("NOM","PRP","NOM")));
-        compoundWordRules.add(new ArrayList<>(Arrays.asList("NOM","ADV","ADJ")));
-        compoundWordRules.add(new ArrayList<>(Arrays.asList("NOM","ADJ","ADJ")));
+		try{
+            Files.readAllLines(Paths.get("datas/mc_rules.txt")).forEach(
+                    line -> compoundWordRules.add(new ArrayList<String>(Arrays.asList(line.split(";")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         LinkedList<String> new_compound_words=new LinkedList<>();
 

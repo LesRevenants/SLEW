@@ -72,7 +72,8 @@ public class TextSequence {
 		wordsByGramPositions=new HashMap<>();
 		int i=0;
 		int offset=0;
-		while(i<wordsGramPositions.size()) {
+		while(i<wordsGramPositions.size() && (i-offset) < words.size()) {
+			//if(i-offset == words.size())
 			String word = words.get(i-offset);
 			if(isCompoundWord(word)) {
 				int compoundWordSize = words_replacements.get(word).size();
@@ -147,7 +148,7 @@ public class TextSequence {
 	}
 
 	public String toString(){
-		int indent = 90; int compound = 0;
+		/*int indent = 90; int compound = 0;
         StringBuilder sb = new StringBuilder();
         for(int i=0 ;i<words.size(); i++) {
         	String word = words.get(i);
@@ -181,7 +182,8 @@ public class TextSequence {
         	sb.append("\n");
         	compound =0;
         }
-        return sb.toString();
+        return sb.toString();*/
+		return "";
     }
     
     public String shortToString() {

@@ -20,7 +20,7 @@ public class RawTextExtractor implements DataExtractor {
 	}
 
 	@Override
-	public Pair<String,LinkedList<TextSequence>> getTextSequences(String text) {
+	public Pair<String,LinkedList<TextSequence>> extract(String text) {
 		LinkedList<TextSequence> wordSequences = new LinkedList<>();
 		List<Character> punctuations = new ArrayList<>(Arrays.asList(';',':',','));
 		String[] sequences = text.split("[\\.\n]"); // split text into sentences 

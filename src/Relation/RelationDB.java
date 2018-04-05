@@ -11,7 +11,7 @@ public class RelationDB {
 	public RelationDB(String url, String login, String pwd){
 
 		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			
 			connection = DriverManager.getConnection(url,login,pwd);
 			if(connection == null) {

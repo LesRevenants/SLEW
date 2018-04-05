@@ -18,7 +18,7 @@ public interface DataExtractor {
      *
      * @return
      */
-    public abstract Pair<String,LinkedList<TextSequence>> getTextSequences(String src);
+    public abstract Pair<String,LinkedList<TextSequence>> extract(String src);
 
 
     public abstract Collection<Pair<String,LinkedList<TextSequence>>> extractAll(Collection<String> data_sources,int limit);
