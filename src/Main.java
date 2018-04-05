@@ -1,10 +1,13 @@
 import TextStructure.CompoundWordBuilder;
+import java.io.BufferedReader;
+import java.net.*;
+import java.io.*;
 import TextStructure.StructuredText;
 import TextStructure.TextSequence;
 import TextStructure.WordPatriciaTrie;
 import Util.Utils;
 import lib.org.ardverk.collection.PatriciaTrie;
-
+import java.util.Scanner;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
@@ -32,6 +35,11 @@ import RequeterRezo.RequeterRezo;
 
 public class Main {
 
+	private static ServerSocket socket;
+    private static Socket connection;
+    private static String command;
+    private static String responseStr ;
+    //private static int port;
 
 	
 	private static void test() {
@@ -46,15 +54,70 @@ public class Main {
 				      
 	}
 
-	public static void extract(){
+	public static void extract(String articlename) throws UnsupportedEncodingException, FileNotFoundException, IOException{
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
     	SLEW slew=new SLEW();
-    	slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id",true);
+    	if(articlename == null)
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", true, true);
+    	else
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser", articlename, true, false);
 	}
 	
 	
-    public static void main(String[] args){
-    	extract();
+	
+	public static void connectJava2Php(int port){
+		
+		       try  {
+		        	
+		    		socket = new ServerSocket(port);
+		    		command = new String("");
+		     	    responseStr  = new String("ttt");
+
+			        System.out.println("Signal Server is running on socket " + socket.getInetAddress()+"\n");
+
+		            while (true) {
+		                System.out.println("le serveur attends une chaine\n");
+
+		                connection = socket.accept();
+		                
+		                InputStreamReader inputStream = new InputStreamReader(connection.getInputStream());
+		                DataOutputStream response = new DataOutputStream(connection.getOutputStream());
+		                BufferedReader input = new BufferedReader(inputStream);
+
+		                command = input.readLine();
+		                System.out.println("The input is " + command + "\n");
+		                response.writeUTF("nike ta mere");
+		                
+		                if (response.equals(null)){
+		                	break;
+		                } else {
+		                	
+		              // response.writeBytes(responseStr);             
+		               // System.out.println("response : " + response + "\n");
+		               // System.out.println("responseStr l : " + responseStr.length() +"\n");
+
+		                response.flush();		               
+		                response.close();	                		              
+		                System.out.println("Running" + "\n");
+		                }
+		            }
+		            
+		        } catch (IOException e)  {
+		           System.out.println("Fail!: " + e.toString());
+		       }
+
+		       // System.out.println("Closing...");
+	}
+		
+	
+	
+	
+    public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException{
+    	//if(args.length = 2)
+    	System.out.println(args[0]);
+    	connectJava2Php(Integer.parseInt(args[0]));
+    	//else
+    	//extract(null);
     	/*if(args.length < 1){
     		System.err.println("Error bad argument number, use help" );
     		return;
