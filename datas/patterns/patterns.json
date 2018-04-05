@@ -149,7 +149,7 @@
 
 			
 		],
-		"r_holo": [
+		"r_has_part": [
 
 			{"syntaxic_constraints" : [
 				{"$x" : [ "NOM", "NAM"]},
@@ -213,18 +213,14 @@
 				"constitué_d'un",
 				"constitué_d'une",
 				"constitué_de_",
-				"de_la_famille",
-				"est_une_espèce",
-				"du_genre",
-				"de_la_sous-famille"
 			]}
 			
 		],
-		"r_mero": [
+		"r_holo": [
 
 			{"syntaxic_constraints" : [
-				{"$x" : [] },
-				{"$y" : [] }
+				{"$x" : [ "NOM", "NAM"]},
+				{"$y" : [ "NOM", "NAM"]}
 			]},
 
 			{"patterns":[
@@ -388,34 +384,7 @@
 		]}
 			
 		],
-		"r_has_part": [
-			
-			{"syntaxic_constraints" : [
-				{"$x" : [] },
-				{"$y" : [] }
-			]},
 
-			{ "patterns" : [
-				"a_des",
-				"a_un",
-				"a_une",
-				"possède_un",
-				"possède_une",
-				"possède_des",
-				"possède_le",
-				"possède_la",
-				"possède_les",
-				"possède_l'",
-				"possèdent_un",
-				"possèdent_une",
-				"possèdent_des",
-				"possèdent_le",
-				"possèdent_la",
-				"possèdent_les",
-				"possèdent_l'"
-			]}
-			
-		],
 		"r_cause": [
 
 			{"syntaxic_constraints" : [
