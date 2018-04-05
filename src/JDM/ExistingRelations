@@ -1,0 +1,39 @@
+package JDM;
+import RequeterRezo.Annotation;
+import RequeterRezo.Mot;
+import RequeterRezo.RequeterRezo;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import Relation.ExtractedRelation;
+
+public class ExistingRelations {
+
+	ExtractedRelation toResearch;
+	boolean exists;
+	
+	   public ExistingRelations(ExtractedRelation er) {
+		   
+		   this.toResearch = er;
+		   exists = false;
+		   
+	   }
+
+	   public boolean Requesting() throws MalformedURLException, IOException, InterruptedException {
+		   
+	        RequeterRezo systeme = new RequeterRezo("36h", 3000);
+	        if(toResearch.getObject() != null) {
+	        Mot result = systeme.requete(toResearch.getObject(), true);
+	        ArrayList<Annotation> annotations = result.getAnnotations();
+	        for(Annotation annotation : annotations) {
+	        if(annotation.getMot_entrant().equals(toResearch.getObject()) &&
+	           annotation.getMot_sortant().equals(toResearch.getSubject()) &&
+	           annotation.getType_relation().equals(toResearch.getRelation_type())) 
+	        	{ this.exists = true; } }
+	        }
+	        
+	        return this.exists;
+	        
+	    }
+	   
+	}
