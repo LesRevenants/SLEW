@@ -45,7 +45,6 @@ public class WikipediaDataExtractor implements DataExtractor {
 			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
-			System.out.println(content);
 			RawTextExtractor rawTextExtractor = new RawTextExtractor();
 			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.getTextSequences(content);
 			data_src.setLeft(articleUrl);

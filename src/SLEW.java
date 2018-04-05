@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import DataExtraction.DataExtractor;
 import DataExtraction.RawTextExtractor;
 import DataExtraction.wikipedia.WikipediaDataExtractor;
+import JDM.ExistingRelations;
 import Relation.ExtractedRelation;
 import Relation.RelationDB;
 import Relation.RelationExtractor;
@@ -48,7 +49,7 @@ public class SLEW {
 	 * @throws FileNotFoundException 
 	 * @throws UnsupportedEncodingException 
 	 */
-	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path,boolean verbose, boolean isFile) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path,boolean verbose, boolean isFile) {
 		
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
@@ -59,91 +60,55 @@ public class SLEW {
 		System.out.println("Lectures sources : \n");
 		long tStart = System.currentTimeMillis();
 		
-		if(!isFile) {
+		try {	 
+			Collection<String> articlesName = null;
+			if(isFile){
+				articlesName=Files.readAllLines(Paths.get(sources_file_path));
+			}
+			else{
+				articlesName=new LinkedList<>();
+				articlesName.add(sources_file_path);
+			}
 			
-		//	try {
-				 
-				 
-				    Pair <String,LinkedList<TextSequence>> data_src = dataExtractor.getTextSequences(sources_file_path);
-					
-					String data_key=data_src.getLeft();
-					LinkedList<TextSequence> sequences=data_src.getRight();
-					//System.out.println("Structuration du texte : ");
+			 for(Pair<String,LinkedList<TextSequence>> data_src : dataExtractor.extractAll(articlesName,3)) {
+				
+				String data_key=data_src.getLeft();
+				LinkedList<TextSequence> sequences=data_src.getRight();
+				System.out.println("Structuration du texte : ");
 					StructuredText structuredText=new StructuredText(
-							sequences, 
-							compoundWordBuilder, 
-							relationPatternReader.getCompoundWords());
-					
-					tStart=Utils.display_ellapsed_time(tStart,"\t");;
-	
-					//System.out.println("Extraction des relations : \n");
-					RelationExtractor relationExtractor = new RelationExtractor(
-							    structuredText,
-								system_query,
-								relationPatternReader
-								);
-				 	if(verbose) {
-						//System.out.println(structuredText.toString());
+						sequences, 
+						compoundWordBuilder, 
+						relationPatternReader.getCompoundWords());
+				
+				tStart=Utils.display_ellapsed_time(tStart,"\t");;
+				
+				System.out.println("Extraction des relations : \n");
+				RelationExtractor relationExtractor = new RelationExtractor(
+						    structuredText,
+							system_query,
+							relationPatternReader
+							);
+				if(verbose) {
+					System.out.println(structuredText.toString());
+				}
+				ExistingRelations existingRelations=new ExistingRelations();
+				System.out.println("Relations extraites : \n");
+				for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
+					if(! existingRelations.Requesting(extractedRelation)){
+						System.out.println("\t"+extractedRelation.toString());
 					}
-				 	ArrayList<ExtractedRelation> EX = new ArrayList<ExtractedRelation>();
-					//System.out.println("Relations extraites : \n");
-					for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-						//System.out.println("\t"+extractedRelation.toString());
-						relationDB.add(extractedRelation,data_key,false);
-						EX.add(extractedRelation);
+					else{
+						System.out.println("Existing relation : "+existingRelations);
 					}
-					exportInJSONFile(EX);
-				 	tStart=Utils.display_ellapsed_time(tStart,"");
-					
-				 }
-				 
-				 
-			/*catch (IOException e) {
-				e.printStackTrace();
+				}
+				tStart=Utils.display_ellapsed_time(tStart,"");
 			
-			}*/
-		//}
-		
-		if(isFile) {
-			try {
+			 }
 				 
 				 
-				 for(Pair<String,LinkedList<TextSequence>> data_src : dataExtractor.extractAll(Files.readAllLines(Paths.get(sources_file_path)),3)) {
-					
-					String data_key=data_src.getLeft();
-					LinkedList<TextSequence> sequences=data_src.getRight();
-					System.out.println("Structuration du texte : ");
-					StructuredText structuredText=new StructuredText(
-							sequences, 
-							compoundWordBuilder, 
-							relationPatternReader.getCompoundWords());
-					
-					tStart=Utils.display_ellapsed_time(tStart,"\t");;
-	
-					System.out.println("Extraction des relations : \n");
-					RelationExtractor relationExtractor = new RelationExtractor(
-							    structuredText,
-								system_query,
-								relationPatternReader
-								);
-				 	if(verbose) {
-						System.out.println(structuredText.toString());
-					}
-				 	
-					System.out.println("Relations extraites : \n");
-					for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-						//System.out.println("\t"+extractedRelation.toString());
-						relationDB.add(extractedRelation,data_key,false);
-					}
-				 	tStart=Utils.display_ellapsed_time(tStart,"");
-					
-				 }
-				 
-				 
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-		}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 

@@ -3,7 +3,6 @@ package Relation;
 import java.sql.*;
 import java.util.Properties;
 
-import Util.Utils;
 
 public class RelationDB {
 	private Connection connection;

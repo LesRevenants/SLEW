@@ -20,7 +20,7 @@ public class ExtractedRelation{
 
 	@Override
 	public String toString() {
-		return linguisticPattern + "("+subject + "," +object+")";
+		return relation_type + ": "+ linguisticPattern + "("+subject + "," +object+")";
 	}
 
 	public String getRelation_type() {
