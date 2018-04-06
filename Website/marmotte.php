@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 if(!isset($_POST['test'])) {
@@ -24,11 +27,12 @@ echo '<!DOCTYPE HTML>
 <article class="container box style3">
 				<section>
 					<header>
-						<h3>Is it what you were looking for ?</h3>
+						<h3>Is it what you are looking for ?</h3>
 					</header>
-					<form method="post" action="load.php">
+					<form method="post" action="marmotte.php">
 						<div class="middler">
 							<div class="middler">
+
 								<center>'. $_SESSION['mar'] .'</center>
 							</div>
 						</div>
@@ -43,13 +47,13 @@ echo '<!DOCTYPE HTML>
 				</section>
 			</article>
 		</body>
-	</html>;'; }
+	</html>'; }
 
 
 	
 if(isset($_POST['test'])) {
 $arg = "yo";
-$relations = phpClient($arg);
+$colin = explode("{",$_SESSION['rel']);
 echo '<!DOCTYPE HTML>
 <!--
 	Overflow by HTML5 UP
@@ -70,14 +74,25 @@ echo '<!DOCTYPE HTML>
 <article class="container box style3">
 				<section>
 					<header>
-						<h3>Is it what you were looking for ?</h3>
+						<h3>Here are the extracted relations</h3>
 					</header>
 					<form method="post" action="load.php">
-						<div class="middler">
-							<div class="middler">
-								<center>'. $relations .'</center>
-							</div>
-						</div>
+							<span style="font-size:50% !important;">
+							<table>
+								<tr><th>N°</th>
+								<th>Object</th>
+								<th>Predicate</th>
+								<th>Subject</th>
+								<th>Relation Type</th>
+								</tr>';
+								for($cpt=1;$cpt<=sizeof($colin)-1;$cpt++) {
+								$seneron = explode(",",$colin[$cpt]);
+								$pascual1 = explode(":",$seneron[0]);
+								$pascual2 = explode(":",$seneron[1]);
+								$pascual3 = explode(":",$seneron[2]);
+								$pascual4 = explode(":",$seneron[3]);
+								echo '<tr><td>' . $cpt . '</td><td>'. $pascual2[1] . '</td><td>' . str_replace("}","",$pascual4[1]) . '</td><td>' . $pascual1[1] . '</td><td>' . $pascual3[1] . '</td></tr>'; }
+								echo '</table></span><br><br>
 						<div class="row">
 							<div class="12u">
 								<ul class="actions">
@@ -89,26 +104,7 @@ echo '<!DOCTYPE HTML>
 				</section>
 			</article>
 		</body>
-	</html>;'; }
+	</html>'; } 
 
-function phpClient($arg) {
-
- $PORT = 20233; //the port on which we are connecting to the "remote" machine
- $HOST = "localhost"; //the ip of the remote machine (in this case it's the same machine)
- 
- $sock = socket_create(AF_INET, SOCK_STREAM, 0) //Creating a TCP socket
-         or die("error: could not create socket\n");
- 
- $succ = socket_connect($sock, $HOST, $PORT) //Connecting to to server using that socket
-         or die("error: could not connect to host\n");
- 
-$text = $arg; //the text we want to send to the server
-
-socket_write($sock, $text . "\n", strlen($text) + 1) //Writing the text to the socket
-       or die("error: failed to write to socket\n");
-
-$reply = socket_read($sock, 100000) //Reading the reply from socket
-        or die("error: failed to read from socket\n");
-  return $reply; }
 
 ?>
