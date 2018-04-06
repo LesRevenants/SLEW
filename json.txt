@@ -1,0 +1,31 @@
+[
+	{ 
+		 x : infection_virale_éruptive,
+		 y : maladie),
+		 relation_type : r_isa,
+		 predicate : est_une
+	},
+	{ 
+		 x : morbillivirus,
+		 y : virus_de_la_rougeole,
+		 relation_type : r_isa,
+		 predicate : est_un
+	},
+	{ 
+		 x : période_d'invasion,
+		 y : phase,
+		 relation_type : r_isa,
+		 predicate : est_la
+	},
+	{ 
+		 x : yeux_rouges,
+		 y : nez,
+		 relation_type : r_has_part,
+		 predicate : a_les
+	},
+	{ 
+		 x : traitement_préventif_actuel,
+		 y : vaccination,
+		 relation_type : r_isa,
+		 predicate : est_le
+	},]

@@ -36,8 +36,7 @@ public class WikipediaDataExtractor implements DataExtractor {
 			for(String l : lines) {
 				//System.out.println(l);
 				CharSequence k = "<p>";
-				CharSequence m = "</p>";
-				CharSequence li =" <li";
+				CharSequence li =" <li>";
 				if(( l.contains(k) || l.contains(li))  && !l.matches("<!--[a-zA-Z]*-->")) {
 					if(!l.equals("\n")){
 					content = content + l + "\n";
@@ -45,10 +44,14 @@ public class WikipediaDataExtractor implements DataExtractor {
 					}
 				}
 			}
+			
 			content = content.replaceAll("\n\n", "\n");
-			content = content.replaceAll("(n>[0-9]<s)", "(n><s)");
+			content = content.replaceAll("(n>[0-9]+<s)", "(n><s)");
 			content = content.replaceAll("&#160;", "");
 			content = content.replaceAll("(<[^>]*>)", "");	
+			
+			
+			
 			text=content;
 			RawTextExtractor rawTextExtractor = new RawTextExtractor();
 			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.extract(content);
