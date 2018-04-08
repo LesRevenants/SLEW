@@ -28,4 +28,10 @@
 		 y : vaccination,
 		 relation_type : r_isa,
 		 predicate : est_le
+	},
+	{ 
+		 x : indication_précoce,
+		 y : Comby»,
+		 relation_type : r_isa,
+		 predicate : qui_est_une
 	},]
