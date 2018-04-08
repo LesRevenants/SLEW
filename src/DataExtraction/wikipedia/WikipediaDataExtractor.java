@@ -34,13 +34,11 @@ public class WikipediaDataExtractor implements DataExtractor {
 			yolo2 = yolo2.replace("'''", ""); yolo2 = yolo2.replace("]", "");
 			String content = "";
 			for(String l : lines) {
-				//System.out.println(l);
 				CharSequence k = "<p>";
 				CharSequence li =" <li>";
 				if(( l.contains(k) || l.contains(li))  && !l.matches("<!--[a-zA-Z]*-->")) {
 					if(!l.equals("\n")){
 					content = content + l + "\n";
-					//System.out.println(l);
 					}
 				}
 			}

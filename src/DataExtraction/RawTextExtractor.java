@@ -26,6 +26,8 @@ public class RawTextExtractor implements DataExtractor {
 		String[] sequences = text.split("[\\.\n]"); // split text into sentences 
 		for(String seq : sequences ) {
 			if(! seq.isEmpty()) {
+				
+				seq = seq.replaceAll("(\\([^\\)]*\\))", ""); //delete everything in parenthesis 
 				String[] sentence =  seq.split("\\s+"); // split sentence into words
 				ArrayList<String> wordList=new ArrayList<String>(sentence.length); 
 				for(String word:sentence) {
