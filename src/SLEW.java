@@ -137,9 +137,12 @@ public class SLEW {
 					flags += UtilColor.ANSI_PURPLE;
 				}
 				flags += "[ANNOT]";
-
+				//System.out.println("------------------------------MAIN CALL---------------------------------");
 				flags += existingRelations.Requesting(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
 				flags += "[JDM] "+UtilColor.ANSI_RESET;
+				
+				//System.out.println(extractedRelation);
+				//System.out.println("Résulat test : "+existingRelations.Requesting(extractedRelation));
 				System.out.println(flags+UtilColor.ANSI_YELLOW +extractedRelation.toString() +UtilColor.ANSI_RESET + extractedRelation.getContextAsStr());
 				rex.add(extractedRelation);
 			}

@@ -1,0 +1,9 @@
+------------------------------MAIN CALL---------------------------------
+Annotation : genou articulation
+toresearch : articulation genou
+motentrant,motsortant,relation : false false false
+r_isa : est_une(genou,articulation)
+Annotation : genou articulation
+toresearch : articulation genou
+motentrant,motsortant,relation : false false false
+Résulat test : false

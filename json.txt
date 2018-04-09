@@ -1,133 +1,19 @@
 [
 	{ 
-		 x : altération,
-		 y : maladie,
+		 x : articulation,
+		 y : genou,
 		 relation_type : r_isa,
 		 predicate : est_une
 	},
 	{ 
-		 x : signes,
-		 y : syndrome,
-		 relation_type : r_isa,
-		 predicate : est_un_ensemble_de
+		 x : genou_par_membre,
+		 y : corps,
+		 relation_type : r_has_part,
+		 predicate : a_un
 	},
 	{ 
-		 x : cause_spécifique,
-		 y : maladie,
+		 x : conséquence_bio-mécanique,
+		 y : tibia,
 		 relation_type : r_has_part,
 		 predicate : a_une
-	},
-	{ 
-		 x : déficience,
-		 y : handicap,
-		 relation_type : r_isa,
-		 predicate : est_une
-	},
-	{ 
-		 x : fait_social,
-		 y : maladie,
-		 relation_type : r_isa,
-		 predicate : est_un
-	},
-	{ 
-		 x : noyau_fondateur,
-		 y : maladie_humaine,
-		 relation_type : r_isa,
-		 predicate : est_le
-	},
-	{ 
-		 x : science,
-		 y : phytopathologie,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : branche,
-		 y : pathologie,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : branche,
-		 y : sémiologie_médicale,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : réflexion,
-		 y : diagnostic,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : prédiction,
-		 y : pronostic,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : section,
-		 y : thérapeutique,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : branche,
-		 y : nosologie,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : domaine_d'étude,
-		 y : maladies,
-		 relation_type : r_isa,
-		 predicate : sont_le
-	},
-	{ 
-		 x : recherche_de_mutation,
-		 y : L'une,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : recherche_de_ségrégation,
-		 y : approche,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : SIDA,
-		 y : maladies,
-		 relation_type : r_isa,
-		 predicate : est_le
-	},
-	{ 
-		 x : syphilis,
-		 y : représentant_plus_ancien,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : prévention,
-		 y : individu,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : section,
-		 y : thérapeutique,
-		 relation_type : r_isa,
-		 predicate : est_la
-	},
-	{ 
-		 x : maladies_à_déclaration,
-		 y : risque_épidémique,
-		 relation_type : r_isa,
-		 predicate : sont_des
-	},
-	{ 
-		 x : dispositif,
-		 y : maladie,
-		 relation_type : r_isa,
-		 predicate : qui_est_un
 	},]
