@@ -89,7 +89,7 @@ public class RelationExtractor {
 	}
 
 	public void cleanExtractedRelation(Collection<ExtractedRelation> extractedRelations){
-		String[] prefixToErase={"L'","l'"};
+		String[] prefixToErase={"L'","l'","L’"};
 		for(ExtractedRelation extractedRelation : extractedRelations){
 			for(String prefix : prefixToErase){
 				String obj=extractedRelation.getObject();
