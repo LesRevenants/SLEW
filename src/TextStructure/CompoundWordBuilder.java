@@ -4,6 +4,8 @@ package TextStructure;
 
 
 
+import org.apache.commons.io.Charsets;
+
 import java.io.*;
 
 import java.nio.file.Files;
@@ -149,7 +151,7 @@ public class CompoundWordBuilder {
     public void read(String filePath,boolean serialized){
         try {
             if(!serialized){
-                      Files.readAllLines(Paths.get(filePath))
+                      Files.readAllLines(Paths.get(filePath), Charsets.ISO_8859_1)
                         .stream()
                         .map(word -> word.split(";")[1])
                         .map(word -> word.replace(" ","_"))

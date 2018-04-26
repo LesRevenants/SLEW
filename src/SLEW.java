@@ -66,6 +66,8 @@ public class SLEW {
 		long tStart = System.currentTimeMillis();
 
 		try {
+
+			LinkedList<ExtractedRelation> extractedRelations=new LinkedList<>();
 			Collection<String> articlesName;
 			if(isFile){
 				articlesName=Files.readAllLines(Paths.get(sources_file_path));
@@ -102,10 +104,12 @@ public class SLEW {
 						relationPatternReader
 				);
 
-				extract(relationExtractor,relationDB,use_db,data_key);
+				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key));
 				tStart=Utils.display_ellapsed_time(tStart,"");
 				System.out.println();
 			}
+
+			exportInJSONFile(extractedRelations);
 
 
 		} catch (IOException e) {
@@ -114,42 +118,38 @@ public class SLEW {
 	}
 
 
-	public void extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name){
-		try {
-			ExistingRelations existingRelations=new ExistingRelations();
-			ArrayList<ExtractedRelation> rex=new ArrayList<>();
+	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name){
+		ExistingRelations existingRelations=new ExistingRelations();
+		ArrayList<ExtractedRelation> rex=new ArrayList<>();
 
-			System.out.println("Relations extraites : \n");
+		System.out.println("Relations extraites : \n");
 
-			Collection<ExtractedRelation> expected_relations=null;
-			if(use_db){
-				expected_relations= relationDB.getRelationsFromArticle(article_name,true);
-
-			}
-
-			for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-				String flags="";
-
-				if(use_db){
-					flags += expected_relations.contains(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
-				}
-				else{
-					flags += UtilColor.ANSI_PURPLE;
-				}
-				flags += "[ANNOT]";
-				//System.out.println("------------------------------MAIN CALL---------------------------------");
-				flags += existingRelations.Requesting(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
-				flags += "[JDM] "+UtilColor.ANSI_RESET;
-				
-				//System.out.println(extractedRelation);
-				//System.out.println("Résulat test : "+existingRelations.Requesting(extractedRelation));
-				System.out.println(flags+UtilColor.ANSI_YELLOW +extractedRelation.toString() +UtilColor.ANSI_RESET + extractedRelation.getContextAsStr());
-				rex.add(extractedRelation);
-			}
-			exportInJSONFile(rex);
-		} catch (IOException e) {
-			e.printStackTrace();
+		Collection<ExtractedRelation> expected_relations=null;
+		if(use_db){
+			expected_relations= relationDB.getRelationsFromArticle(article_name,true);
 		}
+
+		for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
+			String flags="";
+
+			if(use_db){
+				flags += expected_relations.contains(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
+			}
+			else{
+				flags += UtilColor.ANSI_PURPLE;
+			}
+			flags += "[ANNOT]";
+			//System.out.println("------------------------------MAIN CALL---------------------------------");
+			flags += existingRelations.Requesting(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
+			flags += "[JDM] "+UtilColor.ANSI_RESET;
+
+			//System.out.println(extractedRelation);
+			//System.out.println("Résulat test : "+existingRelations.Requesting(extractedRelation));
+			System.out.println(flags+UtilColor.ANSI_YELLOW +extractedRelation.toString() +UtilColor.ANSI_RESET + extractedRelation.getContextAsStr());
+			rex.add(extractedRelation);
+		}
+		//exportInJSONFile(rex);
+		return rex;
 
 	}
 
@@ -189,19 +189,28 @@ public class SLEW {
 		return system_query;
 	}
 
-	private void exportInJSONFile(ArrayList<ExtractedRelation> rex) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+	private void exportInJSONFile(Collection<ExtractedRelation> rex) {
 
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream("json.txt"), "utf-8"))) {
 			writer.write("[");
+			int rex_size=rex.size();
+			int i=0;
 			for(ExtractedRelation relex : rex) {
 				writer.write("\n\t{ "
-						+ "\n\t\t x : " + relex.getObject() + ","
-						+ "\n\t\t y : " + relex.getSubject() + ","
-						+ "\n\t\t relation_type : " + relex.getRelation_type() + ","
-						+ "\n\t\t predicate : " + relex.getLinguisticPattern() + "\n\t},");
+						+ "\n\t\t \"x \": \"" + relex.getObject() + "\","
+						+ "\n\t\t \"y \": \"" + relex.getSubject() + "\","
+						+ "\n\t\t \"relation_type\" : \"" + relex.getRelation_type() + "\","
+						+ "\n\t\t \"predicate\" : \"" + relex.getLinguisticPattern() + "\"\n\t}");
+						if(i != rex_size-1){
+							writer.write(",");
+						}
+						i++;
 			}
 			writer.write("]");
+		}
+		catch (IOException e){
+			e.printStackTrace();
 		}
 
 	}
