@@ -16,6 +16,8 @@ try {
 $outpute = explode("@", $out);
 $output = explode("\n", $outpute[0]);
 $other = $outpute[1];
+echo $out;
+
 echo "Fin php Client--" + "\n";
 /*if($output== null) { $_SESSION["mar"] = "There is no article on the french Wikipedia with that name."; }
 if(substr($output[1], 0, 16) == "Géolocalisation") { $_SESSION["mar"] = $output[4]; }
@@ -25,11 +27,11 @@ else { $_SESSION["mar"] = $output[0] . "\n" . $output[1]; }*/
 $_SESSION["mar"] = $output[1];
 $_SESSION["rel"] = $other;
 if(isset($_SESSION['mar'])) {
-header("Location: marmotte.php", true, 301); }
+header("Location: marmotte.php", true, 301); } 
 
 function phpClient($arg) {
 
- $PORT = 20237; //the port on which we are connecting to the "remote" machine
+ $PORT = 20238; //the port on which we are connecting to the "remote" machine
  $HOST = "localhost"; //the ip of the remote machine (in this case it's the same machine)
  
  $sock = socket_create(AF_INET, SOCK_STREAM, 0) //Creating a TCP socket

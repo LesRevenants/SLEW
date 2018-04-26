@@ -76,7 +76,6 @@ echo '<!DOCTYPE HTML>
 					<header>
 						<h3>Here are the extracted relations</h3>
 					</header>
-					<form method="post" action="load.php">
 							<span style="font-size:50% !important;">
 							<table>
 								<tr><th>N°</th>
@@ -86,6 +85,7 @@ echo '<!DOCTYPE HTML>
 								<th>Relation Type</th>
 								</tr>';
 								for($cpt=1;$cpt<=sizeof($colin)-1;$cpt++) {
+								$colin[$cpt] = str_replace($colin[$cpt],"\"","");
 								$seneron = explode(",",$colin[$cpt]);
 								$pascual1 = explode(":",$seneron[0]);
 								$pascual2 = explode(":",$seneron[1]);
@@ -96,7 +96,7 @@ echo '<!DOCTYPE HTML>
 						<div class="row">
 							<div class="12u">
 								<ul class="actions">
-									<li><input type="submit" name="test" value="Confirm" /></li>
+									<li><a href="http://localhost/~fpascual/SLEW/Website"><input type="submit" name="test" value="Get Back" /></a></li>
 								</ul>
 							</div>
 						</div>

@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<!--
+	Overflow by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SLEW</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<script>
+		window.onload = function() {
+
+		var chary = new CanvasJS.Chart("DataExtraction", {
+			animationEnabled: true,
+			title: {
+				text: "Data Extraction from Sources"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 50, label: "Pascual"},
+					{y: 40, label: "Monod"},
+					{y: 10, label: "Colin"}
+				]
+			}]
+		});
+
+		var chary2 = new CanvasJS.Chart("TestsMaking", {
+					animationEnabled: true,
+					title: {
+						text: "Tests Making"
+					},
+					data: [{
+						type: "pie",
+						startAngle: 240,
+						yValueFormatString: "##0.00\"%\"",
+						indexLabel: "{label} {y}",
+						dataPoints: [
+					{y: 20, label: "Monod"},
+					{y: 30, label: "Colin"},
+					{y: 50, label: "Seneron"}
+						]
+					}]
+				});
+
+		var chary3 = new CanvasJS.Chart("Website", {
+					animationEnabled: true,
+					title: {
+						text: "Website"
+					},
+					data: [{
+						type: "pie",
+						startAngle: 240,
+						yValueFormatString: "##0.00\"%\"",
+						indexLabel: "{label} {y}",
+						dataPoints: [
+					{y: 100, label: "Pascual"}
+						]
+					}]
+				});
+
+		var chary4 = new CanvasJS.Chart("RelationFinder", {
+			animationEnabled: true,
+			title: {
+				text: "Relation Finder Algorithm"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 50, label: "Monod"},
+					{y: 50, label: "Colin"}
+				]
+			}]
+		});
+
+		var chary5 = new CanvasJS.Chart("Networking", {
+			animationEnabled: true,
+			title: {
+				text: "Networking"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 45, label: "Pascual"},
+					{y: 10, label: "Colin"},
+					{y: 45, label: "Seneron"}
+				]
+			}]
+		});
+
+		var chary6 = new CanvasJS.Chart("Database", {
+			animationEnabled: true,
+			title: {
+				text: "Data persistence"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 50, label: "Pascual"},
+					{y: 50, label: "Colin"}
+				]
+			}]
+		});
+
+		var chary7 = new CanvasJS.Chart("APICalls", {
+			animationEnabled: true,
+			title: {
+				text: "API calls"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 20, label: "Monod"},
+					{y: 60, label: "Colin"},
+					{y: 20, label: "Seneron"}
+				]
+			}]
+		});
+
+		var chary8 = new CanvasJS.Chart("CompoundWords", {
+			animationEnabled: true,
+			title: {
+				text: "Compound Words Detection"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 100, label: "Colin"}
+				]
+			}]
+		});
+
+		var chary9 = new CanvasJS.Chart("Tritagger", {
+			animationEnabled: true,
+			title: {
+				text: "Tri Tagger and lemmatisation"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: 15, label: "Monod"},
+					{y: 85, label: "Colin"}
+				]
+			}]
+		});
+
+		chary.render();
+		chary2.render();
+		chary3.render();
+		chary4.render();
+		chary5.render();
+		chary6.render();
+		chary7.render();
+		chary8.render();
+		chary9.render();
+
+		}
+		</script>
+
+	</head>
+	<body>
+
+			<article class="container box style3">
+				<section>
+					<header>
+						<h3>5 pointful charts</h3>
+					</header>
+								<br><br><br>
+								<center><div id="DataExtraction" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="Website" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="RelationFinder" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="TestsMaking" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="Networking" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="Database" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="APICalls" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="CompoundWords" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="Tritagger" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+				</section>
+			</article>
+		</body>
+		
+	</html>

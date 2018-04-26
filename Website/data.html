@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<!--
+	Overflow by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SLEW</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<script>
+		window.onload = function() {
+
+		var chary = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			title: {
+				text: "Accuracy Rates for extracted relations"
+			},
+			axisX: {
+				title: "Date"
+			},
+			axisY: {
+				title: "Percentage",
+				suffix: "%"
+			},
+			data: [{
+				type: "line",
+				name: "Accuracy Rates for extracted relations",
+				connectNullData: true,
+				//nullDataLineDashType: "solid",
+				xValueType: "dateTime",
+				xValueFormatString: "DD MMM hh:mm TT",
+				yValueFormatString: "#,##0.##\"%\"",
+				dataPoints: [
+					{ x: 1521747301000, y: 47 },
+					{ x: 1522747301000, y: 56 },
+					{ x: 1523747301000, y: 58 },
+					{ x: 1524747301000, y: 63 },
+					{ x: 1525247301000, y: 65 },
+					{ x: 1525747301000, y: 77 },
+					{ x: 1526547301000, y: 84 },
+					{ x: 1527047301000, y: 86 }
+				]
+			}]
+		});
+
+		var chart = new CanvasJS.Chart("chartContainer2", {
+			animationEnabled: true,
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			title:{
+				text: "Accuracy Rates per scientific fields"
+			},
+			axisY: {
+				title: "Accuracy rate"
+			},
+			data: [{        
+				type: "column",  
+				showInLegend: true, 
+				legendMarkerColor: "grey",
+				legendText: "MMbbl = one million barrels",
+				dataPoints: [      
+					{ y: 94, label: "Medicine" },
+					{ y: 89,  label: "Computer Sciences" },
+					{ y: 86,  label: "Biology" },
+					{ y: 84,  label: "Astronomy" },
+					{ y: 82,  label: "Mathematics" },
+					{ y: 79, label: "Chemistry" }
+				]
+			}]
+		});
+
+		chart.render();
+		chary.render();
+
+		}
+		</script>
+
+	</head>
+	<body>
+
+			<article class="container box style3">
+				<section>
+					<header>
+						<h3>5 pointful charts</h3>
+					</header>
+								<br><br><br>
+								<center><div id="chartContainer" style="height: 370px; width: 75%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
+								<center><div id="chartContainer2" style="height: 370px; width: 75%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+				</section>
+			</article>
+		</body>
+		
+	</html>
