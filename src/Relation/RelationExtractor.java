@@ -63,7 +63,7 @@ public class RelationExtractor {
 	 	});
 		 
 		 int windows_size=3;
-		 LinkedList<ExtractedRelation> extractedRelations=new LinkedList<>();
+		 Collection<ExtractedRelation> extractedRelations=new LinkedList<>();
 		 structuredText.getTextSequences().forEach(textSequence -> {
 			//LinkedHashSet<String> wordSet = textSequence.getWordsSet();
 			 ArrayList<String> words = textSequence.getWords();
@@ -77,6 +77,7 @@ public class RelationExtractor {
 			 }
 		
 		 });
+		 cleanExtractedRelation(extractedRelations);
 		 
 		 return extractedRelations;
 		 
@@ -86,8 +87,23 @@ public class RelationExtractor {
 		ExtractionMethod extractionMethod=new NaiveExtractionMethod();
 		return extractionMethod.extract(textSequence, pattern, pattern_word_idx);
 	}
-	
 
+	public void cleanExtractedRelation(Collection<ExtractedRelation> extractedRelations){
+		String[] prefixToErase={"L'","l'"};
+		for(ExtractedRelation extractedRelation : extractedRelations){
+			for(String prefix : prefixToErase){
+				String obj=extractedRelation.getObject();
+				String subj=extractedRelation.getSubject();
+				if(obj.startsWith(prefix)){
+					extractedRelation.setObject(obj.substring(prefix.length(),obj.length()));
+				}
+				if(subj.startsWith(prefix)){
+					extractedRelation.setSubject(subj.substring(prefix.length(),subj.length()));
+				}
+			}
+		}
+		//return extractedRelations;
+	}
 	
 	
 	

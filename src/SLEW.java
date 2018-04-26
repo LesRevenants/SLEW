@@ -67,7 +67,7 @@ public class SLEW {
 
 		try {
 
-			LinkedList<ExtractedRelation> extractedRelations=new LinkedList<>();
+			Collection<ExtractedRelation> extractedRelations=new LinkedList<>();
 			Collection<String> articlesName;
 			if(isFile){
 				articlesName=Files.readAllLines(Paths.get(sources_file_path));
@@ -108,7 +108,6 @@ public class SLEW {
 				tStart=Utils.display_ellapsed_time(tStart,"");
 				System.out.println();
 			}
-
 			exportInJSONFile(extractedRelations);
 
 
@@ -116,6 +115,7 @@ public class SLEW {
 			e.printStackTrace();
 		}
 	}
+
 
 
 	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name){
