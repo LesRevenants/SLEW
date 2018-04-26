@@ -19,8 +19,10 @@ public class ExistingRelations {
 
 	   public boolean Requesting(ExtractedRelation toResearch){ 
 		   try{
+		       assert(toResearch.getObject() != null);
+		       assert(toResearch.getSubject() != null);
 			   RequeterRezo systeme = new RequeterRezo("36h", 3000);
-		        if(toResearch.getObject() != null) {	  
+		        if(toResearch.getObject() != null ) {
 			        Mot result = systeme.requete(toResearch.getSubject(), true);
 			        if(result != null){
 			        	 /*ArrayList<Annotation> annotations = result.getAnnotations();
@@ -45,12 +47,13 @@ public class ExistingRelations {
 					        
 			        		 HashMap<String, ArrayList<Terme>> req = result.getRelations_sortantes();
 				        	 //System.out.println("Nombre de requêtes : "+req.size());
-						        for(Terme t : req.get(toResearch.getRelation_type())) {
-							        if(t.getTerme().equals(toResearch.getObject())) {
-							        	return true; 
-							        }
-						        }
-					        
+							 if(req.containsKey(toResearch.getRelation_type())){
+                                 for(Terme t : req.get(toResearch.getRelation_type())) {
+                                     if(t.getTerme().equals(toResearch.getObject())) {
+                                         return true;
+                                     }
+                                 }
+                             }
 			        } 
 			        
 		
