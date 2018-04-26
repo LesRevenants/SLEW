@@ -76,6 +76,21 @@ public class ExtractedRelation{
 		return subject;
 	}
 
+	public void setObject(String object) {
+		this.object = object;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setRelation_type(String relation_type) {
+		this.relation_type = relation_type;
+	}
+
+	public void setLinguisticPattern(String linguisticPattern) {
+		this.linguisticPattern = linguisticPattern;
+	}
 
 	@Override
 	public boolean equals(Object o) {
