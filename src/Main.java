@@ -73,12 +73,12 @@ public class Main {
 
 		                 String text=extract(article,true,false);
 		                 String relationsStr = FileUtils.readFileToString(new File("json.txt"),Charsets.UTF_8);
-		                 
+		                 System.out.println(relationsStr);
 		                 if(text.length()<max_size){
-		                	 bw.write(text+relationsStr);
+		                	 bw.write(text+"@"+relationsStr);
 		                 }
 		                 else{
-		                	 bw.write(text.substring(0, max_size)+relationsStr);
+		                	 bw.write(text.substring(0, max_size)+"@"+relationsStr);
 		                 }
 		                 //Closing streams and the current socket (not the listening socket!)
 		                 bw.close();
@@ -98,14 +98,14 @@ public class Main {
     	connectJava2Php(Integer.parseInt(args[0])); }
     	//else
     	//extract(null);*/
-    	/*if(args.length == 0){
+    	if(args.length == 0){
     		System.err.println("Error bad argument number, use help" );
     		return;
     	}
     	switch(args[0]){
     		case "r_an":
     		case "rex": {
-    		    if(args.length == 2){
+    		    if(args.length >= 2){
     		        if(args[1].equals("net")){
                         connectJava2Php(Integer.parseInt(args[2]));
                     }
@@ -118,8 +118,8 @@ public class Main {
     		case "help": {
     			//System.out.println("i : ");
     		}
-    	}*/
-		extract(null,false,false);
+    	}
+		//extract(null,false,false);
     		
     }
     
