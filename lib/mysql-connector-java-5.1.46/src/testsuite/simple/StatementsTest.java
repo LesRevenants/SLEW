@@ -1127,7 +1127,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Tests for PreparedStatement.setObject()
+     * Tests for PreparedStatement.setX()
      * 
      * @throws Exception
      */
@@ -1405,11 +1405,11 @@ public class StatementsTest extends BaseTestCase {
                         } else if (differentTypes[idx][k] instanceof Float) {
                             assertEquals("On row " + idx + ", column " + (k + 1), ((Float) differentTypes[idx][k]).floatValue(), this.rs.getFloat(k + 1), .1);
                         } else if (className.equals("java.lang.Byte")) {
-                            // special mapping in JDBC for ResultSet.getObject()
+                            // special mapping in JDBC for ResultSet.getX()
                             assertEquals("On row " + idx + ", column " + (k + 1), new Integer(((Byte) differentTypes[idx][k]).byteValue()),
                                     this.rs.getObject(k + 1));
                         } else if (className.equals("java.lang.Short")) {
-                            // special mapping in JDBC for ResultSet.getObject()
+                            // special mapping in JDBC for ResultSet.getX()
                             assertEquals("On row " + idx + ", column " + (k + 1), new Integer(((Short) differentTypes[idx][k]).shortValue()),
                                     this.rs.getObject(k + 1));
                         } else {

@@ -56,7 +56,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
         BASELINE_TIMES.put("ResultSet.getTimestamp()", new Double(0.02363));
         BASELINE_TIMES.put("ResultSet.getDate()", new Double(0.02223));
         BASELINE_TIMES.put("ResultSet.getString()", new Double(0.00982));
-        BASELINE_TIMES.put("ResultSet.getObject() on a string", new Double(0.00861));
+        BASELINE_TIMES.put("ResultSet.getX() on a string", new Double(0.00861));
         BASELINE_TIMES.put("Connection.prepareStatement()", new Double(0.18547));
         BASELINE_TIMES.put("single selects", new Double(46));
         BASELINE_TIMES.put("5 standalone queries", new Double(146));
@@ -67,7 +67,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
             BASELINE_TIMES.put("PreparedStatement.setTimestamp()", new Double(0.0182));
             BASELINE_TIMES.put("PreparedStatement.setDate()", new Double(0.0819));
             BASELINE_TIMES.put("PreparedStatement.setString()", new Double(0.0081));
-            BASELINE_TIMES.put("PreparedStatement.setObject() on a string", new Double(0.00793));
+            BASELINE_TIMES.put("PreparedStatement.setX() on a string", new Double(0.00793));
             BASELINE_TIMES.put("PreparedStatement.setDouble()", new Double(0.0246));
         } else {
             BASELINE_TIMES.put("PreparedStatement.setInt()", new Double(0.0011));
@@ -75,7 +75,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
             BASELINE_TIMES.put("PreparedStatement.setTimestamp()", new Double(0.03184));
             BASELINE_TIMES.put("PreparedStatement.setDate()", new Double(0.12248));
             BASELINE_TIMES.put("PreparedStatement.setString()", new Double(0.01512));
-            BASELINE_TIMES.put("PreparedStatement.setObject() on a string", new Double(0.01923));
+            BASELINE_TIMES.put("PreparedStatement.setX() on a string", new Double(0.01923));
             BASELINE_TIMES.put("PreparedStatement.setDouble()", new Double(0.00671));
         }
 
@@ -195,7 +195,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
 
         double getStringObjAvgMs = (double) (currentTimeMillis() - start) / numLoops;
 
-        checkTime("ResultSet.getObject() on a string", getStringObjAvgMs);
+        checkTime("ResultSet.getX() on a string", getStringObjAvgMs);
     }
 
     public void testPreparedStatementTimes() throws Exception {
@@ -342,7 +342,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
 
         double setStringObjAvgMs = (double) (currentTimeMillis() - start) / numLoops;
 
-        checkTime("PreparedStatement.setObject() on a string", setStringObjAvgMs);
+        checkTime("PreparedStatement.setX() on a string", setStringObjAvgMs);
 
         start = currentTimeMillis();
     }

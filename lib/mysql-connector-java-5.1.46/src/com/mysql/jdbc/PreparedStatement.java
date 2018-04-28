@@ -72,7 +72,7 @@ import com.mysql.jdbc.profiler.ProfilerEvent;
  * </p>
  * 
  * <p>
- * If arbitrary parameter type conversions are required, then the setObject method should be used with a target SQL type.
+ * If arbitrary parameter type conversions are required, then the setX method should be used with a target SQL type.
  * </p>
  */
 public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements java.sql.PreparedStatement {
@@ -3810,7 +3810,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
 
     /**
      * Sets the value for the placeholder as a serialized Java object (used by
-     * various forms of setObject()
+     * various forms of setX()
      * 
      * @param parameterIndex
      * @param parameterObj
@@ -4993,7 +4993,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
                 return null;
             }
 
-            // we can't rely on the default mapping for JDBC's ResultSet.getObject() for numerics, they're not one-to-one with PreparedStatement.setObject
+            // we can't rely on the default mapping for JDBC's ResultSet.getX() for numerics, they're not one-to-one with PreparedStatement.setX
 
             switch (PreparedStatement.this.parameterTypes[parameterIndex - 1]) {
                 case Types.TINYINT:

@@ -663,7 +663,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test for PreparedStatement.setObject().
+     * Test for PreparedStatement.setX().
      * Validate new methods as well as support for the types java.time.Local[Date][Time] and java.time.Offset[Date]Time.
      */
     public void testPrepStmtSetObjectAndNewSupportedTypes() throws Exception {
@@ -685,14 +685,14 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test for PreparedStatement.setObject(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
+     * Test for PreparedStatement.setX(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
      */
     public void testPrepStmtSetObjectAndNewUnsupportedTypes() throws Exception {
         checkUnsupportedTypesBehavior(this.conn.prepareStatement("SELECT ?"));
     }
 
     /**
-     * Test for CallableStatement.setObject().
+     * Test for CallableStatement.setX().
      * Validate new methods as well as support for the types java.time.Local[Date][Time] and java.time.Offset[Date]Time.
      */
     public void testCallStmtSetObjectAndNewSupportedTypes() throws Exception {
@@ -718,7 +718,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test for CallableStatement.setObject(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
+     * Test for CallableStatement.setX(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
      */
     public void testCallStmtSetObjectAndNewUnsupportedTypes() throws Exception {
         createProcedure("testUnsupportedTypesProc", "(OUT param VARCHAR(20)) BEGIN SELECT 1; END");
@@ -726,7 +726,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test for (Server)PreparedStatement.setObject().
+     * Test for (Server)PreparedStatement.setX().
      * Validate new methods as well as support for the types java.time.Local[Date][Time] and java.time.Offset[Date]Time.
      */
     public void testServPrepStmtSetObjectAndNewSupportedTypes() throws Exception {
@@ -750,7 +750,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test for (Server)PreparedStatement.setObject(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
+     * Test for (Server)PreparedStatement.setX(), unsupported SQL types TIME_WITH_TIMEZONE, TIMESTAMP_WITH_TIMEZONE and REF_CURSOR.
      */
     public void testServPrepStmtSetObjectAndNewUnsupportedTypes() throws Exception {
         Connection testConn = getConnectionWithProps("useServerPrepStmts=true");
@@ -874,7 +874,7 @@ public class StatementsTest extends BaseTestCase {
      * 4 - `dt` DATETIME (or any kind of *CHAR)
      * 5 - `ts` TIMESTAMP (or any kind of *CHAR)
      * 
-     * Additionally validate support for the types java.time.Local[Date][Time] in ResultSet.getObject().
+     * Additionally validate support for the types java.time.Local[Date][Time] in ResultSet.getX().
      * 
      * @param tableName
      * @param expectedRowCount
@@ -969,7 +969,7 @@ public class StatementsTest extends BaseTestCase {
      * 4 - `odt1` VARCHAR
      * 5 - `odt2` BLOB
      * 
-     * Additionally validate support for the types java.time.Offset[Date]Time in ResultSet.getObject().
+     * Additionally validate support for the types java.time.Offset[Date]Time in ResultSet.getX().
      * 
      * @param tableName
      * @param expectedRowCount

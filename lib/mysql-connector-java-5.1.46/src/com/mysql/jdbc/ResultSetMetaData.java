@@ -154,15 +154,15 @@ public class ResultSetMetaData implements java.sql.ResultSetMetaData {
      * JDBC 2.0
      * 
      * <p>
-     * Return the fully qualified name of the Java class whose instances are manufactured if ResultSet.getObject() is called to retrieve a value from the
-     * column. ResultSet.getObject() may return a subClass of the class returned by this method.
+     * Return the fully qualified name of the Java class whose instances are manufactured if ResultSet.getX() is called to retrieve a value from the
+     * column. ResultSet.getX() may return a subClass of the class returned by this method.
      * </p>
      * 
      * @param column
      *            the column number to retrieve information for
      * 
      * @return the fully qualified name of the Java class whose instances are
-     *         manufactured if ResultSet.getObject() is called to retrieve a
+     *         manufactured if ResultSet.getX() is called to retrieve a
      *         value from the column.
      * 
      * @throws SQLException

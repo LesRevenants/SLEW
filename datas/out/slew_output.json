@@ -1,0 +1,197 @@
+[
+	{ 
+		 "x ": "foie",
+		 "y ": "organe_abdominal",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "Le [32mfoie[0m [31mest_un[0m [32morgane_abdominal[0m de l'appareil_digestif des vertébrés "
+	},
+	{ 
+		 "x ": "foie",
+		 "y ": "organe_intrapéritonéal",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "Le [32mfoie[0m [31mest_un[0m [32morgane_intrapéritonéal[0m : il_est recouvert à "
+	},
+	{ 
+		 "x ": "lobe_droit_du_foie",
+		 "y ": "tandis_que",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le",
+		 "context" : "Le [32mlobe_droit_du_foie[0m [31mest_le[0m plus volumineux , [32mtandis_que[0m le lobe_gauche est petit "
+	},
+	{ 
+		 "x ": "ligaments_coronaires",
+		 "y ": "replis_péritonéaux",
+		 "relation_type" : "r_isa",
+		 "predicate" : "qui_sont_des",
+		 "context" : "est fixé en_haut par les [32mligaments_coronaires[0m , [31mqui_sont_des[0m [32mreplis_péritonéaux[0m en continuité avec la "
+	},
+	{ 
+		 "x ": "lames",
+		 "y ": "ligaments_triangulaires_droit",
+		 "relation_type" : "r_holo",
+		 "predicate" : "forment_les",
+		 "context" : "et gauche du_foie , les_deux [32mlames[0m s'adossent et [31mforment_les[0m [32mligaments_triangulaires_droit[0m et gauche du_foie , "
+	},
+	{ 
+		 "x ": "L'artère_hépatique_propre",
+		 "y ": "branche_terminale",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_la",
+		 "context" : "[32mL'artère_hépatique_propre[0m [31mest_la[0m [32mbranche_terminale[0m de l'artère_hépatique_commune , issue "
+	},
+	{ 
+		 "x ": "critères_structurels",
+		 "y ": "foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "qui_sont",
+		 "context" : "Cette compartimentation repose sur des [32mcritères_structurels[0m et fonctionnels [31mqui_sont[0m interne au [32mfoie[0m "
+	},
+	{ 
+		 "x ": "segmentation_hépatique",
+		 "y ": "division_du_foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une",
+		 "context" : "La [32msegmentation_hépatique[0m [31mest_une[0m [32mdivision_du_foie[0m en plusieurs segments , "
+	},
+	{ 
+		 "x ": "réunion",
+		 "y ": "canal_hépatique_commun",
+		 "relation_type" : "r_holo",
+		 "predicate" : "forme_le",
+		 "context" : "canaux_hépatiques_droit et gauche dont la [32mréunion[0m [31mforme_le[0m [32mcanal_hépatique_commun[0m qui quitte le foie_au_niveau "
+	},
+	{ 
+		 "x ": "du_foie",
+		 "y ": "lobule_hépatique",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le",
+		 "context" : "L'unité_fonctionnelle [32mdu_foie[0m [31mest_le[0m [32mlobule_hépatique[0m "
+	},
+	{ 
+		 "x ": "cellules_du_foie",
+		 "y ": "hépatocytes",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "80% des [32mcellules_du_foie[0m [31msont_des[0m [32mhépatocytes[0m ayant la particularité d'avoir "
+	},
+	{ 
+		 "x ": "poumon",
+		 "y ": "organe_intrathoracique_pair",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "Le [32mpoumon[0m [31mest_un[0m [32morgane_intrathoracique_pair[0m de l'appareil_respiratoire , permettant "
+	},
+	{ 
+		 "x ": "poumons",
+		 "y ": "divergence",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_une",
+		 "context" : "L'un_des_arguments fort est que les [32mpoumons[0m [31msont_une[0m [32mdivergence[0m de_la paroi_ventrale et_non dorsale "
+	},
+	{ 
+		 "x ": "poissons_dipneustes",
+		 "y ": "poumons",
+		 "relation_type" : "r_has_part",
+		 "predicate" : "ont_des",
+		 "context" : "Les [32mpoissons_dipneustes[0m [31mont_des[0m [32mpoumons[0m en_plus_de branchies "
+	},
+	{ 
+		 "x ": "serpents",
+		 "y ": "trachée",
+		 "relation_type" : "r_has_part",
+		 "predicate" : "ont_une",
+		 "context" : "Les [32mserpents[0m [31mont_une[0m [32mtrachée[0m soutenue par_des anneaux_cartilagineux qui "
+	},
+	{ 
+		 "x ": "rôle",
+		 "y ": "savon_qu'on",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le",
+		 "context" : "Pour comparaison , son [32mrôle[0m [31mest_le[0m même que le [32msavon_qu'on[0m ajoute à l'eau afin_de "
+	},
+	{ 
+		 "x ": "L'expiration_naturelle",
+		 "y ": "phénomène_passif",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "[32mL'expiration_naturelle[0m [31mest_un[0m [32mphénomène_passif[0m , résultant de forces_de_rappel "
+	},
+	{ 
+		 "x ": "poumon",
+		 "y ": "porte",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une",
+		 "context" : "Le [32mpoumon[0m [31mest_une[0m [32mporte[0m d'entrée pour certains microorganismes "
+	},
+	{ 
+		 "x ": "résultats",
+		 "y ": "reflet",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_le",
+		 "context" : "Les [32mrésultats[0m [31msont_le[0m [32mreflet[0m de_la fonction_respiratoire , ainsi_que "
+	},
+	{ 
+		 "x ": "lésions_tuberculeuses",
+		 "y ": "lésions",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "Les [32mlésions_tuberculeuses[0m [31msont_des[0m [32mlésions[0m excavées , appelées cavernes "
+	},
+	{ 
+		 "x ": "tumeurs_secondaires",
+		 "y ": "métastases",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "Les [32mtumeurs_secondaires[0m [31msont_des[0m [32mmétastases[0m d'une tumeur_maligne atteignant un_autre "
+	},
+	{ 
+		 "x ": "fibroses_pulmonaires",
+		 "y ": "pathologies_pulmonaires_mutilantes",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "Les [32mfibroses_pulmonaires[0m [31msont_des[0m [32mpathologies_pulmonaires_mutilantes[0m , par perte d'élasticité "
+	},
+	{ 
+		 "x ": "broncho-pneumopathie_chronique_obstructive",
+		 "y ": "pathologie_pulmonaire_chronique",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une",
+		 "context" : "La [32mbroncho-pneumopathie_chronique_obstructive[0m [31mest_une[0m [32mpathologie_pulmonaire_chronique[0m , généralement secondaire à "
+	},
+	{ 
+		 "x ": "L'asthme",
+		 "y ": "pathologie_inflammatoire_chronique",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une",
+		 "context" : "[32mL'asthme[0m [31mest_une[0m [32mpathologie_inflammatoire_chronique[0m de l'arbre_bronchique , caractérisée "
+	},
+	{ 
+		 "x ": "pleuroscopie",
+		 "y ": "examen",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "La [32mpleuroscopie[0m [31mest_un[0m [32mexamen[0m avec un pleuroscope , "
+	},
+	{ 
+		 "x ": "rate",
+		 "y ": "organe_profond",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un",
+		 "context" : "La [32mrate[0m [31mest_un[0m [32morgane_profond[0m , situé dans l'hypocondre_gauche "
+	},
+	{ 
+		 "x ": "terminaison",
+		 "y ": "capillaires_à_housse",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_les",
+		 "context" : "des sortes_de_bouchons qui entourent leur [32mterminaison[0m : ce [31msont_les[0m [32mcapillaires_à_housse[0m "
+	},
+	{ 
+		 "x ": "germes_en_causes",
+		 "y ": "pneumocoques",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_les",
+		 "context" : "Les [32mgermes_en_causes[0m [31msont_les[0m [32mpneumocoques[0m , les méningocoques et "
+	}]

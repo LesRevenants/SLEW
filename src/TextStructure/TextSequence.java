@@ -85,8 +85,11 @@ public class TextSequence {
 					this.wordsGramPositions.add("PAT");
 					patternsIdx.add(i-offset);
 				}
-				else
-				    this.wordsGramPositions.add("NOM");
+				else{
+
+					this.wordsGramPositions.add("NOM");
+				}
+
 				compoundWordPositions.put(word, new ArrayList<>(wordsGramPositions.subList(i, i+compoundWordSize)));
 				i += compoundWordSize;
 				offset += compoundWordSize-1;

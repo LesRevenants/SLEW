@@ -48,9 +48,9 @@ public class Main {
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
     	SLEW slew=new SLEW();
     	if(articlename == null)
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", verbose, true,use_db);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",verbose, true,use_db);
     	else
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser", articlename, verbose, false,use_db);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",  verbose, false,use_db);
         return wikipediaDataExtractor.getText();
 	}
 

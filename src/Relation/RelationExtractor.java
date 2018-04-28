@@ -5,23 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Objects;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-import org.annolab.tt4j.TokenHandler;
-import org.annolab.tt4j.TreeTaggerException;
 import org.annolab.tt4j.TreeTaggerWrapper;
 
 import ExtractionMethod.ExtractionMethod;
 import ExtractionMethod.NaiveExtractionMethod;
 import RequeterRezo.RequeterRezo;
-import TextStructure.CompoundWordBuilder;
 import TextStructure.StructuredText;
 import TextStructure.TextSequence;
-import TextStructure.WordPatriciaTrie;
 
 
 public class RelationExtractor {
@@ -67,7 +59,6 @@ public class RelationExtractor {
 		 structuredText.getTextSequences().forEach(textSequence -> {
 			//LinkedHashSet<String> wordSet = textSequence.getWordsSet();
 			 ArrayList<String> words = textSequence.getWords();
-			 
 			 for(Integer patternIdx : textSequence.getPatternsIdx()) {
 				 String word = words.get(patternIdx);
 				 ExtractedRelation extractedRelation=extractFrom(textSequence, pattern_map.get(word), patternIdx);
@@ -75,12 +66,10 @@ public class RelationExtractor {
 					 extractedRelations.add(extractedRelation);
 				 }
 			 }
-		
 		 });
 		 cleanExtractedRelation(extractedRelations);
 		 
 		 return extractedRelations;
-		 
 	}
 	
 	public ExtractedRelation extractFrom(TextSequence textSequence, RelationPattern pattern, int pattern_word_idx) {
@@ -91,20 +80,28 @@ public class RelationExtractor {
 	public void cleanExtractedRelation(Collection<ExtractedRelation> extractedRelations){
 		String[] prefixToErase={"L'","l'","L’"};
 		for(ExtractedRelation extractedRelation : extractedRelations){
+
+			String x=extractedRelation.getX();
+			extractedRelation.setX(x);
+			extractedRelation.setX_end(x.length());
+			String y=extractedRelation.getY();
+			extractedRelation.setY(y);
+			extractedRelation.setY_end(y.length());
+
+			boolean x_find=false,y_find=false;
 			for(String prefix : prefixToErase){
-				String obj=extractedRelation.getObject();
-				String subj=extractedRelation.getSubject();
-				if(obj.startsWith(prefix)){
-					extractedRelation.setObject(obj.substring(prefix.length(),obj.length()));
+				if(!x_find && x.startsWith(prefix)){
+					extractedRelation.setX_begin(prefix.length());
+					x_find=true;
 				}
-				if(subj.startsWith(prefix)){
-					extractedRelation.setSubject(subj.substring(prefix.length(),subj.length()));
+				if(!y_find && y.startsWith(prefix)){
+					extractedRelation.setY_begin(prefix.length());
+					y_find=true;
 				}
+				if(y_find && x_find)
+					break;
 			}
 		}
-		//return extractedRelations;
 	}
-	
-	
 	
 }

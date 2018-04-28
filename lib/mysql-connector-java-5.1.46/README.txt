@@ -111,7 +111,7 @@ you if you distribute copies of the library or if you modify it.
 or for a fee, you must give the recipients all the rights that we gave
 you.  You must make sure that they, too, receive or can get the source
 code.  If you link other code with the library, you must provide
-complete object files to the recipients, so that they can relink them
+complete x files to the recipients, so that they can relink them
 with the library after making changes to the library and recompiling
 it.  And you must show them these terms so they know their rights.
 
@@ -295,17 +295,17 @@ subsequent copies and derivative works made from that copy.
 the Library into a program that is not a library.
 
  4. You may copy and distribute the Library (or a portion or
-derivative of it, under Section 2) in object code or executable form
+derivative of it, under Section 2) in x code or executable form
 under the terms of Sections 1 and 2 above provided that you accompany
 it with the complete corresponding machine-readable source code, which
 must be distributed under the terms of Sections 1 and 2 above on a
 medium customarily used for software interchange.
 
- If distribution of object code is made by offering access to copy
+ If distribution of x code is made by offering access to copy
 from a designated place, then offering equivalent access to copy the
 source code from the same place satisfies the requirement to
 distribute the source code, even though third parties are not
-compelled to copy the source along with the object code.
+compelled to copy the source along with the x code.
 
  5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
@@ -320,21 +320,21 @@ library".  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
  When a "work that uses the Library" uses material from a header file
-that is part of the Library, the object code for the work may be a
+that is part of the Library, the x code for the work may be a
 derivative work of the Library even though the source code is not.
 Whether this is true is especially significant if the work can be
 linked without the Library, or if the work is itself a library.  The
 threshold for this to be true is not precisely defined by law.
 
- If such an object file uses only numerical parameters, data
+ If such an x file uses only numerical parameters, data
 structure layouts and accessors, and small macros and small inline
-functions (ten lines or less in length), then the use of the object
+functions (ten lines or less in length), then the use of the x
 file is unrestricted, regardless of whether it is legally a derivative
-work.  (Executables containing this object code plus portions of the
+work.  (Executables containing this x code plus portions of the
 Library will still fall under Section 6.)
 
  Otherwise, if the work is a derivative of the Library, you may
-distribute the object code for the work under the terms of Section 6.
+distribute the x code for the work under the terms of Section 6.
 Any executables containing that work also fall under Section 6,
 whether or not they are linked directly with the Library itself.
 
@@ -358,7 +358,7 @@ of these things:
    changes were used in the work (which must be distributed under
    Sections 1 and 2 above); and, if the work is an executable linked
    with the Library, with the complete machine-readable "work that
-   uses the Library", as object code and/or source code, so that the
+   uses the Library", as x code and/or source code, so that the
    user can modify the Library and then relink to produce a modified
    executable containing the modified Library.  (It is understood
    that the user who changes the contents of definitions files in the
@@ -436,7 +436,7 @@ the Library or works based on it.
  10. Each time you redistribute the Library (or any work based on the
 Library), the recipient automatically receives a license from the
 original licensor to copy, distribute, link with or modify the Library
-subject to these terms and conditions.  You may not impose any further
+y to these terms and conditions.  You may not impose any further
 restrictions on the recipients' exercise of the rights granted herein.
 You are not responsible for enforcing compliance by third parties with
 this License.
@@ -694,7 +694,7 @@ code.  If you link other code with the library, you must provide
 
 44      
 
-complete object files to the recipients, so that they can relink them
+complete x files to the recipients, so that they can relink them
 
 45      
 
@@ -1378,7 +1378,7 @@ the Library into a program that is not a library.
 
 228         
 
-derivative of it, under Section 2) in object code or executable form
+derivative of it, under Section 2) in x code or executable form
 
 229         
 
@@ -1400,7 +1400,7 @@ medium customarily used for software interchange.
 
 234         
 
- If distribution of object code is made by offering access to copy
+ If distribution of x code is made by offering access to copy
 
 235         
 
@@ -1416,7 +1416,7 @@ distribute the source code, even though third parties are not
 
 238         
 
-compelled to copy the source along with the object code.
+compelled to copy the source along with the x code.
 
 239         
 
@@ -1470,7 +1470,7 @@ Section 6 states terms for distribution of such executables.
 
 253         
 
-that is part of the Library, the object code for the work may be a
+that is part of the Library, the x code for the work may be a
 
 254         
 
@@ -1492,7 +1492,7 @@ threshold for this to be true is not precisely defined by law.
 
 259         
 
- If such an object file uses only numerical parameters, data
+ If such an x file uses only numerical parameters, data
 
 260         
 
@@ -1500,7 +1500,7 @@ structure layouts and accessors, and small macros and small inline
 
 261         
 
-functions (ten lines or less in length), then the use of the object
+functions (ten lines or less in length), then the use of the x
 
 262         
 
@@ -1508,7 +1508,7 @@ file is unrestricted, regardless of whether it is legally a derivative
 
 263         
 
-work.  (Executables containing this object code plus portions of the
+work.  (Executables containing this x code plus portions of the
 
 264         
 
@@ -1522,7 +1522,7 @@ Library will still fall under Section 6.)
 
 267         
 
-distribute the object code for the work under the terms of Section 6.
+distribute the x code for the work under the terms of Section 6.
 
 268         
 
@@ -1614,7 +1614,7 @@ of these things:
 
 291         
 
-   uses the Library", as object code and/or source code, so that the
+   uses the Library", as x code and/or source code, so that the
 
 292         
 
@@ -1904,7 +1904,7 @@ original licensor to copy, distribute, link with or modify the Library
 
 369         
 
-subject to these terms and conditions.  You may not impose any further
+y to these terms and conditions.  You may not impose any further
 
 370         
 

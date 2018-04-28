@@ -2282,7 +2282,7 @@ public class UpdatableResultSet extends ResultSetImpl {
     }
 
     /**
-     * Internal setObject implementation. Although targetType is not part of default ResultSet methods signatures, it is used for type conversions from
+     * Internal setX implementation. Although targetType is not part of default ResultSet methods signatures, it is used for type conversions from
      * JDBC42UpdatableResultSet new JDBC 4.2 updateObject() methods.
      * 
      * @param columnIndex

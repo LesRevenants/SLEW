@@ -601,7 +601,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#11798 - Pstmt.setObject(...., Types.BOOLEAN) throws
+     * Tests fix for BUG#11798 - Pstmt.setX(...., Types.BOOLEAN) throws
      * exception.
      * 
      * @throws Exception
@@ -905,7 +905,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#1901 -- PreparedStatement.setObject(int, Object, int,
+     * Tests fix for BUG#1901 -- PreparedStatement.setX(int, Object, int,
      * int) doesn't support CLOB or BLOB types.
      * 
      * @throws Exception
@@ -1105,7 +1105,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#3103 -- java.util.Date not accepted as parameter to
-     * PreparedStatement.setObject().
+     * PreparedStatement.setX().
      * 
      * @throws Exception
      *             if the test fails
@@ -2191,7 +2191,7 @@ public class StatementRegressionTest extends BaseTestCase {
      * BigDecimals for (i = 0; i < vals.length; i++) { BigDecimal foo = new
      * BigDecimal(vals[i]);
      * 
-     * this.pstmt.setObject(1, foo, Types.DECIMAL, 2); this.pstmt.setInt(2, i);
+     * this.pstmt.setX(1, foo, Types.DECIMAL, 2); this.pstmt.setInt(2, i);
      * this.pstmt.executeUpdate(); }
      * 
      * this.pstmt = this.conn.prepareStatement("SELECT field1 FROM testBug9595
@@ -2691,9 +2691,9 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#15383 - PreparedStatement.setObject() serializes
+     * Tests fix for BUG#15383 - PreparedStatement.setX() serializes
      * BigInteger as object, rather than sending as numeric value (and is thus
-     * not complementary to .getObject() on an UNSIGNED LONG type).
+     * not complementary to .getX() on an UNSIGNED LONG type).
      * 
      * @throws Exception
      *             if the test fails.
@@ -2827,7 +2827,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#19615, PreparedStatement.setObject(int, Object, int)
+     * Tests fix for BUG#19615, PreparedStatement.setX(int, Object, int)
      * doesn't respect scale of BigDecimals.
      * 
      * @throws Exception

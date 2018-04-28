@@ -8,26 +8,26 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 
 	@Override
 	public ExtractedRelation extract(TextSequence textSequence, RelationPattern pattern, int pattern_word_idx) {
-		int subject_idx=pattern_word_idx-1;
-		int object_idx=pattern_word_idx+1;
+		int x_idx=pattern_word_idx-1;
+		int y_idx=pattern_word_idx+1;
 		int window = 10;
 		
 		String patternStr = textSequence.getWords().get(pattern_word_idx);
-		String objectGramPosition = textSequence.getWordsPositions().get(object_idx);
-		String subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
+		String x_pos = textSequence.getWordsPositions().get(y_idx);
+		String y_pos = textSequence.getWordsPositions().get(x_idx);
 		
 		int cpt = 0; 
 		boolean found = false;
 		//sujet
 		while(cpt < window && !found){
-			if(subject_idx <0 || object_idx == textSequence.getWords().size()) {
+			if(x_idx <0 || y_idx == textSequence.getWords().size()) {
 				return null;
 			}
-			if(pattern.getSyntaxicContraint().getyConstraints().contains(subjectGramPosition)) found = true;
+			if(pattern.getSyntaxicContraint().getyConstraints().contains(y_pos)) found = true;
 			else {
-				subject_idx--;
-				if(subject_idx >=0) {
-					subjectGramPosition = textSequence.getWordsPositions().get(subject_idx);
+				x_idx--;
+				if(x_idx >=0) {
+					y_pos = textSequence.getWordsPositions().get(x_idx);
 				}
 			}
 			cpt++;
@@ -36,25 +36,27 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 		else {
 			found = false; cpt = 0;
 			while(cpt < window && !found){
-				if(subject_idx <0 || object_idx >= textSequence.getWords().size()) {
+				if(x_idx <0 || y_idx >= textSequence.getWords().size()) {
 					return null;
 				}
-				if(pattern.getSyntaxicContraint().getxConstraints().contains(objectGramPosition)) found = true;
+				if(pattern.getSyntaxicContraint().getxConstraints().contains(x_pos)) found = true;
 				else {
-					object_idx++;
-					if(object_idx != textSequence.getWordsPositions().size()){
-						objectGramPosition = textSequence.getWordsPositions().get(object_idx);
+					y_idx++;
+					if(y_idx != textSequence.getWordsPositions().size()){
+						x_pos = textSequence.getWordsPositions().get(y_idx);
 					}
 
 				}
 				cpt++;
 			}
 		}
-		
-		String object=textSequence.getWords().get(object_idx);
-		String subject=textSequence.getWords().get(subject_idx);
-				
-		return new ExtractedRelation(pattern.getRelationType(),patternStr, object, subject,textSequence,subject_idx,object_idx);
+		String x=textSequence.getWords().get(x_idx);
+		String y=textSequence.getWords().get(y_idx);
+		ExtractedRelation extractedRelation=new ExtractedRelation(pattern.getRelationType(),patternStr, x, y,textSequence,x_idx,y_idx);
+		extractedRelation.setX_end(x_idx);
+		extractedRelation.setY_idx(y_idx);
+		extractedRelation.setLing_pattern_idx(pattern_word_idx);
+		return extractedRelation;
 	}
 
 }

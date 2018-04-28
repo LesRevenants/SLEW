@@ -78,7 +78,7 @@ public class ResultSetScannerInterceptor implements StatementInterceptor {
 
                         String methodName = method.getName();
 
-                        if (invocationResult != null && invocationResult instanceof String || "getString".equals(methodName) || "getObject".equals(methodName)
+                        if (invocationResult != null && invocationResult instanceof String || "getString".equals(methodName) || "getX".equals(methodName)
                                 || "getObjectStoredProc".equals(methodName)) {
                             Matcher matcher = ResultSetScannerInterceptor.this.regexP.matcher(invocationResult.toString());
 

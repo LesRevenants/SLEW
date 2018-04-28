@@ -89,7 +89,7 @@ public class ResultSetTest extends BaseTestCase {
 
     /**
      * Test for (Updatable)ResultSet.[update|get]Object().
-     * Note: ResultSet.getObject() is covered in methods TestJDBC42Statemet.validateTestData[Local|Offset]DTTypes.
+     * Note: ResultSet.getX() is covered in methods TestJDBC42Statemet.validateTestData[Local|Offset]DTTypes.
      */
     public void testUpdResultSetUpdateObjectAndNewSupportedTypes() throws Exception {
         /*

@@ -47,25 +47,25 @@ public interface ResultSetInternalMethods extends java.sql.ResultSet {
     public abstract boolean reallyResult();
 
     /**
-     * Functions like ResultSet.getObject(), but using the given SQL type
+     * Functions like ResultSet.getX(), but using the given SQL type
      * (as registered during CallableStatement.registerOutParameter()).
      */
     public abstract Object getObjectStoredProc(int columnIndex, int desiredSqlType) throws SQLException;
 
     /**
-     * Functions like ResultSet.getObject(), but using the given SQL type
+     * Functions like ResultSet.getX(), but using the given SQL type
      * (as registered during CallableStatement.registerOutParameter()).
      */
     public abstract Object getObjectStoredProc(int i, java.util.Map<Object, Object> map, int desiredSqlType) throws SQLException;
 
     /**
-     * Functions like ResultSet.getObject(), but using the given SQL type
+     * Functions like ResultSet.getX(), but using the given SQL type
      * (as registered during CallableStatement.registerOutParameter()).
      */
     public abstract Object getObjectStoredProc(String columnName, int desiredSqlType) throws SQLException;
 
     /**
-     * Functions like ResultSet.getObject(), but using the given SQL type
+     * Functions like ResultSet.getX(), but using the given SQL type
      * (as registered during CallableStatement.registerOutParameter()).
      */
     public abstract Object getObjectStoredProc(String colName, java.util.Map<Object, Object> map, int desiredSqlType) throws SQLException;

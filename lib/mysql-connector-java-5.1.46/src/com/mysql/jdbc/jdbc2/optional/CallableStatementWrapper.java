@@ -375,7 +375,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#getObject(int)
+     * @see java.sql.CallableStatement#getX(int)
      */
     public Object getObject(int parameterIndex) throws SQLException {
         try {
@@ -413,7 +413,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#getObject(int, java.util.Map)
+     * @see java.sql.CallableStatement#getX(int, java.util.Map)
      */
     public Object getObject(int parameterIndex, Map<String, Class<?>> typeMap) throws SQLException {
         try {
@@ -936,7 +936,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#setObject(java.lang.String, java.lang.Object, int, int)
+     * @see java.sql.CallableStatement#setX(java.lang.String, java.lang.Object, int, int)
      */
     public void setObject(String parameterName, Object x, int targetSqlType, int scale) throws SQLException {
         try {
@@ -953,7 +953,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#setObject(java.lang.String, java.lang.Object, int)
+     * @see java.sql.CallableStatement#setX(java.lang.String, java.lang.Object, int)
      */
     public void setObject(String parameterName, Object x, int targetSqlType) throws SQLException {
         try {
@@ -970,7 +970,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#setObject(java.lang.String, java.lang.Object)
+     * @see java.sql.CallableStatement#setX(java.lang.String, java.lang.Object)
      */
     public void setObject(String parameterName, Object x) throws SQLException {
         try {
@@ -1299,7 +1299,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#getObject(int)
+     * @see java.sql.CallableStatement#getX(int)
      */
     public Object getObject(String parameterName) throws SQLException {
         try {
@@ -1337,7 +1337,7 @@ public class CallableStatementWrapper extends PreparedStatementWrapper implement
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.CallableStatement#getObject(int, java.util.Map)
+     * @see java.sql.CallableStatement#getX(int, java.util.Map)
      */
     public Object getObject(String parameterName, Map<String, Class<?>> typeMap) throws SQLException {
         try {

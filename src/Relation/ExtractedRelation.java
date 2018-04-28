@@ -2,7 +2,6 @@ package Relation;
 
 import TextStructure.TextSequence;
 import Util.UtilColor;
-import Util.Utils;
 
 import java.util.Objects;
 
@@ -10,30 +9,48 @@ public class ExtractedRelation{
 	
 	private String relation_type;
 	private String linguisticPattern;
-	private String object;
-	private String subject;
+	private int ling_pattern_idx;
+
+	public void setLing_pattern_idx(int ling_pattern_idx) {
+		this.ling_pattern_idx = ling_pattern_idx;
+	}
+
+	public void setX_idx(int x_idx) {
+		this.x_idx = x_idx;
+	}
+
+	public void setY_idx(int y_idx) {
+		this.y_idx = y_idx;
+	}
+
+	private String x;
+	private int x_idx,x_begin, x_end;
+	private String y;
+	private int y_idx,y_begin, y_end;
 	private TextSequence context;
-	private int begin_idx;
-	private int end_idx;
+	private int context_begin;
+	private int context_end;
 	private static final int windows_size=5;
 
 
-	public ExtractedRelation(String relation_type, String linguisticPattern, String object, String subject, TextSequence context, int begin_idx, int end_idx) {
+	public ExtractedRelation(String relation_type, String linguisticPattern, String x, String y, TextSequence context, int context_begin, int context_end) {
 		this.relation_type = relation_type;
 		this.linguisticPattern = linguisticPattern;
-		this.object = object;
-		this.subject = subject;
+		this.x = x;
+		this.y = y;
 		this.context = context;
-		this.begin_idx = (begin_idx-windows_size >= 0) ? begin_idx-windows_size : 0;
-		this.end_idx = (end_idx + windows_size < context.getWords().size() ? end_idx +windows_size: context.getWords().size());
+		this.context_begin = (context_begin -windows_size >= 0) ? context_begin -windows_size : 0;
+		this.context_end = (context_end + windows_size < context.getWords().size() ? context_end +windows_size: context.getWords().size());
 	}
 
-	public ExtractedRelation(String relation_type, String linguisticPattern, String object, String subject) {
+
+
+	public ExtractedRelation(String relation_type, String linguisticPattern, String x, String y) {
 		super();
 		this.relation_type = relation_type;
 		this.linguisticPattern = linguisticPattern;
-		this.object = object;
-		this.subject = subject;
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override
@@ -43,21 +60,53 @@ public class ExtractedRelation{
 		sb.append(" : ");
 		sb.append(linguisticPattern);
 		sb.append("(");
-		sb.append(subject);
+		sb.append(x.substring(x_begin,x_end));
 		sb.append(",");
-		sb.append(object);
+		sb.append(y.substring(y_begin,y_end));
 		sb.append(")");
 		return sb.toString();
 	}
 
+	public TextSequence getContext() {
+		return context;
+	}
+
 	public String getContextAsStr(){
-		StringBuilder sb=new StringBuilder("  -->    ");
+		StringBuilder sb=new StringBuilder();
 		if(context != null){
-			for(String word : context.getWords().subList(begin_idx,end_idx)) {
-				sb.append(word+" ");
+			for(String word : context.getWords().subList(context_begin, context_end)) {
+				if(word.equals(x)){
+					sb.append(UtilColor.ANSI_GREEN+word+UtilColor.ANSI_RESET);
+				}
+				else if(word.equals(y)){
+					sb.append(UtilColor.ANSI_GREEN+word+UtilColor.ANSI_RESET);
+				}
+				else if(word.equals(linguisticPattern)){
+					sb.append(UtilColor.ANSI_RED +word+UtilColor.ANSI_RESET);
+				}
+				else{
+					sb.append(word);
+				}
+				sb.append(" ");
 			}
 		}
 		return sb.toString();
+	}
+
+	public void setX_begin(int x_begin) {
+		this.x_begin = x_begin;
+	}
+
+	public void setX_end(int x_end) {
+		this.x_end = x_end;
+	}
+
+	public void setY_begin(int y_begin) {
+		this.y_begin = y_begin;
+	}
+
+	public void setY_end(int y_end) {
+		this.y_end = y_end;
 	}
 
 	public String getRelation_type() {
@@ -68,20 +117,20 @@ public class ExtractedRelation{
 		return linguisticPattern;
 	}
 
-	public String getObject() {
-		return object;
+	public String getX() {
+		return x;
 	}
 
-	public String getSubject() {
-		return subject;
+	public String getY() {
+		return y;
 	}
 
-	public void setObject(String object) {
-		this.object = object;
+	public void setX(String x) {
+		this.x = x;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setY(String y) {
+		this.y = y;
 	}
 
 	public void setRelation_type(String relation_type) {
@@ -99,13 +148,13 @@ public class ExtractedRelation{
 		ExtractedRelation that = (ExtractedRelation) o;
 		return Objects.equals(relation_type, that.relation_type) &&
 				Objects.equals(linguisticPattern, that.linguisticPattern) &&
-				Objects.equals(object, that.object) &&
-				Objects.equals(subject, that.subject);
+				Objects.equals(x, that.x) &&
+				Objects.equals(y, that.y);
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(relation_type, linguisticPattern, object, subject);
+		return Objects.hash(relation_type, linguisticPattern, x, y);
 	}
 }

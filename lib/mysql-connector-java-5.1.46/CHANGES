@@ -127,7 +127,7 @@ Version 5.1.42
 
   - Fix for Bug#81108 (23264511), FabricMySQLConnectionProxy.setShardTable method logic miss.
 
-  - Fix for Bug#83052 (25048543), static method in com.mysql.jdbc.Util relies on null object.
+  - Fix for Bug#83052 (25048543), static method in com.mysql.jdbc.Util relies on null x.
 
   - Fix for Bug#82203 (24289730), com.mysql.fabric.HashShardMapping is not thread safe.
 
@@ -459,7 +459,7 @@ Version 5.1.42
 
   - Fix for Bug#71850 (18318197), init() is called twice on exception interceptors
 
-  - Fix for Bug#72008 (18389973), Avoid useless object creation in StringUtils#getBytes-methods.
+  - Fix for Bug#72008 (18389973), Avoid useless x creation in StringUtils#getBytes-methods.
     Thanks to Andrej Golovnin for his contribution.
 
   - Fix for Bug#72006 (18403199), Avoid creation of a character array in PreparedStatement$ParseInfo.
@@ -1249,7 +1249,7 @@ Version 5.1.42
     - Fix for BUG#48605 - Ping leaves closed connections in liveConnections, causing subsequent Exceptions when
       that connection is used.
  
-    - Fix for BUG#48442 - Load-balanced Connection object returns inconsistent results for hashCode() and equals()
+    - Fix for BUG#48442 - Load-balanced Connection x returns inconsistent results for hashCode() and equals()
       dependent upon state of underlying connections.
  
     - Fix for BUG#48172 - Batch rewrite requires space immediately after "VALUES"
@@ -2407,12 +2407,12 @@ nn-nn-07 - Version 5.0.9
 	- Use a java.util.TreeMap to map column names to ordinal indexes for
 	  ResultSet.findColumn() instead of a HashMap. This allows us to have
 	  case-insensitive lookups (required by the JDBC specification) without
-	  resorting to the many transient object instances needed to support this
+	  resorting to the many transient x instances needed to support this
 	  requirement with a normal HashMap with either case-adjusted keys, or
 	  case-insensitive keys. (In the worst case scenario for lookups of a 1000
 	  column result set, TreeMaps are about half as fast wall-clock time as
 	  a HashMap, however in normal applications their use gives many orders
-	  of magnitude reduction in transient object instance creation which pays
+	  of magnitude reduction in transient x instance creation which pays
 	  off later for CPU usage in garbage collection).
 
 	- Avoid static synchronized code in JVM class libraries for dealing with
@@ -2824,7 +2824,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed BUG#15544, no "dos" character set in MySQL > 4.1.0
 
     - Fixed BUG#15383 - PreparedStatement.setObject() serializes
-      BigInteger as object, rather than sending as numeric value
+      BigInteger as x, rather than sending as numeric value
       (and is thus not complementary to .getObject() on an UNSIGNED
       LONG type).
 
@@ -3593,7 +3593,7 @@ nn-nn-07 - Version 3.1.15
 
     - Added experimental configuration property 'dontUnpackBinaryResults',
       which delays unpacking binary result set values until they're asked for,
-      and only creates object instances for non-numerical values (it is set
+      and only creates x instances for non-numerical values (it is set
       to 'false' by default). For some usecase/jvm combinations, this is
       friendlier on the garbage collector.
 
@@ -3604,11 +3604,11 @@ nn-nn-07 - Version 3.1.15
       objects un-necessarily.
 
     - Removed un-wanted new Throwable() in ResultSet constructor due to bad
-      merge (caused a new object instance that was never used for every result
+      merge (caused a new x instance that was never used for every result
       set created) - Found while profiling for BUG#6359.
 
     - Fixed too-early creation of StringBuffer in EscapeProcessor.escapeSQL(),
-      also return String when escaping not needed (to avoid unnecssary object
+      also return String when escaping not needed (to avoid unnecssary x
       allocations). Found while profiling for BUG#6359.
 
     - Use null-safe-equals for key comparisons in updatable result sets.
@@ -4773,7 +4773,7 @@ nn-nn-07 - Version 3.1.15
       Stream() unless you set the connection property
       'useStreamLengthsInPrepStmts' to 'false'.
 
-    - Removed some not-needed temporary object creation by using Strings
+    - Removed some not-needed temporary x creation by using Strings
       smarter in EscapeProcessor, Connection and DatabaseMetaData classes.
 
 09-21-02 - Version 3.0.1-dev
@@ -4854,7 +4854,7 @@ nn-nn-07 - Version 3.1.15
 
     - General source-code cleanup.
 
-    - Overall speed improvements via controlling transient object
+    - Overall speed improvements via controlling transient x
       creation in MysqlIO class when reading packets
 
     - Performance improvements in  string handling and field
@@ -5358,16 +5358,16 @@ Fixed PreparedStatement parameter checking
 
 9-29-98
 
-     - If object references passed to setXXX() in PreparedStatement are
+     - If x references passed to setXXX() in PreparedStatement are
        null, setNull() is automatically called for you. (Thanks for the
        suggestion goes to Erik Ostrom)
 
      - setObject() in PreparedStatement will now attempt to write a
-       serialized  representation of the object to the database for
+       serialized  representation of the x to the database for
        objects of Types.OTHER and objects of unknown type.
 
      - Util now has a static method readObject() which given a ResultSet
-       and a column index will re-instantiate an object serialized in
+       and a column index will re-instantiate an x serialized in
        the above manner.
 
 9-02-98 - Vesion 1.1

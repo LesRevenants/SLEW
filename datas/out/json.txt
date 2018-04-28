@@ -1,0 +1,169 @@
+[
+	{ 
+		 "x ": "organe_abdominal",
+		 "y ": "foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "organe_intrapéritonéal",
+		 "y ": "foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "tandis_que",
+		 "y ": "lobe_droit_du_foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le"
+	},
+	{ 
+		 "x ": "replis_péritonéaux",
+		 "y ": "ligaments_coronaires",
+		 "relation_type" : "r_isa",
+		 "predicate" : "qui_sont_des"
+	},
+	{ 
+		 "x ": "ligaments_triangulaires_droit",
+		 "y ": "lames",
+		 "relation_type" : "r_holo",
+		 "predicate" : "forment_les"
+	},
+	{ 
+		 "x ": "branche_terminale",
+		 "y ": "artère_hépatique_propre",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_la"
+	},
+	{ 
+		 "x ": "foie",
+		 "y ": "critères_structurels",
+		 "relation_type" : "r_isa",
+		 "predicate" : "qui_sont"
+	},
+	{ 
+		 "x ": "division",
+		 "y ": "segmentation_hépatique",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une"
+	},
+	{ 
+		 "x ": "canal_hépatique_commun",
+		 "y ": "réunion",
+		 "relation_type" : "r_holo",
+		 "predicate" : "forme_le"
+	},
+	{ 
+		 "x ": "lobule_hépatique",
+		 "y ": "du_foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le"
+	},
+	{ 
+		 "x ": "hépatocytes",
+		 "y ": "du_foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des"
+	},
+	{ 
+		 "x ": "organe_intrathoracique_pair",
+		 "y ": "poumon",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "divergence",
+		 "y ": "poumons",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_une"
+	},
+	{ 
+		 "x ": "poumons",
+		 "y ": "poissons_dipneustes",
+		 "relation_type" : "r_has_part",
+		 "predicate" : "ont_des"
+	},
+	{ 
+		 "x ": "trachée",
+		 "y ": "serpents",
+		 "relation_type" : "r_has_part",
+		 "predicate" : "ont_une"
+	},
+	{ 
+		 "x ": "savon_qu'on",
+		 "y ": "rôle",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le"
+	},
+	{ 
+		 "x ": "phénomène_passif",
+		 "y ": "expiration_naturelle",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "porte",
+		 "y ": "poumon",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une"
+	},
+	{ 
+		 "x ": "reflet",
+		 "y ": "résultats",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_le"
+	},
+	{ 
+		 "x ": "lésions",
+		 "y ": "lésions_tuberculeuses",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des"
+	},
+	{ 
+		 "x ": "métastases",
+		 "y ": "tumeurs_secondaires",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des"
+	},
+	{ 
+		 "x ": "pathologies_pulmonaires_mutilantes",
+		 "y ": "fibroses_pulmonaires",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des"
+	},
+	{ 
+		 "x ": "pathologie_pulmonaire_chronique",
+		 "y ": "broncho-pneumopathie_chronique_obstructive",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une"
+	},
+	{ 
+		 "x ": "pathologie_inflammatoire_chronique",
+		 "y ": "asthme",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_une"
+	},
+	{ 
+		 "x ": "examen",
+		 "y ": "pleuroscopie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "organe_profond",
+		 "y ": "rate",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_un"
+	},
+	{ 
+		 "x ": "capillaires",
+		 "y ": "terminaison",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_les"
+	},
+	{ 
+		 "x ": "pneumocoques",
+		 "y ": "causes",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_les"
+	}]

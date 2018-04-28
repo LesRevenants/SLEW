@@ -699,7 +699,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#4482, ResultSet.getObject() returns wrong type for
+     * Tests fix for BUG#4482, ResultSet.getX() returns wrong type for
      * strings when using prepared statements.
      * 
      * @throws Exception
@@ -753,7 +753,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#5032 -- ResultSet.getObject() doesn't return type
+     * Tests fix for BUG#5032 -- ResultSet.getX() doesn't return type
      * Boolean for pseudo-bit types from prepared statements on 4.1.x.
      * 
      * @throws Exception
@@ -1265,7 +1265,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for Bug#8868, DATE_FORMAT() queries returned as BLOBs from
-     * getObject().
+     * getX().
      * 
      * @throws Exception
      *             if the test fails.
@@ -3105,7 +3105,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#25328 - BIT(> 1) is returned as java.lang.String from
-     * ResultSet.getObject() rather than byte[].
+     * ResultSet.getX() rather than byte[].
      * 
      * @throws Exception
      *             if the test fails.
@@ -3230,7 +3230,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#25787 - java.util.Date should be serialized for
-     * PreparedStatement.setObject().
+     * PreparedStatement.setX().
      * 
      * We add a new configuration option "treatUtilDateAsTimestamp", which is
      * false by default, as (1) We already had specific behavior to treat

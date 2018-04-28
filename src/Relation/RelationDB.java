@@ -3,7 +3,6 @@ package Relation;
 import java.sql.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Properties;
 
 
 public class RelationDB {
@@ -72,8 +71,8 @@ public class RelationDB {
 			PreparedStatement pstmt= connection.prepareStatement(query.toString());
 			pstmt.setString(1, relation.getRelation_type());
 			pstmt.setString(2,relation.getLinguisticPattern());
-			pstmt.setString(3,relation.getSubject());
-			pstmt.setString(4,relation.getObject());
+			pstmt.setString(3,relation.getY());
+			pstmt.setString(4,relation.getX());
 			pstmt.setBoolean(5, is_human_found);
 			int id=wikiDB.article_id_for(article_name);
 			if(id != -1){
