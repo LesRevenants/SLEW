@@ -69,6 +69,7 @@ public class StructuredText {
             compoundWordBuilder.addToTrie(new_compound_words);
 			TextSequence newTextSequence=compoundWordBuilder.replaceSequence(textSequence, 5);
 			newTextSequence.setWordsGramPositions(positions, patterns);
+			newTextSequence.update_compoundWordPos();
 			this.textSequences.add(newTextSequence);
 			total_size +=newTextSequence.getSize();
 		});

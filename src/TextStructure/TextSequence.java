@@ -2,10 +2,7 @@ package TextStructure;
 
 
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -34,11 +31,13 @@ public class TextSequence {
     /**
      *  Key/Value associative array [ a_multiple_word -> { pos(a),pos(multiple),pos(word)}
      */
-    private HashMap<String,ArrayList<String>> compoundWordPositions;
+    private HashMap<String,ArrayList<String>> compoundWordGramPositions;
 
 
     
     private ArrayList<Integer> patternsIdx;
+
+    private ArrayList<Integer> compoundWordIdx;
 
     private long size;
 
@@ -51,8 +50,9 @@ public class TextSequence {
     	 words = new ArrayList<>();
     	 words_replacements = new HashMap<>();
     	 wordsGramPositions=new ArrayList<>();
-    	 compoundWordPositions=new HashMap<>();
+    	 compoundWordGramPositions =new HashMap<>();
     	 patternsIdx=new ArrayList<>();
+    	 compoundWordIdx=new ArrayList<>();
     	 size =0;
     }
     
@@ -86,11 +86,11 @@ public class TextSequence {
 					patternsIdx.add(i-offset);
 				}
 				else{
-
-					this.wordsGramPositions.add("NOM");
+					this.wordsGramPositions.add("CW");
+					compoundWordIdx.add(i-offset);
 				}
 
-				compoundWordPositions.put(word, new ArrayList<>(wordsGramPositions.subList(i, i+compoundWordSize)));
+				compoundWordGramPositions.put(word, new ArrayList<>(wordsGramPositions.subList(i, i+compoundWordSize)));
 				i += compoundWordSize;
 				offset += compoundWordSize-1;
 			}
@@ -153,7 +153,22 @@ public class TextSequence {
 		if(words.isEmpty())
 			return false;
 		this.words_replacements = words_replacements;
+
 		return true;
+	}
+
+	public void update_compoundWordPos(){
+    	/*for(Map.Entry<String,ArrayList<String>> entry : compoundWordGramPositions.entrySet()){
+			if(entry.getValue().get(0).equals("NOM")){
+
+			}
+		}*/
+    	for(Integer cw_idx : compoundWordIdx){
+    		String cw=words.get(cw_idx);
+    		if(compoundWordGramPositions.get(cw).get(0).equals("NOM") ){
+				wordsGramPositions.set(cw_idx,"NOM");
+			}
+		}
 	}
 
 	public String toString(){
@@ -169,8 +184,8 @@ public class TextSequence {
         		for(int j=0;j<word_replacement.size();j++) {
         			sb.append(word_replacement.get(j)+"[");
         			compound += (word_replacement.get(j)+"[").length();
-        			sb.append(compoundWordPositions.get(word).get(j)+"], ");
-        			compound += (compoundWordPositions.get(word).get(j)+"], ").length();
+        			sb.append(compoundWordGramPositions.get(word).get(j)+"], ");
+        			compound += (compoundWordGramPositions.get(word).get(j)+"], ").length();
         		}
 
         	
