@@ -52,7 +52,7 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 		}
 		String x=textSequence.getWords().get(x_idx);
 		String y=textSequence.getWords().get(y_idx);
-		ExtractedRelation extractedRelation=new ExtractedRelation(pattern.getRelationType(),patternStr, x, y,textSequence,x_idx,y_idx);
+		ExtractedRelation extractedRelation=new ExtractedRelation(pattern,patternStr, x, y,textSequence,x_idx,y_idx);
 		extractedRelation.setX_end(x_idx);
 		extractedRelation.setY_idx(y_idx);
 		extractedRelation.setLing_pattern_idx(pattern_word_idx);

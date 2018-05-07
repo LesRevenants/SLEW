@@ -6,34 +6,32 @@ import Util.UtilColor;
 import java.util.Objects;
 
 public class ExtractedRelation{
-	
-	private String relation_type;
+
+
+	private RelationPattern relation_type;
+
+	/** The linguistric pattern */
 	private String linguisticPattern;
 	private int ling_pattern_idx;
 
-	public void setLing_pattern_idx(int ling_pattern_idx) {
-		this.ling_pattern_idx = ling_pattern_idx;
-	}
-
-	public void setX_idx(int x_idx) {
-		this.x_idx = x_idx;
-	}
-
-	public void setY_idx(int y_idx) {
-		this.y_idx = y_idx;
-	}
-
 	private String x;
+
 	private int x_idx,x_begin, x_end;
 	private String y;
 	private int y_idx,y_begin, y_end;
+
+	/** The textSequence whose extraction was made */
 	private TextSequence context;
-	private int context_begin;
-	private int context_end;
+
+
+	/** sub-context sc = context[context_begin,context_end] */
+	private int context_begin,context_end;
+
+	/** The windows size */
 	private static final int windows_size=5;
 
 
-	public ExtractedRelation(String relation_type, String linguisticPattern, String x, String y, TextSequence context, int context_begin, int context_end) {
+	public ExtractedRelation(RelationPattern relation_type, String linguisticPattern, String x, String y, TextSequence context, int context_begin, int context_end) {
 		this.relation_type = relation_type;
 		this.linguisticPattern = linguisticPattern;
 		this.x = x;
@@ -45,7 +43,7 @@ public class ExtractedRelation{
 
 
 
-	public ExtractedRelation(String relation_type, String linguisticPattern, String x, String y) {
+	public ExtractedRelation(RelationPattern relation_type, String linguisticPattern, String x, String y) {
 		super();
 		this.relation_type = relation_type;
 		this.linguisticPattern = linguisticPattern;
@@ -56,7 +54,7 @@ public class ExtractedRelation{
 	@Override
 	public String toString() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(relation_type);
+		sb.append(relation_type.getRelation_name());
 		sb.append(" : ");
 		sb.append(linguisticPattern);
 		sb.append("(");
@@ -109,7 +107,7 @@ public class ExtractedRelation{
 		this.y_end = y_end;
 	}
 
-	public String getRelation_type() {
+	public RelationPattern getRelation_type() {
 		return relation_type;
 	}
 
@@ -133,12 +131,24 @@ public class ExtractedRelation{
 		this.y = y;
 	}
 
-	public void setRelation_type(String relation_type) {
+	public void setRelation_type(RelationPattern relation_type) {
 		this.relation_type = relation_type;
 	}
 
 	public void setLinguisticPattern(String linguisticPattern) {
 		this.linguisticPattern = linguisticPattern;
+	}
+
+	public void setLing_pattern_idx(int ling_pattern_idx) {
+		this.ling_pattern_idx = ling_pattern_idx;
+	}
+
+	public void setX_idx(int x_idx) {
+		this.x_idx = x_idx;
+	}
+
+	public void setY_idx(int y_idx) {
+		this.y_idx = y_idx;
 	}
 
 	@Override

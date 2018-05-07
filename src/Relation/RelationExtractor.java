@@ -17,19 +17,41 @@ import TextStructure.TextSequence;
 
 
 public class RelationExtractor {
-	
-	private StructuredText structuredText;
-	private RequeterRezo system_query;
-	private RelationPatternReader relationPatternFactory;
-	private TreeTaggerWrapper tt;
-	
 
+	/**
+	 * The structuredText to read
+	 */
+	private StructuredText structuredText;
+
+	/**
+	 * JDM KnoledgeBase access
+	 */
+	private RequeterRezo system_query;
+
+	/**
+	 * The collection of each pattern
+	 */
+	private RelationPatternReader relationPatternFactory;
+
+	/**
+	 * The treeTaggerWrapper
+	 */
+	private TreeTaggerWrapper tt;
+
+
+	/**
+	 *
+	 * @param sequence
+	 * @param system_query
+	 * @param relationPatternFactory
+	 */
 	public RelationExtractor(StructuredText sequence,RequeterRezo system_query,RelationPatternReader relationPatternFactory) {
 		super();
 		this.structuredText = sequence;
 		this.system_query = system_query;
 		this.relationPatternFactory = relationPatternFactory;
-		
+
+		// load TreeTagger
 		 System.setProperty("treetagger.home","lib/TreeTagger");
 		 tt = new TreeTaggerWrapper<String>();
 		 try {
@@ -38,9 +60,13 @@ public class RelationExtractor {
 				e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * @returnall all available relation from the text sequence
+	 */
 	public Collection<ExtractedRelation>extract() {
-		
+
+		// "est_un" -> pattern r_isa
 		 HashMap<String,RelationPattern> pattern_map = new HashMap<>();
 		 LinkedList<RelationPattern> patterns = relationPatternFactory.readPattern();
 		 HashSet<String> relationPatternsStr=new HashSet<>();
@@ -56,8 +82,9 @@ public class RelationExtractor {
 		 
 		 int windows_size=3;
 		 Collection<ExtractedRelation> extractedRelations=new LinkedList<>();
-		 structuredText.getTextSequences().forEach(textSequence -> {
-			//LinkedHashSet<String> wordSet = textSequence.getWordsSet();
+
+		 structuredText.getTextSequences().forEach(textSequence -> { // read each text sequence and extract relations
+
 			 ArrayList<String> words = textSequence.getWords();
 			 for(Integer patternIdx : textSequence.getPatternsIdx()) {
 				 String word = words.get(patternIdx);
@@ -77,6 +104,10 @@ public class RelationExtractor {
 		return extractionMethod.extract(textSequence, pattern, pattern_word_idx);
 	}
 
+	/**
+	 * Erase somme
+	 * @param extractedRelations
+	 */
 	public void cleanExtractedRelation(Collection<ExtractedRelation> extractedRelations){
 		String[] prefixToErase={"L'","l'","L’"};
 		for(ExtractedRelation extractedRelation : extractedRelations){

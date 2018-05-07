@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class RelationPattern {
 
     /** the name of the relation (ex : r_isa || r_holo )*/
-    private String relationType;
+    private String relation_name;
 
     /** The list of pattern which identifiate a relation*/
     private LinkedList<LinguisticPattern> linguisticPatterns;
@@ -17,22 +17,22 @@ public class RelationPattern {
     
     /**
      * 
-     * @param relationType
+     * @param relation_name
      * @param linguisticPatterns
      * @param syntaxicContraint
      */
-	public RelationPattern(String relationType, LinkedList<LinguisticPattern> linguisticPatterns,
-			SyntaxicContraint syntaxicContraint) {
+	public RelationPattern(String relation_name, LinkedList<LinguisticPattern> linguisticPatterns,
+						   SyntaxicContraint syntaxicContraint) {
 		super();
-		this.relationType = relationType;
+		this.relation_name = relation_name;
 		this.linguisticPatterns = linguisticPatterns;
 		this.syntaxicContraint = syntaxicContraint;
 	}
 
 
 
-	public String getRelationType() {
-		return relationType;
+	public String getRelation_name() {
+		return relation_name;
 	}
 
 
@@ -52,14 +52,14 @@ public class RelationPattern {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(relationType);
+		sb.append(relation_name);
 		linguisticPatterns.forEach(pattern -> sb.append("\t"+pattern.toString()+"\n"));
 		return sb.toString();
 	}
 	
 	public String shortToString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(relationType + " : ");
+		sb.append(relation_name + " : ");
 		sb.append(syntaxicContraint.toString());
 		return sb.toString();
 	}

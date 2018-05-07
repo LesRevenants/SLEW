@@ -42,18 +42,19 @@ public class StructuredText {
         LinkedList<String> new_compound_words=new LinkedList<>();
 
 		patterns = new HashSet<>(knownPatterns);
+
+
 		inTextSequences.forEach(textSequence -> {
 
-            ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(textSequence);
-            compoundWordRules.forEach(rule -> {
+            ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(textSequence); //get positions fromm TT
+
+            compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
                 int j=0;
                 for(int i=0;i<positions.size();i++){
                     if(positions.get(i).equals(rule.get(j))){
                         j++;
                     }
-                    else if(j>0){
-                        j=0;
-                    }
+
                     if(j==rule.size()){
                         StringBuilder new_compound_word = new StringBuilder();
                         for(int k=i-j+1;k<i;k++){
@@ -85,7 +86,7 @@ public class StructuredText {
     public String toString() {
     	StringBuilder sb = new StringBuilder();
     	textSequences.forEach(textSequence -> {
-    	    sb.append(textSequence.toString());
+    	    sb.append(textSequence.shortToString());
             sb.append("\n");
         });
     	return sb.toString();

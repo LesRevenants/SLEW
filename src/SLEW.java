@@ -83,7 +83,7 @@ public class SLEW {
 				tStart=Utils.display_ellapsed_time(tStart,"\t");
 
 				if(verbose) {
-					System.out.println(structuredText.toString());
+					//System.out.println(structuredText.toString());
 				}
 				System.out.println("Relation extraction : \n");
 				RelationExtractor relationExtractor = new RelationExtractor(
@@ -114,9 +114,9 @@ public class SLEW {
 
 		int indent_size=100;
 		Collection<ExtractedRelation> expected_relations=null;
-		if(use_db){
+		/*if(use_db){
 			expected_relations= relationDB.getRelationsFromArticle(article_name,true);
-		}
+		}*/
 
 		for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
 			StringBuilder flags=new StringBuilder();
@@ -143,7 +143,7 @@ public class SLEW {
 			System.out.println(flags);
 			rex.add(extractedRelation);
 		}
-		//exportInJSONFile(rex);
+		//exportInJSONFile(rex,);
 		return rex;
 
 	}
@@ -196,9 +196,9 @@ public class SLEW {
 						"\n\t{ "
 							+ "\n\t\t \"x \": \"" + relex.getX() + "\","
 							+ "\n\t\t \"y \": \"" + relex.getY() + "\","
-							+ "\n\t\t \"relation_type\" : \"" + relex.getRelation_type() +"\","
+							+ "\n\t\t \"relation_type\" : \"" + relex.getRelation_type().getRelation_name() +"\","
 							+ "\n\t\t \"predicate\" : \"" + relex.getLinguisticPattern() +"\","
-							+ "\n\t\t \"context\" : \"" + relex.getContextAsStr()
+							+ "\n\t\t \"context\" : \"" + relex.getContext().getWords()
 								+"\"\n\t}");
 						if(i != rex_size-1){
 							writer.write(",");

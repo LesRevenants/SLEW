@@ -2,6 +2,7 @@ package Relation;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 
@@ -28,7 +29,7 @@ public class RelationDB {
 		}		
 	}
 
-	public Collection<ExtractedRelation> getRelationsFromArticle(String article_name, boolean is_human_found){
+	public Collection<ExtractedRelation> getRelationsFromArticle(HashMap<String,RelationPattern> relationsFactory, String article_name, boolean is_human_found){
 		HashSet<ExtractedRelation> relations = new HashSet<>();
 		if(! wikiDB.exist(article_name)){
 			System.err.println("[ERROR] no article : "+article_name);
@@ -44,7 +45,7 @@ public class RelationDB {
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
 				relations.add(new ExtractedRelation(
-						rs.getString("relation_type"),
+						relationsFactory.get(rs.getString("relation_type")),
 						rs.getString("predicate"),
 						rs.getString("x"),
 						rs.getString("y")));
@@ -69,7 +70,7 @@ public class RelationDB {
 		
 		try {
 			PreparedStatement pstmt= connection.prepareStatement(query.toString());
-			pstmt.setString(1, relation.getRelation_type());
+			pstmt.setString(1, relation.getRelation_type().getRelation_name());
 			pstmt.setString(2,relation.getLinguisticPattern());
 			pstmt.setString(3,relation.getY());
 			pstmt.setString(4,relation.getX());
