@@ -42,6 +42,7 @@ public class SLEW {
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
 		RequeterRezo system_query=buildRequeterRezo();
+		
 		RelationDB relationDB=null;
 		WikiArticleDB wikiArticleDB=null;
 		if(use_db){
@@ -92,13 +93,14 @@ public class SLEW {
 						relationPatternReader
 				);
 
-				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key));
+				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key,system_query));
 				tStart=Utils.display_ellapsed_time(tStart,"");
 				System.out.println();
 			}
 
 			System.out.println("Extraction results written on "+outFile);
 			exportInJSONFile(extractedRelations,outFile);
+			system_query.sauvegarder();
 
 
 		} catch (IOException e) {
@@ -108,7 +110,7 @@ public class SLEW {
 
 
 
-	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name){
+	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name,RequeterRezo system_query){
 		ExistingRelations existingRelations=new ExistingRelations();
 		ArrayList<ExtractedRelation> rex=new ArrayList<>();
 
@@ -129,7 +131,7 @@ public class SLEW {
 			}
 			flags += "[ANNOT]";*/
 			//System.out.println("------------------------------MAIN CALL---------------------------------");
-			flags.append(existingRelations.Requesting(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
+			flags.append(existingRelations.Requesting(extractedRelation,system_query) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
 			flags.append("[JDM] "+UtilColor.ANSI_RESET);
 
 			//System.out.println(extractedRelation);
