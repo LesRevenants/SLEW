@@ -48,11 +48,15 @@ public class StructuredText {
 
             ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(textSequence); //get positions fromm TT
 
-            compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
+            for(ArrayList<String> rule : compoundWordRules){
+           // compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
                 int j=0;
                 for(int i=0;i<positions.size();i++){
                     if(positions.get(i).equals(rule.get(j))){
                         j++;
+                    }
+                    else{
+                    	j=0;
                     }
 
                     if(j==rule.size()){
@@ -60,12 +64,17 @@ public class StructuredText {
                         for(int k=i-j+1;k<i;k++){
                             new_compound_word.append(textSequence.getWords().get(k)+"_");
                         }
+
                         new_compound_word.append(textSequence.getWords().get(i));
+                       /* System.out.println("MC : "+new_compound_word.toString());
+                        System.out.println("Rule : "+rule.toString());*/
                         new_compound_words.add(new_compound_word.toString());
                         j=0;
                     }
+                    
                 }
-            });
+            }
+            //);
 
             compoundWordBuilder.addToTrie(new_compound_words);
 			TextSequence newTextSequence=compoundWordBuilder.replaceSequence(textSequence, 5);
