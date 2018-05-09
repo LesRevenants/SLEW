@@ -226,7 +226,7 @@
 
 			{"patterns":[
 				"compose_la",
-				"compose_le ",
+				"compose_le",
 				"compose_les",
 				"compose_l'",
 				"composent_la",
@@ -266,7 +266,8 @@
 				"forme_les",
 				"forment_la",
 				"forment_le",
-				"forment_les "
+				"forment_les",
+				"est_la_branche_terminale_de"
 			]}
 				
 		],
@@ -279,24 +280,24 @@
 
 			{ "patterns" : [
 				"qui_est_un",
-				"qui_est_un_des ",
+				"qui_est_un_des",
 				"qui_est_l'un_des",
-				"qui_est_une ",
-				"qui_est_une_des ",
+				"qui_est_une",
+				"qui_est_une_des",
 				"qui_est_l'",
-				"qui_est_la ",
-				"qui_est_le ",
+				"qui_est_la",
+				"qui_est_le",
 				"qui_sont_l'",
-				"qui_sont_la ",
-				"qui_sont_le ",
-				"qui_sont_des ",
-				"qui_sont_les ",
+				"qui_sont_la",
+				"qui_sont_le",
+				"qui_sont_des",
+				"qui_sont_les",
 				"qui_sont_un_des",
-				"qui_sont_une_des ",
-				"c'est-à-dire_un ",
-				"c'est-à-dire_une ",
-				"est_aussi_un ",
-				"est_aussi_une ",
+				"qui_sont_une_des",
+				"c'est-à-dire_un",
+				"c'est-à-dire_une",
+				"est_aussi_un",
+				"est_aussi_une",
 				"est_de_la_famille_de",
 				"est_de_la_famille_des",
 				"est_de_la_famille_du",

@@ -29,10 +29,10 @@
 	},
 	{ 
 		 "x ": "L'artère_hépatique_propre",
-		 "y ": "branche_terminale",
-		 "relation_type" : "r_isa",
-		 "predicate" : "est_la",
-		 "context" : "[L'artère_hépatique_propre, est_la, branche_terminale, de, l'artère_hépatique_commune, ,, issue, du, tronc_cœliaque]"
+		 "y ": "l'artère_hépatique_commune",
+		 "relation_type" : "r_holo",
+		 "predicate" : "est_la_branche_terminale_de",
+		 "context" : "[L'artère_hépatique_propre, est_la_branche_terminale_de, l'artère_hépatique_commune, ,, issue, du, tronc_cœliaque]"
 	},
 	{ 
 		 "x ": "critères_structurels",
