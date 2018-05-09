@@ -4,124 +4,187 @@
 		 "y ": "organe_abdominal",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[Le, foie, est_un, organe_abdominal, de_l'appareil_digestif, des_vertébrés, sécrétant, la, bile, et, remplissant, plus_de, 300_fonctions_vitales, ,, notamment, les, trois, suivantes, :, une_fonction_d'épuration, ,, une_fonction, de, synthèse, et_une_fonction, de, stockage]"
+		 "context" : "[Le, foie, est_un, organe_abdominal, de, l'appareil_digestif, des, vertébrés, sécrétant, la, bile, et, remplissant, plus_de, 300, fonctions_vitales, ,, notamment, les, trois, suivantes, :, une, fonction_d'épuration, ,, une, fonction_de_synthèse, et, une, fonction_de_stockage]"
 	},
 	{ 
 		 "x ": "foie",
 		 "y ": "organe_intrapéritonéal",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[Le, foie, est_un, organe_intrapéritonéal, :, il_est, recouvert, à_sa_surface, de_péritoine_viscéral, ,, qui, le, rattache, à_la_paroi, abdominale, en, se, réfléchissant, sur_le_péritoine, pariétal]"
+		 "context" : "[Le, foie, est_un, organe_intrapéritonéal, :, il_est, recouvert, à, sa, surface_de_péritoine, viscéral, ,, qui, le, rattache, à, la, paroi_abdominale, en, se, réfléchissant, sur, le, péritoine_pariétal]"
 	},
 	{ 
-		 "x ": "lobe_droit_du_foie",
-		 "y ": "lobe_gauche",
-		 "relation_type" : "r_isa",
-		 "predicate" : "est_le",
-		 "context" : "[Le, lobe_droit_du_foie, est_le, plus_volumineux, ,, tandis_que, le, lobe_gauche, est, petit, et, se, termine_en_pointe]"
-	},
-	{ 
-		 "x ": "foie",
+		 "x ": "ligaments_coronaires",
 		 "y ": "replis_péritonéaux",
 		 "relation_type" : "r_isa",
 		 "predicate" : "qui_sont_des",
-		 "context" : "[Le, foie, est, fixé, en_haut, par_les_ligaments, coronaires, ,, qui_sont_des, replis_péritonéaux, en_continuité, avec_la_capsule, de, Glisson, ,, et_donc, en_continuité, avec, les_ligaments_falciformes, d'une, certaine_façon]"
+		 "context" : "[Le, foie, est, fixé, en_haut, par, les, ligaments_coronaires, ,, qui_sont_des, replis_péritonéaux, en, continuité, avec, la, capsule_de_Glisson, ,, et_donc, en, continuité, avec, les, ligaments_falciformes, d'une, certaine, façon]"
 	},
 	{ 
-		 "x ": "extrémités_supérieures_droite",
+		 "x ": "lames",
 		 "y ": "ligaments_triangulaires_droit",
 		 "relation_type" : "r_holo",
 		 "predicate" : "forment_les",
-		 "context" : "[Aux, extrémités_supérieures_droite, et, gauche_du_foie, ,, les_deux_lames, s'adossent, et, forment_les, ligaments_triangulaires_droit, et, gauche_du_foie, ,, respectivement]"
+		 "context" : "[Aux, extrémités_supérieures_droite, et, gauche, du_foie, ,, les_deux, lames, s'adossent, et, forment_les, ligaments_triangulaires_droit, et, gauche, du_foie, ,, respectivement]"
 	},
 	{ 
 		 "x ": "L'artère_hépatique_propre",
 		 "y ": "branche_terminale",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_la",
-		 "context" : "[L'artère_hépatique_propre, est_la, branche_terminale, de_l'artère_hépatique, commune, ,, issue_du_tronc, cœliaque]"
+		 "context" : "[L'artère_hépatique_propre, est_la, branche_terminale, de, l'artère_hépatique_commune, ,, issue, du, tronc_cœliaque]"
+	},
+	{ 
+		 "x ": "critères_structurels",
+		 "y ": "foie",
+		 "relation_type" : "r_isa",
+		 "predicate" : "qui_sont",
+		 "context" : "[Cette, compartimentation, repose, sur, des, critères_structurels, et, fonctionnels, qui_sont, interne, au, foie]"
 	},
 	{ 
 		 "x ": "segmentation_hépatique",
 		 "y ": "division_du_foie",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_une",
-		 "context" : "[La, segmentation_hépatique, est_une, division_du_foie, en_plusieurs_segments, ,, adaptée, particulièrement, pour, la_résection_chirurgicale]"
+		 "context" : "[La, segmentation_hépatique, est_une, division_du_foie, en, plusieurs, segments, ,, adaptée, particulièrement, pour, la, résection_chirurgicale]"
+	},
+	{ 
+		 "x ": "réunion",
+		 "y ": "canal_hépatique_commun",
+		 "relation_type" : "r_holo",
+		 "predicate" : "forme_le",
+		 "context" : "[Les, canaux_interlobulaires, forment, ensuite, des, canaux_biliaires, de_plus, gros_calibre, et, finissent, par, former, les, canaux_hépatiques_droit, et, gauche, dont, la, réunion, forme_le, canal_hépatique_commun, qui, quitte, le, foie_au_niveau, du, hile_hépatique]"
+	},
+	{ 
+		 "x ": "L'unité_fonctionnelle",
+		 "y ": "lobule_hépatique",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le",
+		 "context" : "[L'unité_fonctionnelle, du_foie, est_le, lobule_hépatique]"
+	},
+	{ 
+		 "x ": "cellules_du_foie",
+		 "y ": "hépatocytes",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "[80%, des, cellules_du_foie, sont_des, hépatocytes, ayant, la, particularité, d'avoir, un, noyau, qui, peut, contenir, jusqu'à, 8, jeux_de_chromosomes, ,, ce_qui, facilite, probablement, la, régénérescence_du_foie]"
 	},
 	{ 
 		 "x ": "poumon",
 		 "y ": "organe_intrathoracique_pair",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[Le, poumon, est_un, organe_intrathoracique_pair, de, l'appareil_respiratoire, ,, permettant_l'échange, des_gaz_vitaux, ,_notamment_l'oxygène, et_le_dioxyde, de, carbone]"
+		 "context" : "[Le, poumon, est_un, organe_intrathoracique_pair, de, l'appareil_respiratoire, ,, permettant, l'échange_des_gaz, vitaux, ,, notamment, l'oxygène, et, le, dioxyde_de_carbone]"
 	},
 	{ 
-		 "x ": "L'un_des_arguments",
+		 "x ": "poumons",
 		 "y ": "divergence",
 		 "relation_type" : "r_isa",
 		 "predicate" : "sont_une",
-		 "context" : "[L'un_des_arguments, fort, est, que_les_poumons, sont_une, divergence, de_la_paroi, ventrale, et_non_dorsale, du_pharynx]"
+		 "context" : "[L'un_des_arguments, fort, est, que, les, poumons, sont_une, divergence, de_la, paroi_ventrale, et_non, dorsale, du, pharynx]"
+	},
+	{ 
+		 "x ": "poissons_dipneustes",
+		 "y ": "poumons",
+		 "relation_type" : "r_has_part",
+		 "predicate" : "ont_des",
+		 "context" : "[Les, poissons_dipneustes, ont_des, poumons, en_plus_de, branchies]"
 	},
 	{ 
 		 "x ": "serpents",
 		 "y ": "trachée",
 		 "relation_type" : "r_has_part",
 		 "predicate" : "ont_une",
-		 "context" : "[Les, serpents, ont_une, trachée, soutenue, par_des_anneaux, cartilagineux, qui, la_maintiennent_béante, y_compris, lors_de, l'ingestion, d'une, proie, les, empêchant, ainsi, de, s'étouffer]"
+		 "context" : "[Les, serpents, ont_une, trachée, soutenue, par_des, anneaux_cartilagineux, qui, la, maintiennent, béante, y_compris, lors_de, l'ingestion, d'une, proie, les, empêchant, ainsi, de, s'étouffer]"
+	},
+	{ 
+		 "x ": "rôle",
+		 "y ": "savon_qu'on",
+		 "relation_type" : "r_isa",
+		 "predicate" : "est_le",
+		 "context" : "[Pour, comparaison, ,, son, rôle, est_le, même, que, le, savon_qu'on, ajoute, à, l'eau, afin_de, former, des, bulles_de_savon]"
 	},
 	{ 
 		 "x ": "L'expiration_naturelle",
 		 "y ": "phénomène_passif",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[L'expiration_naturelle, est_un, phénomène_passif, ,, résultant_de_forces, de_rappel, élastiques, lorsque, les, muscles, se, relâchent, qui, font, revenir_la_cage, thoracique, à_son_volume, de_début_d'inspiration, et_donc, chassent, l'air_des_poumons]"
+		 "context" : "[L'expiration_naturelle, est_un, phénomène_passif, ,, résultant, de, forces_de_rappel, élastiques, lorsque, les, muscles, se, relâchent, qui, font, revenir, la, cage_thoracique, à, son, volume_de_début, d'inspiration, et_donc, chassent, l'air, des_poumons]"
 	},
 	{ 
 		 "x ": "poumon",
 		 "y ": "porte",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_une",
-		 "context" : "[Le, poumon, est_une, porte, d'entrée, pour_certains_microorganismes, ,_virus, ,, gaz_et_micro-, ou, nanoparticules_toxiques]"
+		 "context" : "[Le, poumon, est_une, porte, d'entrée, pour, certains, microorganismes, ,, virus, ,, gaz, et, micro-, ou, nanoparticules_toxiques]"
 	},
 	{ 
 		 "x ": "résultats",
 		 "y ": "reflet",
 		 "relation_type" : "r_isa",
 		 "predicate" : "sont_le",
-		 "context" : "[Les, résultats, sont_le, reflet, de_la_fonction, respiratoire, ,, ainsi_que, de_l'homéostasie, des, bicarbonates, par_le_rein]"
+		 "context" : "[Les, résultats, sont_le, reflet, de_la, fonction_respiratoire, ,, ainsi_que, de, l'homéostasie_des_bicarbonates, par, le, rein]"
+	},
+	{ 
+		 "x ": "lésions_tuberculeuses",
+		 "y ": "lésions",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "[Les, lésions_tuberculeuses, sont_des, lésions, excavées, ,, appelées, cavernes, ,, pouvant, être, le, siège, d'une, greffe_aspergillaire, ou, d'une_transformation, tumorale]"
+	},
+	{ 
+		 "x ": "tumeurs_secondaires",
+		 "y ": "métastases",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "[Les, tumeurs_secondaires, sont_des, métastases, d'une, tumeur_maligne, atteignant, un_autre, organe]"
+	},
+	{ 
+		 "x ": "fibroses_pulmonaires",
+		 "y ": "pathologies_pulmonaires_mutilantes",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_des",
+		 "context" : "[Les, fibroses_pulmonaires, sont_des, pathologies_pulmonaires_mutilantes, ,, par, perte, d'élasticité, et, de, compliance_du_parenchyme]"
 	},
 	{ 
 		 "x ": "broncho-pneumopathie_chronique_obstructive",
 		 "y ": "pathologie_pulmonaire_chronique",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_une",
-		 "context" : "[La, broncho-pneumopathie_chronique_obstructive, est_une, pathologie_pulmonaire_chronique, ,_généralement_secondaire, à_un_tabagisme, important, et, prolongé, ,, caractérisée, par_une, distension_des_alvéoles, et_des_volumes, pulmonaires, avec_une_destruction, des_parois, alvéolaires]"
+		 "context" : "[La, broncho-pneumopathie_chronique_obstructive, est_une, pathologie_pulmonaire_chronique, ,, généralement, secondaire, à, un, tabagisme_important, et, prolongé, ,, caractérisée, par_une, distension_des_alvéoles, et, des, volumes_pulmonaires, avec, une, destruction_des_parois, alvéolaires]"
 	},
 	{ 
 		 "x ": "L'asthme",
 		 "y ": "pathologie_inflammatoire_chronique",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_une",
-		 "context" : "[L'asthme, est_une, pathologie_inflammatoire_chronique, de_l'arbre_bronchique, ,, caractérisée, cliniquement, par_une_dyspnée, parfois_majeure]"
+		 "context" : "[L'asthme, est_une, pathologie_inflammatoire_chronique, de, l'arbre_bronchique, ,, caractérisée, cliniquement, par_une, dyspnée_parfois_majeure]"
 	},
 	{ 
 		 "x ": "pleuroscopie",
 		 "y ": "examen",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[La, pleuroscopie, est_un, examen, avec_un_pleuroscope, ,_endoscope, que, l'on, passe, par_une_ouverture, thoracique]"
+		 "context" : "[La, pleuroscopie, est_un, examen, avec, un, pleuroscope, ,, endoscope, que, l'on, passe, par_une, ouverture_thoracique]"
 	},
 	{ 
 		 "x ": "rate",
 		 "y ": "organe_profond",
 		 "relation_type" : "r_isa",
 		 "predicate" : "est_un",
-		 "context" : "[La, rate, est_un, organe_profond, ,, situé_dans_l'hypocondre, gauche, en_regard_de, la, 10ecôte, ,, accolé, à_la_face, latérale_de_l'estomac, ,_la_grande, courbure]"
+		 "context" : "[La, rate, est_un, organe_profond, ,, situé, dans, l'hypocondre_gauche, en_regard_de, la, 10ecôte, ,, accolé, à, la, face_latérale, de, l'estomac, ,, la, grande_courbure]"
 	},
 	{ 
-		 "x ": "bouchons",
+		 "x ": "terminaison",
 		 "y ": "capillaires_à_housse",
 		 "relation_type" : "r_isa",
 		 "predicate" : "sont_les",
-		 "context" : "[Celles-ci, se, finissent, par_des, capillaires, avec_des_sortes, de, bouchons, qui, entourent, leur_terminaison, :, ce, sont_les, capillaires_à_housse]"
+		 "context" : "[Celles-ci, se, finissent, par_des, capillaires, avec, des, sortes_de_bouchons, qui, entourent, leur, terminaison, :, ce, sont_les, capillaires_à_housse]"
+	},
+	{ 
+		 "x ": "germes_en_causes",
+		 "y ": "pneumocoques",
+		 "relation_type" : "r_isa",
+		 "predicate" : "sont_les",
+		 "context" : "[Les, germes_en_causes, sont_les, pneumocoques, ,, les, méningocoques, et, l'Haemophilus_influenzae]"
 	}]
