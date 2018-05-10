@@ -48,40 +48,43 @@ public class StructuredText {
 
             ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(textSequence); //get positions fromm TT
 
-            for(ArrayList<String> rule : compoundWordRules){
-           // compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
-                int j=0;
-                for(int i=0;i<positions.size();i++){
-                    if(positions.get(i).equals(rule.get(j))){
-                        j++;
-                    }
-                    else{
-                    	j=0;
-                    }
 
-                    if(j==rule.size()){
-                        StringBuilder new_compound_word = new StringBuilder();
-                        for(int k=i-j+1;k<i;k++){
-                            new_compound_word.append(textSequence.getWords().get(k)+"_");
+                for (ArrayList<String> rule : compoundWordRules) {
+                    // compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
+                    int j = 0;
+                    for (int i = 0; i < positions.size(); i++) {
+                        if (positions.get(i).equals(rule.get(j))) {
+                            j++;
+                        } else {
+                            j = 0;
                         }
 
-                        new_compound_word.append(textSequence.getWords().get(i));
-                       /* System.out.println("MC : "+new_compound_word.toString());
-                        System.out.println("Rule : "+rule.toString());*/
-                        new_compound_words.add(new_compound_word.toString());
-                        j=0;
-                    }
-                    
-                }
-            }
-            //);
+                        if (j == rule.size()) {
+                            StringBuilder new_compound_word = new StringBuilder();
+                            for (int k = i - j + 1; k < i; k++) {
+                                new_compound_word.append(textSequence.getWords().get(k) + "_");
+                            }
 
-            compoundWordBuilder.addToTrie(new_compound_words);
-			TextSequence newTextSequence=compoundWordBuilder.replaceSequence(textSequence, 8);
-			newTextSequence.setWordsGramPositions(positions, patterns);
-			newTextSequence.update_compoundWordPos();
-			this.textSequences.add(newTextSequence);
-			total_size +=newTextSequence.getSize();
+                            new_compound_word.append(textSequence.getWords().get(i));
+                   /* System.out.println("MC : "+new_compound_word.toString());
+                    System.out.println("Rule : "+rule.toString());*/
+                            new_compound_words.add(new_compound_word.toString());
+                            j = 0;
+                        }
+
+                    }
+                }
+                compoundWordBuilder.addToTrie(new_compound_words);
+                TextSequence newTextSequence=compoundWordBuilder.replaceSequence(textSequence, 8);
+                newTextSequence.setWordsGramPositions(positions, patterns);
+                newTextSequence.update_compoundWordPos();
+                this.textSequences.add(newTextSequence);
+                total_size +=newTextSequence.getSize();
+                //new_compound_words.
+
+                    //);
+
+
 		});
 
 	}
