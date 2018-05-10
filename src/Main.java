@@ -44,13 +44,13 @@ public class Main {
 
 
 
-	public static String extract(String articlename,boolean verbose, boolean use_db) {
+	public static String extract(String articlename,boolean verbose, boolean use_db, boolean valid) {
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
     	SLEW slew=new SLEW();
     	if(articlename == null)
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",verbose, true,use_db);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",verbose, true,use_db,valid);
     	else
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",  verbose, false,use_db);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",  verbose, false,use_db,valid);
         return wikipediaDataExtractor.getText();
 	}
 
@@ -71,7 +71,7 @@ public class Main {
 		                 System.out.println(article);
 		                 int max_size=1000;
 
-		                 String text=extract(article,true,false);
+		                 String text=extract(article,true,false,false);
 		                 String relationsStr = FileUtils.readFileToString(new File("json.txt"),Charsets.UTF_8);
 		                 System.out.println(relationsStr);
 		                 if(text.length()<max_size){
@@ -103,14 +103,16 @@ public class Main {
     		return;
     	}
     	switch(args[0]){
-    		case "r_an":
+    		case "valid":{
+				extract(null,false,false,true);
+			}
     		case "rex": {
     		    if(args.length >= 2){
     		        if(args[1].equals("net")){
                         connectJava2Php(Integer.parseInt(args[2]));
                     }
                     else if(args[1].equals("sta")){
-    		            extract(null,false,false);
+    		            extract(null,false,false,false);
                     }
 
                 }

@@ -26,6 +26,9 @@ public class WikipediaDataExtractor implements DataExtractor {
 	public Pair<String, LinkedList<TextSequence>> extract(String articleUrl) {
 		try {
 			String yolo2 = wiki.getRenderedText(articleUrl);
+			if(yolo2==null){
+				return null;
+			}
 			
 			yolo2 = yolo2.replace("{", ""); yolo2 = yolo2.replace("}", "");
 			yolo2 = yolo2.replace("[", ""); yolo2 = yolo2.replace("]", "");
@@ -53,9 +56,10 @@ public class WikipediaDataExtractor implements DataExtractor {
 			text=content;
 			RawTextExtractor rawTextExtractor = new RawTextExtractor();
 			Pair<String,LinkedList<TextSequence>> data_src = rawTextExtractor.extract(content);
+
 			data_src.setLeft(articleUrl);
 			return data_src;
-		} catch (Exception e) {
+		} catch (Exception  | UnknownError e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -64,9 +68,14 @@ public class WikipediaDataExtractor implements DataExtractor {
 	@Override
 	public Collection<Pair<String,LinkedList<TextSequence>>> extractAll(Collection<String> data_sources, int limit) {
 		Collection<Pair<String,LinkedList<TextSequence>>> allSequences=new LinkedList<>();
-		data_sources.forEach(src -> {
-			allSequences.add(extract(src));
-		});
+		for(String src : data_sources){
+			if(src != null){
+				Pair<String,LinkedList<TextSequence>> pair = extract(src);
+				if(pair != null){
+					allSequences.add(pair);
+				}
+			}
+		}
 		return allSequences;
 	}
 }

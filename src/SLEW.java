@@ -5,6 +5,7 @@ import Util.Pair;
 import Util.Utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -37,7 +38,7 @@ public class SLEW {
 	 * @param sources_file_path
 	 * @param verbose
 	 */
-	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean verbose, boolean isFile, boolean use_db) {
+	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean verbose, boolean isFile, boolean use_db,boolean valid) {
 
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
@@ -59,7 +60,7 @@ public class SLEW {
 			Collection<ExtractedRelation> extractedRelations=new LinkedList<>();
 			Collection<String> articlesName;
 			if(isFile){
-				articlesName=Files.readAllLines(Paths.get(sources_file_path));
+				articlesName=Files.readAllLines(Paths.get(sources_file_path),StandardCharsets.ISO_8859_1);
 			}
 			else{
 				articlesName=new LinkedList<>();
@@ -93,7 +94,8 @@ public class SLEW {
 						relationPatternReader
 				);
 
-				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key,system_query));
+
+				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key,system_query,valid));
 				tStart=Utils.display_ellapsed_time(tStart,"");
 				System.out.println();
 			}
@@ -102,7 +104,6 @@ public class SLEW {
 			exportInJSONFile(extractedRelations,outFile);
 			system_query.sauvegarder();
 
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -110,7 +111,9 @@ public class SLEW {
 
 
 
-	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB, boolean use_db,String article_name,RequeterRezo system_query){
+	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB,
+												 boolean use_db,String article_name,RequeterRezo system_query,
+												 boolean valid){
 		ExistingRelations existingRelations=new ExistingRelations();
 		ArrayList<ExtractedRelation> rex=new ArrayList<>();
 
@@ -120,17 +123,11 @@ public class SLEW {
 			expected_relations= relationDB.getRelationsFromArticle(article_name,true);
 		}*/
 
-		for(ExtractedRelation extractedRelation : relationExtractor.extract()) {
-			StringBuilder flags=new StringBuilder();
+		Collection<ExtractedRelation> extractedRelations = relationExtractor.extract();
+		ArrayList<String> displays=new ArrayList<>();
 
-			/*if(use_db){
-				flags += expected_relations.contains(extractedRelation) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED;
-			}
-			else{
-				flags += UtilColor.ANSI_PURPLE;
-			}
-			flags += "[ANNOT]";*/
-			//System.out.println("------------------------------MAIN CALL---------------------------------");
+		for(ExtractedRelation extractedRelation : extractedRelations) {
+			StringBuilder flags=new StringBuilder();
 			flags.append(existingRelations.Requesting(extractedRelation,system_query) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
 			flags.append("[JDM] "+UtilColor.ANSI_RESET);
 
@@ -143,8 +140,43 @@ public class SLEW {
 			}
 			flags.append("["+extractedRelation.getContextAsStr()+"]");
 			System.out.println(flags);
+			displays.add(flags.toString());
 			rex.add(extractedRelation);
 		}
+
+		if(valid){
+			Scanner in_sc=new Scanner(System.in);
+			System.out.println(); System.out.println();
+			ArrayList<Integer> rex_valid=new ArrayList<>(extractedRelations.size());
+			for(int i=0;i<extractedRelations.size();i++){
+				System.out.println((displays.get(i)));
+				System.out.println("Correct ? Key Y/N/Q (yes/no/quit) :");
+
+				boolean _continue=false;
+				while (! _continue){
+					String choice = in_sc.nextLine();
+					if(choice.toUpperCase().equals("Y")){
+						rex_valid.add(1);
+						_continue = true;
+					}
+					else if(choice.toUpperCase().equals("N")){
+						rex_valid.add(0);
+						_continue = true;
+					}
+					else if(choice.toUpperCase().equals("Q")){
+						return rex;
+					}
+					else{
+						System.err.println("RTFM : !!!! Key Y/N/Q (yes/no/quit");
+					}
+				}
+			}
+			long nb_valid= rex_valid.stream().filter(is_valid -> is_valid == 1).count();
+			System.out.println(nb_valid  + " : "+rex_valid.size());
+			float precision= (float) nb_valid/(float)rex_valid.size();
+			System.out.println("Precision : "+precision);
+		}
+
 		//exportInJSONFile(rex,);
 		return rex;
 
@@ -200,7 +232,7 @@ public class SLEW {
 							+ "\n\t\t \"y \": \"" + relex.getY() + "\","
 							+ "\n\t\t \"relation_type\" : \"" + relex.getRelation_type().getRelation_name() +"\","
 							+ "\n\t\t \"predicate\" : \"" + relex.getLinguisticPattern() +"\","
-							+ "\n\t\t \"context\" : \"" + relex.getContext().getWords()
+							//+ "\n\t\t \"context\" : \"" + relex.getContext().getWords() +"\","
 								+"\"\n\t}");
 						if(i != rex_size-1){
 							writer.write(",");

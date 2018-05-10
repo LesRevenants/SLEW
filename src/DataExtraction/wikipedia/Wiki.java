@@ -7529,6 +7529,7 @@ public class Wiki implements Serializable
                 // can be avoided entirely.
                 default:
                     throw new UnknownError("MW API error. Server response was: " + temp);
+                    //return null;
             }   
         }
         return temp;
