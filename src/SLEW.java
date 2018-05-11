@@ -36,9 +36,8 @@ public class SLEW {
 	 * @param patternPath
 	 * @param jdmMcPath
 	 * @param sources_file_path
-	 * @param verbose
 	 */
-	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean verbose, boolean isFile, boolean use_db,boolean valid) {
+	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean isFile,Properties properties) {
 
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
@@ -46,6 +45,12 @@ public class SLEW {
 		
 		RelationDB relationDB=null;
 		WikiArticleDB wikiArticleDB=null;
+		boolean use_db = properties.containsKey("use_db") && properties.getProperty("use_db").equals("true");
+		boolean verbose = properties.containsKey("verbose") && properties.getProperty("verbose").equals("true");
+		boolean valid = properties.containsKey("valid") && properties.getProperty("valid").equals("true");
+
+		System.out.println("Running with properties : "+properties.toString());
+
 		if(use_db){
 			relationDB=new RelationDB("jdbc:mysql://venus/rcolin", "rcolin", "mysqlpwd");
 			wikiArticleDB=new WikiArticleDB("jdbc:mysql://venus/rcolin", "rcolin", "mysqlpwd");
@@ -70,6 +75,7 @@ public class SLEW {
 			Collection<Pair<String,LinkedList<TextSequence>>> data_sources = dataExtractor.extractAll(articlesName,3);
 			tStart=Utils.display_ellapsed_time(tStart,"\t");
 
+
 			for(Pair<String,LinkedList<TextSequence>> data_src : data_sources) {
 				String data_key=data_src.getLeft();
 				System.out.println("Get Wikipedia page ["+ UtilColor.ANSI_GREEN+data_key+"]"+UtilColor.ANSI_RESET);
@@ -79,10 +85,11 @@ public class SLEW {
 				StructuredText structuredText=new StructuredText(
 						sequences,
 						compoundWordBuilder,
-						relationPatternReader.getCompoundWords());
+						relationPatternReader.getCompoundWords(),properties);
 
 				System.out.println("\tTextSize : "+structuredText.getTotal_size());
 				tStart=Utils.display_ellapsed_time(tStart,"\t");
+
 
 				if(verbose) {
 					//System.out.println(structuredText.toString());
@@ -187,10 +194,6 @@ public class SLEW {
 	/**
 	 *
 	 * @param patternPath
-	 * @param jdmMcPath
-	 * @param verbose
-	 * @param relationPatternFactory
-	 * @param compoundWordBuilder
 	 */
 
 	private RelationPatternReader buildPatterns(String patternPath) {

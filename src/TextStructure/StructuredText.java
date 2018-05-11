@@ -19,17 +19,17 @@ public class StructuredText {
 	private HashSet<String> patterns;
     private LinkedList<TextSequence> textSequences;
     private TextSequenceAnalyser textSequenceAnalyser;
+    private CorenlpLoader corenlpLoader;
     private long total_size;
 
     public long getTotal_size() {
         return total_size;
     }
 
-    public StructuredText(Collection<TextSequence>  inTextSequences, CompoundWordBuilder compoundWordBuilder, LinkedList<String> knownPatterns) {
+    public StructuredText(Collection<TextSequence>  inTextSequences, CompoundWordBuilder compoundWordBuilder, LinkedList<String> knownPatterns, Properties properties) {
 		super();
 		this.textSequences = new LinkedList<>();
 		textSequenceAnalyser = TextSequenceAnalyser.getInstance();
-
 
 		ArrayList<ArrayList<String>> compoundWordRules=new ArrayList<>();
 		try{
@@ -37,6 +37,11 @@ public class StructuredText {
                     line -> compoundWordRules.add(new ArrayList<String>(Arrays.asList(line.split(";")))));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        boolean use_corenlp=properties.containsKey("use_corenlp") && properties.getProperty("use_corenlp").equals("true");
+		if(use_corenlp){
+		    corenlpLoader=CorenlpLoader.getInstance();
         }
 
         LinkedList<String> new_compound_words=new LinkedList<>();

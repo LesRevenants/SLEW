@@ -44,18 +44,18 @@ public class Main {
 
 
 
-	public static String extract(String articlename,boolean verbose, boolean use_db, boolean valid) {
+	public static String extract(String articlename, Properties properties) {
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
     	SLEW slew=new SLEW();
     	if(articlename == null)
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",verbose, true,use_db,valid);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",true,properties);
     	else
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",  verbose, false,use_db,valid);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",false,properties);
         return wikipediaDataExtractor.getText();
 	}
 
 	
-	public static void connectJava2Php(int port) {
+	public static void connectJava2Php(int port, Properties properties) {
 		          ServerSocket listenSock; //the listening server socket
 		          Socket sock;             //the socket that will actually be used for communication
 		          try {
@@ -70,8 +70,7 @@ public class Main {
 		                 String article = br.readLine();
 		                 System.out.println(article);
 		                 int max_size=1000;
-
-		                 String text=extract(article,true,false,false);
+		                 String text=extract(article,properties);
 		                 String relationsStr = FileUtils.readFileToString(new File("json.txt"),Charsets.UTF_8);
 		                 System.out.println(relationsStr);
 		                 if(text.length()<max_size){
@@ -102,17 +101,26 @@ public class Main {
     		System.err.println("Error bad argument number, use help" );
     		return;
     	}
+    	Properties properties=new Properties();
+    	properties.setProperty("verbose","false");
+    	properties.setProperty("use_db","false");
+    	properties.setProperty("use_corenlp","true");
+
     	switch(args[0]){
     		case "valid":{
-				extract(null,false,false,true);
+    			properties.setProperty("valid","true");
+				extract(null,properties);
 			}
     		case "rex": {
+    			properties.setProperty("valid","false");
     		    if(args.length >= 2){
     		        if(args[1].equals("net")){
-                        connectJava2Php(Integer.parseInt(args[2]));
+						properties.setProperty("verbose","true");
+                        connectJava2Php(Integer.parseInt(args[2]),properties);
                     }
                     else if(args[1].equals("sta")){
-    		            extract(null,false,false,false);
+
+    		            extract(null,properties);
                     }
 
                 }
