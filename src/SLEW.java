@@ -207,7 +207,7 @@ public class SLEW {
 	private CompoundWordBuilder buildCWB(String jdmMcPath,RelationPatternReader relationPatternReader) {
 		long tStart = System.currentTimeMillis();
 		System.out.println("Lecture des mots composés de JDM : ");
-		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder(jdmMcPath,true);
+		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder(jdmMcPath,true,"datas/mc_rules.txt");
 		compoundWordBuilder.addToTrie(relationPatternReader.getCompoundWords()); // add compound word from patterns into compound word dictionary
 		Utils.display_ellapsed_time(tStart,"\t");
 		return compoundWordBuilder;

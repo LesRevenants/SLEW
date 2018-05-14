@@ -37,18 +37,65 @@ public class CompoundWordBuilder {
      */
     private boolean dataLoaded;
 
+    ArrayList<ArrayList<String>> compoundWordRules;
+
 
     public CompoundWordBuilder(){
        trie = new WordPatriciaTrie();
        dataLoaded = false;
+       compoundWordRules=new ArrayList<>();
     }
-    
-    
 
-    public CompoundWordBuilder(String filePath,boolean serialized) {
+
+    public void loadRules(String rulesPath){
+        try{
+            Files.readAllLines(Paths.get(rulesPath)).forEach(
+                    line -> compoundWordRules.add(new ArrayList<String>(Arrays.asList(line.split(";")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public LinkedList<String> getNewCompoundWordFrom(ArrayList<String> words, ArrayList<String> positions, boolean stop_first){
+
+        LinkedList<String> new_compound_words=new LinkedList<>();
+
+        for (ArrayList<String> rule : compoundWordRules) {
+            // compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
+            int j = 0;
+            for (int i = 0; i < positions.size(); i++) {
+                if (positions.get(i).equals(rule.get(j))) {
+                    j++;
+                } else {
+                    j = 0;
+                }
+
+                if (j == rule.size()) {
+                    StringBuilder new_compound_word = new StringBuilder();
+                    for (int k = i - j + 1; k < i; k++) {
+                        new_compound_word.append(words.get(k) + "_");
+                    }
+
+                    new_compound_word.append(words.get(i));
+                   /* System.out.println("MC : "+new_compound_word.toString());
+                    System.out.println("Rule : "+rule.toString());*/
+                    new_compound_words.add(new_compound_word.toString());
+                    j = 0;
+                    if(stop_first){
+                        return new_compound_words;
+                    }
+                }
+
+            }
+        }
+        return new_compound_words;
+    }
+
+    public CompoundWordBuilder(String filePath,boolean serialized, String rulesPath) {
 		this();
 		this.filePath = filePath;
 		read(filePath, serialized);
+		loadRules(rulesPath);
 	}
 
     /**

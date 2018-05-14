@@ -1,38 +1,15 @@
-import TextStructure.CompoundWordBuilder;
+
 import java.io.BufferedReader;
 import java.net.*;
 import java.io.*;
-import TextStructure.StructuredText;
-import TextStructure.TextSequence;
-import TextStructure.WordPatriciaTrie;
-import Util.Utils;
-import lib.org.ardverk.collection.PatriciaTrie;
-import java.util.Scanner;
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 
-//import org.apache.commons.lang3.RandomStringUtils;
-
-import DataExtraction.DataExtractor;
-import DataExtraction.RawTextExtractor;
 import DataExtraction.wikipedia.WikipediaDataExtractor;
-import Relation.ExtractedRelation;
-import Relation.RelationDB;
-import Relation.RelationExtractor;
-import Relation.RelationPatternReader;
-import Relation.WikiArticleDB;
-import RequeterRezo.RequeterRezo;
+
 
 public class Main {
 

@@ -2,6 +2,9 @@ package TextStructure;
 
 
 
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.semgraph.SemanticGraph;
+
 import java.util.*;
 
 /**
@@ -13,10 +16,8 @@ public class TextSequence {
      *  ex : "Le requin est un poisson" -> {Le,requin,est,un,poisson}
      */
     private ArrayList<String> words;
-    
-    
-    
-    /**
+
+	/**
      * The list of Grammatical positions of the words
      */
     private ArrayList<String> wordsGramPositions;
@@ -34,10 +35,15 @@ public class TextSequence {
     private HashMap<String,ArrayList<String>> compoundWordGramPositions;
 
 
+    private ArrayList<Integer> puncIdxs;
+
+
     
     private ArrayList<Integer> patternsIdx;
 
     private ArrayList<Integer> compoundWordIdx;
+
+    private HashMap<Integer,String> refs;
 
     private long size;
 
@@ -53,6 +59,7 @@ public class TextSequence {
     	 compoundWordGramPositions =new HashMap<>();
     	 patternsIdx=new ArrayList<>();
     	 compoundWordIdx=new ArrayList<>();
+    	 refs=new HashMap<>();
     	 size =0;
     }
     
@@ -171,6 +178,33 @@ public class TextSequence {
 		}
 	}
 
+	/**
+	 *
+	 * @param begin
+	 * @param end
+	 * @return
+	 */
+	public ArrayList<String> getGramPositionsBetween(int begin, int end){
+    	int i=begin;
+    	ArrayList<String> pos=new ArrayList<>();
+    	if( ! (end > begin) ){
+    		return pos;
+		}
+		while (i<end){
+			String word=words.get(i);
+			if(isCompoundWord(word)){
+				ArrayList<String> cw_pos=compoundWordGramPositions.get(word);
+				pos.addAll(cw_pos);
+				i += cw_pos.size();
+			}
+			else{
+				pos.add(wordsGramPositions.get(i));
+			}
+			i++;
+		}
+		return pos;
+	}
+
 	public String toString(){
 		int indent = 90; int compound = 0;
         StringBuilder sb = new StringBuilder();
@@ -218,6 +252,15 @@ public class TextSequence {
         return sb.toString();
     }
 
+    private void buildPuncIdxs(){
+    	puncIdxs=new ArrayList<>();
+    	for(int i=0;i<wordsGramPositions.size();i++){
+    		if(wordsGramPositions.get(i).equals("PUNC")){
+    			puncIdxs.add(i);
+			}
+		}
+	}
+
 	public HashMap<String, ArrayList<String>> getWords_replacements() {
 		return words_replacements;
 	}
@@ -225,7 +268,37 @@ public class TextSequence {
 	public ArrayList<Integer> getPatternsIdx() {
 		return patternsIdx;
 	}
-	
+
+	public String getWordsAsStr(){
+		StringBuilder sb=new StringBuilder();
+		for(String word : words){
+			if(isCompoundWord(word)){
+				words_replacements.get(word).forEach(subword -> sb.append(subword+" "));
+			}
+			else{
+				sb.append(word+" ");
+			}
+
+		}
+		return sb.toString();
+	}
+
+
+    public void setRef(Integer idx, String ref){
+		if(idx >= 0 && idx <words.size()){
+			if(words.get(idx).equals("IL")){
+				refs.put(idx,ref);
+			}
+		}
+	}
+
+	public boolean is_ref(Integer idx){
+		return refs.containsKey(idx);
+	}
+
+	public String getRefReplacement(Integer idx){
+		return refs.get(idx);
+	}
 	
     
     
