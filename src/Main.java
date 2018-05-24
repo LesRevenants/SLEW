@@ -2,9 +2,12 @@
 import java.io.BufferedReader;
 import java.net.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
+import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 
@@ -25,9 +28,9 @@ public class Main {
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
     	SLEW slew=new SLEW();
     	if(articlename == null)
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser","datas/wiki_articles_id", "datas/out/slew_output.json",true,properties);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser","datas/wiki_articles_id", "datas/out/slew_output.json",true,properties);
     	else
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.ser",articlename,"datas/out/slew_output.json",false,properties);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser",articlename,"datas/out/slew_output.json",false,properties);
         return wikipediaDataExtractor.getText();
 	}
 
@@ -48,7 +51,7 @@ public class Main {
 		                 System.out.println(article);
 		                 int max_size=1000;
 		                 String text=extract(article,properties);
-		                 String relationsStr = FileUtils.readFileToString(new File("json.txt"),Charsets.UTF_8);
+		                 String relationsStr = FileUtils.readFileToString(new File("json.txt"),StandardCharsets.UTF_8);
 		                 System.out.println(relationsStr);
 		                 if(text.length()<max_size){
 		                	 bw.write(text+"@"+relationsStr);
@@ -66,7 +69,8 @@ public class Main {
 		       }
 		    
 		}
-	
+
+
 	
 	
     public static void main(String[] args){
@@ -81,7 +85,7 @@ public class Main {
     	Properties properties=new Properties();
     	properties.setProperty("verbose","false");
     	properties.setProperty("use_db","false");
-    	properties.setProperty("use_corenlp","true");
+    	properties.setProperty("use_corenlp","false");
 
     	switch(args[0]){
     		case "valid":{
@@ -106,8 +110,6 @@ public class Main {
     			//System.out.println("i : ");
     		}
     	}
-		//extract(null,false,false);
-    		
     }
     
 }

@@ -24,7 +24,7 @@ public class RelationExtractor {
 	private StructuredText structuredText;
 
 	/**
-	 * JDM KnoledgeBase access
+	 * JDM KnowledgeBase access
 	 */
 	private RequeterRezo system_query;
 
@@ -109,7 +109,7 @@ public class RelationExtractor {
 	 * @param extractedRelations
 	 */
 	public void cleanExtractedRelation(Collection<ExtractedRelation> extractedRelations){
-		String[] prefixToErase={"L'","l'","L’"};
+		String[] prefixToErase={"L'","l'","L’","d'"};
 		for(ExtractedRelation extractedRelation : extractedRelations){
 
 			String x=extractedRelation.getX();

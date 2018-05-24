@@ -92,7 +92,7 @@ public class SLEW {
 
 
 				if(verbose) {
-					//System.out.println(structuredText.toString());
+					System.out.println(structuredText.toString());
 				}
 				System.out.println("Relation extraction : \n");
 				RelationExtractor relationExtractor = new RelationExtractor(
@@ -174,7 +174,7 @@ public class SLEW {
 						return rex;
 					}
 					else{
-						System.err.println("RTFM : !!!! Key Y/N/Q (yes/no/quit");
+						System.err.println("RT*M : ! Key Y/N/Q (yes/no/quit");
 					}
 				}
 			}
@@ -208,6 +208,9 @@ public class SLEW {
 		long tStart = System.currentTimeMillis();
 		System.out.println("Lecture des mots composés de JDM : ");
 		CompoundWordBuilder compoundWordBuilder = new CompoundWordBuilder(jdmMcPath,true,"datas/mc_rules.txt");
+		//compoundWordBuilder.write(jdmMcPath+".ser");
+		System.out.println(compoundWordBuilder.getTrie().containsKey("système_nerveux"));
+		System.out.println(compoundWordBuilder.getTrie().containsKey("système_nerveux_central"));
 		compoundWordBuilder.addToTrie(relationPatternReader.getCompoundWords()); // add compound word from patterns into compound word dictionary
 		Utils.display_ellapsed_time(tStart,"\t");
 		return compoundWordBuilder;

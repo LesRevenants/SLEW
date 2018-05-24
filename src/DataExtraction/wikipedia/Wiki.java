@@ -998,7 +998,7 @@ public class Wiki implements Serializable
 
     /**
      *  Gets the number of actions (edit, move, block, delete, etc) between
-     *  status checks. A status check is where we update user rights, block
+     *  status checks. A status check is where we set user rights, block
      *  status and check for new messages (if the appropriate assertion mode
      *  is set).
      *
@@ -1013,7 +1013,7 @@ public class Wiki implements Serializable
 
     /**
      *  Sets the number of actions (edit, move, block, delete, etc) between
-     *  status checks. A status check is where we update user rights, block
+     *  status checks. A status check is where we set user rights, block
      *  status and check for new messages (if the appropriate assertion mode
      *  is set). Default is 100.
      *
@@ -2138,7 +2138,7 @@ public class Wiki implements Serializable
     /**
      *  Purges the server-side cache for various pages.
      *  @param titles the titles of the page to purge
-     *  @param links update the links tables
+     *  @param links set the links tables
      *  @throws IOException if a network error occurs
      *  @since 0.17
      */

@@ -4,10 +4,11 @@ package TextStructure;
 
 
 
-import org.apache.commons.io.Charsets;
+import Util.Pair;
 
 import java.io.*;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -56,14 +57,16 @@ public class CompoundWordBuilder {
         }
     }
 
+
     public LinkedList<String> getNewCompoundWordFrom(ArrayList<String> words, ArrayList<String> positions, boolean stop_first){
+
 
         LinkedList<String> new_compound_words=new LinkedList<>();
 
         for (ArrayList<String> rule : compoundWordRules) {
             // compoundWordRules.forEach(rule -> { // generate new compound word with rules ( ex : NOM,NOM
             int j = 0;
-            for (int i = 0; i < positions.size(); i++) {
+            for (int i = 0; i < positions.size()-1; i++) {
                 if (positions.get(i).equals(rule.get(j))) {
                     j++;
                 } else {
@@ -98,19 +101,21 @@ public class CompoundWordBuilder {
 		loadRules(rulesPath);
 	}
 
+
     /**
      * @param oldTextSequence : A collection of word
      * @param limitSize : The maximum size of a compound word which can be finded
      * @return The list of compound word from the sentence
      * Complexity :
      */
-      
-     public TextSequence replaceSequence(TextSequence oldTextSequence, int limitSize){
+
+
+     public Pair<ArrayList<String>, HashMap<String, ArrayList<String>>> replaceSequence(TextSequence oldTextSequence, int limitSize){
         if(limitSize < 2){
             throw new IllegalArgumentException("Limit size of a compoundWord must be >= 2 : "+limitSize);
         }
 
-        LinkedList<String> newWords = new LinkedList<String>();
+        ArrayList<String> newWords = new ArrayList<>(oldTextSequence.getWords().size()); // reserve memory for  |old words| words
         
         /**
          * The list of replacement of each multiple_word. Ex replace(est_un) -> {est,un}
@@ -118,14 +123,11 @@ public class CompoundWordBuilder {
         HashMap<String,ArrayList<String>> newTextSequenceReplacements = new HashMap<>();
 
         build(oldTextSequence,"",0,0,limitSize,newWords,newTextSequenceReplacements);
-        TextSequence textSequence = new TextSequence(newWords);
-        textSequence.setWords_replacements(newTextSequenceReplacements);
-        return textSequence;
-        
+        return new Pair<>(newWords,newTextSequenceReplacements);
     }
     
      public void build(TextSequence oldTextSequence,String prefixWord, int i, int compoundWordSize, int limitSize,
-    		 LinkedList<String> newWords,
+    		 ArrayList<String> newWords,
     		 HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
     	 
     	 if(i==oldTextSequence.getWords().size()) {
@@ -198,14 +200,15 @@ public class CompoundWordBuilder {
     public void read(String filePath,boolean serialized){
         try {
             if(!serialized){
-                      Files.readAllLines(Paths.get(filePath), Charsets.ISO_8859_1)
+                int i=0;
+                Files.readAllLines(Paths.get(filePath), StandardCharsets.ISO_8859_1)
                         .stream()
                         .map(word -> word.split(";")[1])
-                        .map(word -> word.replace(" ","_"))
+                        .map(word -> word.replaceAll(" ","_"))
                         .forEach(word -> trie.put(word,true));
             }
             else{
-                Files.readAllLines(Paths.get(filePath))
+                Files.readAllLines(Paths.get(filePath), StandardCharsets.ISO_8859_1)
                         .forEach( word -> trie.put(word,true));
             }
             dataLoaded = true;
@@ -222,25 +225,19 @@ public class CompoundWordBuilder {
         if(! dataLoaded)
            throw new IllegalStateException("Attempting to write data before read them");
         try{
-            FileWriter fileWriter = new FileWriter(filePath);
-            trie.keySet()
-                    .parallelStream()
-                    .forEach(word ->writeToFile(fileWriter,word));
-            fileWriter.close();
+            String newline = System.getProperty("line.separator");
+            OutputStreamWriter writer =
+                    new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.ISO_8859_1);
+           for(String key : trie.keySet()){
+               writer.write(key+newline);
+           }
+           writer.close();
         }
         catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    private void writeToFile(FileWriter fileWriter, String content){
-        try{
-            fileWriter.write(content+"\n");
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
     
     
     public void addToTrie(Collection<String> compoundWords) {

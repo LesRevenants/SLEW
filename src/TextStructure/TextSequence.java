@@ -2,7 +2,7 @@ package TextStructure;
 
 
 
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import Util.Pair;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 
 import java.util.*;
@@ -17,31 +17,28 @@ public class TextSequence {
      */
     private ArrayList<String> words;
 
+
 	/**
-     * The list of Grammatical positions of the words
+     * The list of Grammatical positions of the words with TreeTagger
      */
-    private ArrayList<String> wordsGramPositions;
+    private ArrayList<String> TT_WordGramPos;
     
     private HashMap<String, ArrayList<Integer>> wordsByGramPositions;
     
     /**
      * Key/Value associative array [ a_multiple_word -> {a,multiple_word} ]
      */
-    private HashMap<String, ArrayList<String>> words_replacements; 
+    private HashMap<String, ArrayList<String>> words_replacements;
     
     /**
      *  Key/Value associative array [ a_multiple_word -> { pos(a),pos(multiple),pos(word)}
      */
     private HashMap<String,ArrayList<String>> compoundWordGramPositions;
-
-
-    private ArrayList<Integer> puncIdxs;
-
-
-    
-    private ArrayList<Integer> patternsIdx;
-
     private ArrayList<Integer> compoundWordIdx;
+
+
+    private HashSet<String> patterns;
+    private ArrayList<Integer> patternsIdx;
 
     private HashMap<Integer,String> refs;
 
@@ -55,9 +52,9 @@ public class TextSequence {
 	public TextSequence() {
     	 words = new ArrayList<>();
     	 words_replacements = new HashMap<>();
-    	 wordsGramPositions=new ArrayList<>();
+    	 TT_WordGramPos =new ArrayList<>();
     	 compoundWordGramPositions =new HashMap<>();
-    	 patternsIdx=new ArrayList<>();
+		 patterns=new HashSet<>();
     	 compoundWordIdx=new ArrayList<>();
     	 refs=new HashMap<>();
     	 size =0;
@@ -68,56 +65,120 @@ public class TextSequence {
         this.words = words;
     }*/
 
+    public void setWord_list(HashMap<Pair<Integer,Integer>, ArrayList<String>> words_replacements,SemanticGraph graph){
+		/*graph=new SemanticGraph();
+		graph.a*/
+	}
+
+
     private void set_size(){
     	words.forEach(word -> size += word.length());
 	}
 
-	public ArrayList<String> getWordsGramPositions() {
-		return wordsGramPositions;
+	public ArrayList<String> getTT_WordGramPos() {
+		return TT_WordGramPos;
 	}
 
-	public boolean setWordsGramPositions(ArrayList<String> wordsGramPositions, HashSet<String> patterns) {
-		/*if(words.size() != wordsGramPositions.size()) {
-    		return false;
-    	}*/
+	public ArrayList<Integer> getPatternsIdx() {
+		return patternsIdx;
+	}
+
+	/**
+	 *
+	 * @param words the new words ( eventually with multiple words )
+	 * @param tt_word_gram_pos  positions of words ( eventually with pos of word without replacement by compound word)
+	 * @param words_replacements a_compound_word ->  {a,compound,word}
+	 * @param patterns The set of patterns
+	 */
+	public void set(ArrayList<String> words, ArrayList<String> tt_word_gram_pos, HashMap<String,ArrayList<String>> words_replacements, HashSet<String> patterns) {
+    	assert( words.size()>0 && words.size()==tt_word_gram_pos.size());
+
+		this.words=words;
+		this.compoundWordIdx=new ArrayList<>();
+		this.words_replacements=words_replacements;
+
+		this.patterns=new HashSet<>();
+		this.patternsIdx=new ArrayList<>();
+
+		if( words_replacements.isEmpty()){
+			this.TT_WordGramPos=tt_word_gram_pos;
+		}
+		else{
+			this.TT_WordGramPos=new ArrayList<>();
+			int offset=0;
+			for (int i = 0; i < words.size(); i++) {
+				String word=words.get(i);
+				if(words_replacements.containsKey(word)){ // if word is a compound word
+
+					int compoundWordSize = words_replacements.get(word).size();
+					if(patterns.contains(word)){ // if the compound word is a pattern
+						this.patterns.add(word); // save pattern and pattern idx
+						this.patternsIdx.add(i);
+						this.TT_WordGramPos.add("PAT");
+					}
+					else{
+						int j=i+compoundWordSize+offset;
+						compoundWordGramPositions.put(word, new ArrayList<>(tt_word_gram_pos.subList(i+offset, j))); // save gram pos of each sub-word word from a compound_word
+						if(compoundWordGramPositions.get(word).get(0).equals("NOM")){
+							this.TT_WordGramPos.add("NOM");
+						}
+						else{
+							this.TT_WordGramPos.add("CW");
+						}
+						this.compoundWordIdx.add(i);
+					}
+					offset += compoundWordSize-1;
+				}
+
+				else{
+					this.TT_WordGramPos.add(tt_word_gram_pos.get(i+offset));
+				}
+
+			}
+		}
+	}
+
+
+
+	/*public boolean setWordsGramPositions(ArrayList<String> TT_WordGramPos, HashSet<String> patterns) {
 		wordsByGramPositions=new HashMap<>();
 		int i=0;
 		int offset=0;
-		while(i<wordsGramPositions.size() && (i-offset) < words.size()) {
+		while(i<TT_WordGramPos.size() && (i-offset) < words.size()) {
 			//if(i-offset == words.size())
 			String word = words.get(i-offset);
 			if(isCompoundWord(word)) {
 				int compoundWordSize = words_replacements.get(word).size();
 				if(patterns.contains(word)) {
-					this.wordsGramPositions.add("PAT");
+					this.TT_WordGramPos.add("PAT");
 					patternsIdx.add(i-offset);
 				}
 				else{
-					this.wordsGramPositions.add("CW");
+					this.TT_WordGramPos.add("CW");
 					compoundWordIdx.add(i-offset);
 				}
 
-				compoundWordGramPositions.put(word, new ArrayList<>(wordsGramPositions.subList(i, i+compoundWordSize)));
+				compoundWordGramPositions.put(word, new ArrayList<>(TT_WordGramPos.subList(i, i+compoundWordSize)));
 				i += compoundWordSize;
 				offset += compoundWordSize-1;
 			}
 			else {
-				String word_pos = wordsGramPositions.get(i);
-				this.wordsGramPositions.add(word_pos);
+				String word_pos = TT_WordGramPos.get(i);
+				this.TT_WordGramPos.add(word_pos);
 				i++;
 			}
 			
 		}
 		
 		for(i=0;i<words.size();i++) {
-			String word_pos=this.wordsGramPositions.get(i);
+			String word_pos=this.TT_WordGramPos.get(i);
 			if(!wordsByGramPositions.containsKey(word_pos)) {
 				wordsByGramPositions.put(word_pos, new ArrayList<>());
 			}
 			wordsByGramPositions.get(word_pos).add(i);
 		}
     	return true;
-	}
+	}*/
     
 
 	public TextSequence(Collection<String> words) {
@@ -149,34 +210,21 @@ public class TextSequence {
 	}*/
     
     public boolean isCompoundWord(String word) {
-    	return words_replacements.containsKey(word);
+    	return words_replacements.containsKey(word) && ! patterns.contains(word);
     }
 
+
+
     public ArrayList<String> getWordsPositions() {
-		return wordsGramPositions;
+		return TT_WordGramPos;
 	}
 
-	public boolean setWords_replacements(HashMap<String, ArrayList<String>> words_replacements) {
-		if(words.isEmpty())
-			return false;
-		this.words_replacements = words_replacements;
+	private void updateWordsPos(ArrayList<String> tt_word_gram_pos, HashSet<String> patterns){
 
-		return true;
+
+
 	}
 
-	public void update_compoundWordPos(){
-    	/*for(Map.Entry<String,ArrayList<String>> entry : compoundWordGramPositions.entrySet()){
-			if(entry.getValue().get(0).equals("NOM")){
-
-			}
-		}*/
-    	for(Integer cw_idx : compoundWordIdx){
-    		String cw=words.get(cw_idx);
-    		if(compoundWordGramPositions.get(cw).get(0).equals("NOM") ){
-				wordsGramPositions.set(cw_idx,"NOM");
-			}
-		}
-	}
 
 	/**
 	 *
@@ -190,7 +238,7 @@ public class TextSequence {
     	if( ! (end > begin) ){
     		return pos;
 		}
-		while (i<end){
+		while (i<end && i<words.size()){
 			String word=words.get(i);
 			if(isCompoundWord(word)){
 				ArrayList<String> cw_pos=compoundWordGramPositions.get(word);
@@ -198,7 +246,7 @@ public class TextSequence {
 				i += cw_pos.size();
 			}
 			else{
-				pos.add(wordsGramPositions.get(i));
+				pos.add(TT_WordGramPos.get(i));
 			}
 			i++;
 		}
@@ -206,7 +254,7 @@ public class TextSequence {
 	}
 
 	public String toString(){
-		int indent = 90; int compound = 0;
+		/*int indent = 90; int compound = 0;
         StringBuilder sb = new StringBuilder();
         for(int i=0 ;i<words.size(); i++) {
         	String word = words.get(i);
@@ -236,11 +284,12 @@ public class TextSequence {
         			sb.append(" ");
         		}
         	}
-        	sb.append("["+wordsGramPositions.get(i)+"]");
+        	sb.append("["+ TT_WordGramPos.get(i)+"]");
         	sb.append("\n");
         	compound =0;
         }
-        return sb.toString();
+        return sb.toString();*/
+		return shortToString();
     }
     
     public String shortToString() {
@@ -253,21 +302,18 @@ public class TextSequence {
     }
 
     private void buildPuncIdxs(){
-    	puncIdxs=new ArrayList<>();
-    	for(int i=0;i<wordsGramPositions.size();i++){
-    		if(wordsGramPositions.get(i).equals("PUNC")){
+    	/*puncIdxs=new ArrayList<>();
+    	for(int i = 0; i< TT_WordGramPos.size(); i++){
+    		if(TT_WordGramPos.get(i).equals("PUNC")){
     			puncIdxs.add(i);
 			}
-		}
+		}*/
 	}
 
 	public HashMap<String, ArrayList<String>> getWords_replacements() {
 		return words_replacements;
 	}
 
-	public ArrayList<Integer> getPatternsIdx() {
-		return patternsIdx;
-	}
 
 	public String getWordsAsStr(){
 		StringBuilder sb=new StringBuilder();
