@@ -22,6 +22,7 @@ echo '<!DOCTYPE HTML>
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
+
 	<body>
 
 <article class="container box style3">
@@ -85,7 +86,7 @@ echo '<!DOCTYPE HTML>
 								<th>Relation Type</th>
 								</tr>';
 								for($cpt=1;$cpt<=sizeof($colin)-1;$cpt++) {
-								$colin[$cpt] = str_replace($colin[$cpt],"\"","");
+								$colin[$cpt] = str_replace("\"","",$colin[$cpt]);
 								$seneron = explode(",",$colin[$cpt]);
 								$pascual1 = explode(":",$seneron[0]);
 								$pascual2 = explode(":",$seneron[1]);
@@ -93,6 +94,10 @@ echo '<!DOCTYPE HTML>
 								$pascual4 = explode(":",$seneron[3]);
 								echo '<tr><td>' . $cpt . '</td><td>'. $pascual2[1] . '</td><td>' . str_replace("}","",$pascual4[1]) . '</td><td>' . $pascual1[1] . '</td><td>' . $pascual3[1] . '</td></tr>'; }
 								echo '</table></span><br><br>
+								<br><br><br>
+								<center><div id="DataExtraction" style="height: 370px; width: 30%;"></div></center>
+								<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+								<br><br><br>
 						<div class="row">
 							<div class="12u">
 								<ul class="actions">
@@ -104,6 +109,40 @@ echo '<!DOCTYPE HTML>
 				</section>
 			</article>
 		</body>
+		<script>
+		window.onload = function() {
+
+				var chary = new CanvasJS.Chart("DataExtraction", {
+					animationEnabled: true,
+					title: {
+						text: "Relation Types Insights"
+					},
+					data: [{
+						type: "pie",
+						startAngle: 240,
+						yValueFormatString: "##0.00\"%\"",
+						indexLabel: "{label} {y}",
+						dataPoints: [';
+							for($cpt=1;$cpt<=sizeof($colin)-1;$cpt++) {
+								$colin[$cpt] = str_replace("\"","",$colin[$cpt]);
+								$seneron = explode(",",$colin[$cpt]);
+								$pascual1 = explode(":",$seneron[0]);
+								$pascual2 = explode(":",$seneron[1]);
+								$pascual3 = explode(":",$seneron[2]);
+								$pascual4 = explode(":",$seneron[3]);
+								$table[$cpt] = $pascual3[1]; }
+								$thetab = array_count_values($table);
+								$keys = array_keys($thetab);
+							for($cp=0;$cp<=sizeof($thetab)-1;$cp++) {
+								$size = sizeof($colin)-1;
+								$result = $thetab[$keys[$cp]]/$size;
+								echo '{y: ' . $result*100 . ', label: "' . $keys[$cp] . '"}';
+								if($cp !== sizeof($thetab)-1) { echo ','; } }
+						echo ']
+					}]
+				});
+			chary.render(); }
+		</script>
 	</html>'; } 
 
 
