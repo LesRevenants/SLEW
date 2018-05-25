@@ -47,7 +47,7 @@ public class StructuredText {
 
         if(use_corenlp){
             corenlpLoader=CorenlpLoader.getInstance();
-            resolveCoreference(corenlpLoader.getPipeline());
+            //resolveCoreference(corenlpLoader.getPipeline());
         }
 	}
 
@@ -75,18 +75,18 @@ public class StructuredText {
                         found=true;
                     }
                     else{
+                        int offset=0;
                         for(int k=0;k<j;k++){
-                            int offset=t0.getWords().get(i-k).length();
+                            offset += t0.getWords().get(i-k).length();
                             int end_idx=new_word.length()-offset-1;
-                            if(patterns_trie.containsKey(new_word.substring(0,end_idx))){
-                                found=true;
+                            String sub_word=new_word.substring(0,end_idx);
+                            if(patterns_trie.containsKey(sub_word)){
+                                return true;
                             }
                         }
-                        if(! found){
-                            begin_found=false;
-                            pattern="";
-                        }
-
+                        begin_found=false;
+                        pattern="";
+                        j=0;
                     }
                 }
             }
@@ -105,8 +105,7 @@ public class StructuredText {
 
         ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(t0);
 
-        Collection<String> new_cw=compoundWordBuilder.getNewCompoundWordFrom(t0.getWords(),positions,false);
-        compoundWordBuilder.addToTrie(new_cw);
+
 
         Pair<ArrayList<String>,HashMap<String,ArrayList<String>>> cw_pair= compoundWordBuilder.replaceSequence(t0, 8);
         ArrayList<String> new_words=cw_pair.getLeft();
@@ -114,6 +113,10 @@ public class StructuredText {
 
         if(! words_replacements.isEmpty()){
             t0.set(new_words,positions,words_replacements,patterns);
+
+            Collection<String> new_cw=compoundWordBuilder.getNewCompoundWordFrom(t0.getWords(),t0.getWordsPositions(),false);
+            //compoundWordBuilder.addToTrie(new_cw);
+
             textSequences.add(t0);
         }
 
@@ -165,7 +168,7 @@ public class StructuredText {
     	return sb.toString();
     }
 
-    public void resolveCoreference(StanfordCoreNLP coreNLP){
+    /*public void resolveCoreference(StanfordCoreNLP coreNLP){
 
         ArrayList<String> refs=new ArrayList<>(textSequences.size());
         for(int i=0;i<textSequences.size();i++){
@@ -241,7 +244,7 @@ public class StructuredText {
 
             }
         }
-    }
+    }*/
 
 
 }
