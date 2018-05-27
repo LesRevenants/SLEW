@@ -8,8 +8,12 @@ public class NaiveExtractionMethod extends ExtractionMethod {
 
 	@Override
 	public ExtractedRelation extract(TextSequence textSequence, RelationPattern pattern, int pattern_word_idx) {
+
 		int x_idx=pattern_word_idx-1;
 		int y_idx=pattern_word_idx+1;
+		if(textSequence.getWords().get(x_idx).equals(",") || textSequence.getWords().get(y_idx).equals(",")){
+			return null; // virgule just before or after the pattern
+		}
 		int window = 6;
 		
 		String patternStr = textSequence.getWords().get(pattern_word_idx);

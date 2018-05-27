@@ -88,7 +88,7 @@ public class SLEW {
 						compoundWordBuilder,
 						relationPatternReader.getCompoundWords(),properties);
 
-				System.out.println("\tTextSize : "+structuredText.getTotal_size());
+				System.out.println("\tTextSize : "+structuredText.getTotal_size() +"B");
 				tStart=Utils.display_ellapsed_time(tStart,"\t");
 
 
@@ -103,8 +103,9 @@ public class SLEW {
 				);
 
 
-				extractedRelations.addAll(extract(relationExtractor,relationDB,data_key,system_query));
-				tStart=Utils.display_ellapsed_time(tStart,"");
+				Collection<ExtractedRelation> new_relations=extract(relationExtractor,relationDB,data_key,system_query);
+				extractedRelations.addAll(new_relations);
+				tStart=Utils.display_ellapsed_time(tStart,new_relations.size() + " relations extracted, ");
 				System.out.println();
 			}
 
@@ -135,8 +136,10 @@ public class SLEW {
 		Collection<ExtractedRelation> extractedRelations = relationExtractor.extract();
 		ArrayList<String> displays=new ArrayList<>();
 
+		int relation_idx=0;
 		for(ExtractedRelation extractedRelation : extractedRelations) {
 			StringBuilder flags=new StringBuilder();
+			flags.append("["+relation_idx+"]");
 			flags.append(use_jdm && existingRelations.Requesting(extractedRelation,system_query) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
 			flags.append("[JDM] "+UtilColor.ANSI_RESET);
 
@@ -151,6 +154,7 @@ public class SLEW {
 			System.out.println(flags);
 			displays.add(flags.toString());
 			rex.add(extractedRelation);
+			relation_idx++;
 		}
 
 		boolean valid = properties.containsKey("valid") && properties.getProperty("valid").equals("true");

@@ -21,10 +21,9 @@ public class StructuredText {
     private TextSequenceAnalyser textSequenceAnalyser;
     private CorenlpLoader corenlpLoader;
     private CompoundWordBuilder compoundWordBuilder;
-    private long total_size;
 
     public long getTotal_size() {
-        return total_size;
+        return textSequences.stream().mapToLong(ts -> ts.getSize()).sum();
     }
 
     public StructuredText(Collection<TextSequence>  inTextSequences, CompoundWordBuilder compoundWordBuilder, LinkedList<String> knownPatterns, Properties properties) {
@@ -120,18 +119,15 @@ public class StructuredText {
                 TextSequence newTextSequence=new TextSequence();
                 newTextSequence.set(cw_pair2.getLeft(),positions,cw_pair2.getRight(),patterns);
                 textSequences.add(newTextSequence);
-                total_size += newTextSequence.getSize();
             }
 
 
             else{
                 textSequences.add(t0);
-                total_size += t0.getSize();
             }
         }
         else{
             textSequences.add(t0);
-            total_size += t0.getSize();
         }
     }
 

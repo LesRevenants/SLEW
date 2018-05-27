@@ -42,11 +42,9 @@ public class TextSequence {
 
     private HashMap<Integer,String> refs;
 
-    private long size;
-
 
 	public long getSize() {
-		return size;
+		return words.stream().mapToLong(word -> word.length()).sum();
 	}
 
 	public TextSequence() {
@@ -57,7 +55,6 @@ public class TextSequence {
 		 patterns=new HashSet<>();
     	 compoundWordIdx=new ArrayList<>();
     	 refs=new HashMap<>();
-    	 size =0;
     }
     
     /*public TextSequence(ArrayList<String> words) {
@@ -70,10 +67,6 @@ public class TextSequence {
 		graph.a*/
 	}
 
-
-    private void set_size(){
-    	words.forEach(word -> size += word.length());
-	}
 
 	public ArrayList<String> getTT_WordGramPos() {
 		return TT_WordGramPos;
@@ -184,7 +177,6 @@ public class TextSequence {
 	public TextSequence(Collection<String> words) {
         this();
         this.words.addAll(words);
-        set_size();
     }
 
 	/**
@@ -197,7 +189,6 @@ public class TextSequence {
         for(String word : words){
             this.words.add(word);
         }
-        set_size();
     }
     
     
