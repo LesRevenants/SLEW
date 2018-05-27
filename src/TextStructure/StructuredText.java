@@ -103,11 +103,10 @@ public class StructuredText {
     }
 	private void updateCW(TextSequence t0){
 
+        ArrayList<String> oldWords=t0.getWords();
         ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(t0);
 
-
-
-        Pair<ArrayList<String>,HashMap<String,ArrayList<String>>> cw_pair= compoundWordBuilder.replaceSequence(t0, 8);
+        Pair<ArrayList<String>,HashMap<String,ArrayList<String>>> cw_pair= compoundWordBuilder.replaceSequence(oldWords, 8);
         ArrayList<String> new_words=cw_pair.getLeft();
         HashMap<String,ArrayList<String>> words_replacements=cw_pair.getRight();
 
@@ -115,44 +114,27 @@ public class StructuredText {
             t0.set(new_words,positions,words_replacements,patterns);
 
             Collection<String> new_cw=compoundWordBuilder.getNewCompoundWordFrom(t0.getWords(),t0.getWordsPositions(),false);
-            //compoundWordBuilder.addToTrie(new_cw);
-
-            textSequences.add(t0);
-        }
-
-
-        /*Collection<String> new_cw=compoundWordBuilder.getNewCompoundWordFrom(t0.getWords(),t0.getWordsPositions(),false);
-
-
-
-
-
-        textSequences.add(t0);
-        total_size += t0.getSize();
-        /*ArrayList<String> positions = textSequenceAnalyser.getPositionsOf(t0);
-        Pair<ArrayList<String>,HashMap<String,ArrayList<String>>> cw_pair= compoundWordBuilder.replaceSequence(t0, 8);
-        ArrayList<String> new_words=cw_pair.getLeft();
-        HashMap<String,ArrayList<String>> words_replacements=cw_pair.getRight();
-        t0.set(new_words,positions,words_replacements,patterns);
-        Collection<String> new_cw=compoundWordBuilder.getNewCompoundWordFrom(t0.getWords(),t0.getWordsPositions(),false);
-
-        if( ! t0.getPatternsIdx().isEmpty()){
-           if( ! new_cw.isEmpty()){
-                compoundWordBuilder.add(
+            if(!new_cw.isEmpty()){
+                compoundWordBuilder.addToTrie(new_cw);
+                Pair<ArrayList<String>,HashMap<String,ArrayList<String>>> cw_pair2= compoundWordBuilder.replaceSequence(oldWords, 8);
+                TextSequence newTextSequence=new TextSequence();
+                newTextSequence.set(cw_pair2.getLeft(),positions,cw_pair2.getRight(),patterns);
+                textSequences.add(newTextSequence);
+                total_size += newTextSequence.getSize();
             }
+
+
+            else{
+                textSequences.add(t0);
+                total_size += t0.getSize();
+            }
+        }
+        else{
             textSequences.add(t0);
             total_size += t0.getSize();
-        }*/
-
-
-       /* t1.setWordsGramPositions(positions,patterns);
-        t1.updateCompoundWordPos();
-
-        compoundWordBuilder.addToTrie(new_cw);
-        TextSequence t2=compoundWordBuilder.replaceSequence(t0,8);
-        t2.updateCompoundWordPos();
-        return t2;*/
+        }
     }
+
 
 	public ArrayList<TextSequence> getTextSequences() {
 		return textSequences;

@@ -25,8 +25,10 @@ import Util.UtilColor;
 
 public class SLEW {
 
-	public SLEW(){
+	private Properties properties;
 
+	public SLEW(Properties properties){
+		this.properties=properties;
 	}
 
 	
@@ -37,7 +39,7 @@ public class SLEW {
 	 * @param jdmMcPath
 	 * @param sources_file_path
 	 */
-	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean isFile,Properties properties) {
+	public void run(DataExtractor dataExtractor, String patternPath, String jdmMcPath, String sources_file_path, String outFile, boolean isFile) {
 
 		RelationPatternReader relationPatternReader = buildPatterns(patternPath);
 		CompoundWordBuilder compoundWordBuilder = buildCWB(jdmMcPath, relationPatternReader);
@@ -47,7 +49,6 @@ public class SLEW {
 		WikiArticleDB wikiArticleDB=null;
 		boolean use_db = properties.containsKey("use_db") && properties.getProperty("use_db").equals("true");
 		boolean verbose = properties.containsKey("verbose") && properties.getProperty("verbose").equals("true");
-		boolean valid = properties.containsKey("valid") && properties.getProperty("valid").equals("true");
 
 		System.out.println("Running with properties : "+properties.toString());
 
@@ -102,7 +103,7 @@ public class SLEW {
 				);
 
 
-				extractedRelations.addAll(extract(relationExtractor,relationDB,use_db,data_key,system_query,valid));
+				extractedRelations.addAll(extract(relationExtractor,relationDB,data_key,system_query));
 				tStart=Utils.display_ellapsed_time(tStart,"");
 				System.out.println();
 			}
@@ -119,8 +120,7 @@ public class SLEW {
 
 
 	public Collection<ExtractedRelation> extract(RelationExtractor relationExtractor, RelationDB relationDB,
-												 boolean use_db,String article_name,RequeterRezo system_query,
-												 boolean valid){
+												String article_name,RequeterRezo system_query){
 		ExistingRelations existingRelations=new ExistingRelations();
 		ArrayList<ExtractedRelation> rex=new ArrayList<>();
 
@@ -130,12 +130,14 @@ public class SLEW {
 			expected_relations= relationDB.getRelationsFromArticle(article_name,true);
 		}*/
 
+
+		boolean use_jdm = properties.containsKey("use_jdm") && properties.getProperty("use_jdm").equals("true");
 		Collection<ExtractedRelation> extractedRelations = relationExtractor.extract();
 		ArrayList<String> displays=new ArrayList<>();
 
 		for(ExtractedRelation extractedRelation : extractedRelations) {
 			StringBuilder flags=new StringBuilder();
-			flags.append(existingRelations.Requesting(extractedRelation,system_query) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
+			flags.append(use_jdm && existingRelations.Requesting(extractedRelation,system_query) ? UtilColor.ANSI_GREEN : UtilColor.ANSI_RED);
 			flags.append("[JDM] "+UtilColor.ANSI_RESET);
 
 			//System.out.println(extractedRelation);
@@ -151,6 +153,7 @@ public class SLEW {
 			rex.add(extractedRelation);
 		}
 
+		boolean valid = properties.containsKey("valid") && properties.getProperty("valid").equals("true");
 		if(valid){
 			Scanner in_sc=new Scanner(System.in);
 			System.out.println(); System.out.println();

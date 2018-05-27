@@ -26,11 +26,11 @@ public class Main {
 
 	public static String extract(String articlename, Properties properties) {
 		WikipediaDataExtractor wikipediaDataExtractor = new WikipediaDataExtractor();
-    	SLEW slew=new SLEW();
+    	SLEW slew=new SLEW(properties);
     	if(articlename == null)
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser","datas/wiki_articles_id", "datas/out/slew_output.json",true,properties);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser","datas/wiki_articles_id", "datas/out/slew_output.json",true);
     	else
-    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser",articlename,"datas/out/slew_output.json",false,properties);
+    		slew.run(wikipediaDataExtractor,"datas/patterns/patterns.json","datas/jdm-mc.txt.ser",articlename,"datas/out/slew_output.json",false);
         return wikipediaDataExtractor.getText();
 	}
 
@@ -86,6 +86,7 @@ public class Main {
     	properties.setProperty("verbose","false");
     	properties.setProperty("use_db","false");
     	properties.setProperty("use_corenlp","false");
+    	properties.setProperty("use_jdm","false");
 
     	switch(args[0]){
     		case "valid":{
@@ -100,7 +101,6 @@ public class Main {
                         connectJava2Php(Integer.parseInt(args[2]),properties);
                     }
                     else if(args[1].equals("sta")){
-
     		            extract(null,properties);
                     }
 

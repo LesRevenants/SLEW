@@ -103,34 +103,34 @@ public class CompoundWordBuilder {
 
 
     /**
-     * @param oldTextSequence : A collection of word
+     * @param oldWords : A collection of word
      * @param limitSize : The maximum size of a compound word which can be finded
      * @return The list of compound word from the sentence
      * Complexity :
      */
 
 
-     public Pair<ArrayList<String>, HashMap<String, ArrayList<String>>> replaceSequence(TextSequence oldTextSequence, int limitSize){
+     public Pair<ArrayList<String>, HashMap<String, ArrayList<String>>> replaceSequence(ArrayList<String> oldWords, int limitSize){
         if(limitSize < 2){
             throw new IllegalArgumentException("Limit size of a compoundWord must be >= 2 : "+limitSize);
         }
 
-        ArrayList<String> newWords = new ArrayList<>(oldTextSequence.getWords().size()); // reserve memory for  |old words| words
+        ArrayList<String> newWords = new ArrayList<>(oldWords.size()); // reserve memory for  |old words| words
         
         /**
          * The list of replacement of each multiple_word. Ex replace(est_un) -> {est,un}
          */
         HashMap<String,ArrayList<String>> newTextSequenceReplacements = new HashMap<>();
 
-        build(oldTextSequence,"",0,0,limitSize,newWords,newTextSequenceReplacements);
+        build(oldWords,"",0,0,limitSize,newWords,newTextSequenceReplacements);
         return new Pair<>(newWords,newTextSequenceReplacements);
     }
     
-     public void build(TextSequence oldTextSequence,String prefixWord, int i, int compoundWordSize, int limitSize,
-    		 ArrayList<String> newWords,
-    		 HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
+     public void build(ArrayList<String> oldWords, String prefixWord, int i, int compoundWordSize, int limitSize,
+                       ArrayList<String> newWords,
+                       HashMap<String,ArrayList<String>> newTextSequenceReplacements) {
     	 
-    	 if(i==oldTextSequence.getWords().size()) {
+    	 if(i== oldWords.size()) {
     	     if(compoundWordSize>0){
     	         if( trie.containsKey(prefixWord)) {
                      newWords.add(prefixWord);
@@ -142,14 +142,14 @@ public class CompoundWordBuilder {
              }
     		 return;
     	 }
-    	 String word=oldTextSequence.getWords().get(i);
+    	 String word= oldWords.get(i);
     	 if(compoundWordSize == 0) {
     		 if(trie.hasPrefix(word)) {
-    			 build(oldTextSequence,word,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
+    			 build(oldWords,word,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
     		 }
     		 else {
     			 newWords.add(word);
-    			 build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    			 build(oldWords,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
     		 }
     	 }
     	 else {
@@ -157,34 +157,34 @@ public class CompoundWordBuilder {
     			 if(trie.containsKey(prefixWord)) {
     				 newWords.add(prefixWord);
     		         newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
-    		         build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    		         build(oldWords,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
     			 }
     			 else {
                      newWords.addAll(Arrays.asList(prefixWord.split("_")));  // the multiple word does not exist so add each part of multiple word
-    				 build(oldTextSequence,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
+    				 build(oldWords,"",i+1,0,limitSize,newWords,newTextSequenceReplacements);
     			 }
     		 }
     		 else {
     			 String newPrefix = prefixWord.concat("_").concat(word);
                  if( trie.hasPrefix(newPrefix)){ // check if word with newPrefix as prefix exists     
-                     build(oldTextSequence,newPrefix,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
+                     build(oldWords,newPrefix,i+1,compoundWordSize+1,limitSize,newWords,newTextSequenceReplacements);
                  }
                  else{ // no longer multiple-word found     
                 	 if( (compoundWordSize > 1) ) {
                 		 if(trie.containsKey(prefixWord)){  	// add the multiple_word if it exist
                 			  newWords.add(prefixWord);
                               newTextSequenceReplacements.put(prefixWord,new ArrayList<String>( Arrays.asList(prefixWord.split("_"))));
-                              build(oldTextSequence,"",i,0,limitSize,newWords,newTextSequenceReplacements);
+                              build(oldWords,"",i,0,limitSize,newWords,newTextSequenceReplacements);
                 		 }
                 		 else {
-                			 newWords.add(oldTextSequence.getWords().get(i-compoundWordSize));
-                			 build(oldTextSequence,"",i-compoundWordSize+1,0,limitSize,newWords,newTextSequenceReplacements);
+                			 newWords.add(oldWords.get(i-compoundWordSize));
+                			 build(oldWords,"",i-compoundWordSize+1,0,limitSize,newWords,newTextSequenceReplacements);
                 		 }
                 			                  
                     }
                  	else { //
                          newWords.add(prefixWord);
-                         build(oldTextSequence,"",i,0,limitSize,newWords,newTextSequenceReplacements);
+                         build(oldWords,"",i,0,limitSize,newWords,newTextSequenceReplacements);
                      }
                  }
     		 }
